@@ -17,9 +17,46 @@ const connectionPool = mysql.createPool({
     database: 'test' // change this to your local database
 });
 
+connectionPool.getConnection((err, connection) => {
+  if (err) {
+      console.error('Error connecting to the database:', err.stack);
+      return;
+  }
+
+  const createTableQuery = `
+      CREATE TABLE IF NOT EXISTS users (
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          first_name VARCHAR(255),
+          last_name VARCHAR(255)
+      )`;
+
+  connection.query(createTableQuery, (err) => {
+      connection.release();
+
+      if (err) {
+          console.error('Error creating table:', err.stack);
+          return;
+      }
+
+      console.log('Table created successfully.');
+  });
+});
+
 app.get('/', (req, res) => {
     res.send(`Testing connection to port ${port}`);
 });
+
+app.get('/api/users', (req, res) => {
+  connectionPool.query('SELECT * FROM test.users', (err, rows) => {
+      if (err) {
+          console.error('Error executing query:', err.stack);
+          return res.status(500).json({ error: 'Error retrieving users' });
+      }
+
+      res.json(rows);
+  });
+});
+
 
 app.get('/api/users', (req, res) => {
     connectionPool.query('SELECT * FROM test.users', (err, rows) => {

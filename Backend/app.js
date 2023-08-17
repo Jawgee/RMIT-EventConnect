@@ -23,6 +23,9 @@ connectionPool.getConnection((err, connection) => {
     console.error('Error connecting to the database:', err.stack);
     return;
   }
+//Erase the table to avoid conflicta or errors
+  connection.query(`DROP TABLE users`);
+  console.error('Erase the table');
 
   const createTableQuery = `
     CREATE TABLE IF NOT EXISTS users (

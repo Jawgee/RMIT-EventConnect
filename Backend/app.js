@@ -1,157 +1,57 @@
-const Joi = require('joi');
-const express = require('express');
-const mysql = require('mysql');
+// Import the required modules and configurations
+const express = require("express"); 
+const serverConfig = require("./src/serverConfig.js");  // Import server configuration
+const mysql = require('mysql'); 
+
+
 const app = express();
-const port = 4444;
+
 
 app.use(express.json());
 
-app.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
-});
-
+// Create a MySQL connection pool
 const connectionPool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'test' // change this to your local database
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'test'
 });
 
+// Acquire a connection from the pool and execute a query to create a table
 connectionPool.getConnection((err, connection) => {
   if (err) {
-      console.error('Error connecting to the database:', err.stack);
-      return;
+    console.error('Error connecting to the database:', err.stack);
+    return;
   }
 
   const createTableQuery = `
-      CREATE TABLE IF NOT EXISTS users (
-          id INT AUTO_INCREMENT PRIMARY KEY,
-          first_name VARCHAR(255),
-          last_name VARCHAR(255)
-      )`;
+    CREATE TABLE IF NOT EXISTS users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      first_name VARCHAR(255),
+      last_name VARCHAR(255)
+    )`;
 
   connection.query(createTableQuery, (err) => {
-      connection.release();
+    connection.release();
 
-      if (err) {
-          console.error('Error creating table:', err.stack);
-          return;
-      }
+    if (err) {
+      console.error('Error creating table:', err.stack);
+      return;
+    }
 
-      console.log('Table created successfully.');
+    console.log('Table created successfully.');
   });
 });
 
+// Define a route for the root URL
 app.get('/', (req, res) => {
-    res.send(`Testing connection to port ${port}`);
+  res.send(`Testing connection to port ${serverConfig.PORT}`);  // Respond with a message
 });
 
-app.get('/api/users', (req, res) => {
-  connectionPool.query('SELECT * FROM test.users', (err, rows) => {
-      if (err) {
-          console.error('Error executing query:', err.stack);
-          return res.status(500).json({ error: 'Error retrieving users' });
-      }
+// Import and use user routes
+require("./src/routes/user.routes.js")(express, app);  // Include user-related routes
 
-      res.json(rows);
-  });
+// Start the server and listen for requests on the specified port
+app.listen(serverConfig.PORT, () => {
+  console.log(`Server is running on port ${serverConfig.PORT}.`);
 });
-
-
-app.get('/api/users', (req, res) => {
-    connectionPool.query('SELECT * FROM test.users', (err, rows) => {
-        if (err) {
-            console.error('Error executing query:', err.stack);
-            return res.status(500).json({ error: 'Error retrieving users' });
-        }
-
-        res.json(rows);
-    });
-});
-
-app.get('/api/users/:id', (req, res) => {
-    const userId = req.params.id;
-
-    connectionPool.query('SELECT * FROM users WHERE id = ?', [userId], (err, rows) => {
-        if (err) {
-            console.error('Error executing query:', err.stack);
-            return res.status(500).json({ error: 'Error retrieving user' });
-        }
-        if (rows.length === 0) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-        res.json(rows[0]);
-    });
-});
-
-app.post('/api/users', (req, res) => {
-    const result = validateUser(req.body);
-    if(result.error) return res.status(400).send(result.error.details[0].message)
-
-    const { first_name, last_name } = req.body;
-    connectionPool.query('INSERT INTO users (first_name, last_name) VALUES (?, ?)', [first_name, last_name], (err, result) => { //your database needs to have first_name and last_name columns
-        if (err) {
-            console.error('Error executing query:', err.stack);
-            return res.status(500).json({ error: 'Error inserting user' });
-        }
-
-        const insertedUserId = result.insertId;
-        res.json({ id: insertedUserId, first_name, last_name });
-    });
-});
-
-app.put('/api/users/:id', (req, res) => {
-    const result = validateUser(req.body);
-    if(result.error) return res.status(400).send(result.error.details[0].message)
-
-    const userId = req.params.id;
-    const { first_name, last_name } = req.body;
-
-    connectionPool.query(
-        'UPDATE users SET first_name = ?, last_name = ? WHERE id = ?',
-        [first_name, last_name, userId],
-        (err, result) => {
-            if (err) {
-                console.error('Error executing query:', err.stack);
-                return res.status(500).json({ error: 'Error updating user' });
-            }
-
-            if (result.affectedRows === 0) {
-                return res.status(404).json({ error: 'User not found' });
-            }
-
-            res.json({ id: userId, first_name, last_name });
-        }
-    );
-});
-
-app.delete('/api/users/:id', (req, res) => {
-    const userId = req.params.id;
-    connectionPool.query(
-        'DELETE FROM users WHERE id = ?',[userId],(err, result) => {
-            if (err) {
-                console.error('Error executing query:', err.stack);
-                return res.status(500).json({ error: 'Error deleting user'});
-            }
-
-            if (result.affectedRows === 0) {
-                return res.status(404).json({ error: 'User not found'});
-            }
-            res.json({ message: 'User deleted successfully' });
-        }
-    );
-});
-
-function validateUser(user) {
-    const userSchema = Joi.object({
-        first_name: Joi.string().min(3).required(),
-        last_name: Joi.string().min(3).required()
-    });
-    return userSchema.validate(user);
-};
-
-//example JSON:
-// {
-//   "first_name": "Jed",
-//   "last_name": "Beattie"
-// }

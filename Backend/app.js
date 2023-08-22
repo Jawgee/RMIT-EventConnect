@@ -3,9 +3,7 @@ const express = require("express");
 const serverConfig = require("./src/serverConfig.js");  // Import server configuration
 const mysql = require('mysql'); 
 
-
 const app = express();
-
 
 app.use(express.json());
 
@@ -14,6 +12,7 @@ const connectionPool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: '',
+  // Eventually change the database (please)
   database: 'test'
 });
 

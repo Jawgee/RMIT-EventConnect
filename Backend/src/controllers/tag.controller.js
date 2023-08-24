@@ -23,11 +23,12 @@ exports.listTags = async (req, res) => {
 
 
 exports.getUserByTag = async (req, res) => {
+    const bool = req.params.bool;
     const column = req.params.column;
   
     const query = `SELECT * FROM users JOIN Tags ON users.id = Tags.user_id WHERE Tags.${column} = ?`;
   
-    connectionPool.query(query, [1], (err, rows) => {
+    connectionPool.query(query, [bool], (err, rows) => {
       if (err) {
         console.error('Error executing query:', err.stack);
         return res.status(500).json({ error: 'Error retrieving user' });

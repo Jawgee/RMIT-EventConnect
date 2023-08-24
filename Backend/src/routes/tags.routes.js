@@ -5,7 +5,9 @@ module.exports = (express, app) => {
     // Create routes
   
     router.get("/listTags", controller.listTags);
-    router.get("/getUserByTag/:column", controller.getUserByTag);
+    //http://localhost:4000/api/tags/getUserByTag/pitch
+    router.get("/getUserByTag/:column/:bool", controller.getUserByTag);
+    //http://localhost:4000/api/tags/getUserByTag/virtual/0
     router.put("/updateUserInterests/:id", controller.updateUserInterests);
   
     // Add routes to server.

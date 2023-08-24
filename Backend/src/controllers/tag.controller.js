@@ -10,16 +10,8 @@ const connectionPool = mysql.createPool({
   database: 'test' // change this to your local database
 });
 
-exports.listTags = async (req, res) => {
-  connectionPool.query('SELECT * FROM test.tags', (err, rows) => {
-    if (err) {
-      console.error('Error executing query:', err.stack);
-      return res.status(500).json({ error: 'Error retrieving users' });
-    }
+const allowedColumns = ['pitch', 'metaverse', 'virtual', 'stand', 'round_table'];
 
-    res.json(rows);
-  });
-};
 
 
 exports.getUserByTag = async (req, res) => {
@@ -73,6 +65,76 @@ exports.updateUserInterests = async (req, res) => {
     });
   };
   
+
+
+exports.getUserTagList = async (req, res) => {
+    const user_id = req.params.user_id;
+    
+    const query = `
+      SELECT 
+        users.first_name,
+        users.last_name,
+        Tags.pitch,
+        Tags.metaverse,
+        Tags.virtual,
+        Tags.stand,
+        Tags.round_table
+      FROM users
+      JOIN Tags ON users.id = Tags.user_id
+      WHERE users.id = ? AND (
+        Tags.pitch = 1 OR
+        Tags.metaverse = 1 OR
+        Tags.virtual = 1 OR
+        Tags.stand = 1 OR
+        Tags.round_table = 1
+      )`;
+    
+    connectionPool.query(query, [user_id], (err, rows) => {
+      if (err) {
+        console.error('Error executing query:', err.stack);
+        return res.status(500).json({ error: 'Error retrieving user interests' });
+      }
+      
+      if (rows.length === 0) {
+        return res.status(404).json({ error: 'User not found or no interests found' });
+      }
+      
+      res.json(rows);
+    });
+  };
+  
+
+  //THIS IS NOT WORKING
+  //TODO: FIX THIS
+
+//   exports.getUserInterests = async (req, res) => {
+//     const user_id = req.params.user_id;
+  
+//     const query = `
+//       SELECT 
+//         users.first_name,
+//         users.last_name,
+//         ${Object.keys(allowedColumns)
+//           .filter(column => allowedColumns[column] === 1)
+//           .map(column => `Tags.${column}`)
+//           .join(',\n      ')}
+//       FROM users
+//       JOIN Tags ON users.id = Tags.user_id
+//       WHERE users.id = ?`;
+    
+//     connectionPool.query(query, [user_id], (err, rows) => {
+//       if (err) {
+//         console.error('Error executing query:', err.stack);
+//         return res.status(500).json({ error: 'Error retrieving user interests' });
+//       }
+      
+//       if (rows.length === 0) {
+//         return res.status(404).json({ error: 'User not found or no interests found' });
+//       }
+      
+//       res.json(rows);
+//     });
+//   };
 
 
 const validateColumns = (updateData) => {

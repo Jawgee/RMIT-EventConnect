@@ -29,8 +29,12 @@ connectionPool.getConnection((err, connection) => {
   const createUserTableQuery = `
     CREATE TABLE IF NOT EXISTS users (
       id INT AUTO_INCREMENT PRIMARY KEY,
-      first_name VARCHAR(255),
-      last_name VARCHAR(255)
+      first_name VARCHAR(100),
+      last_name VARCHAR(100),
+      photo VARCHAR(300),
+      email VARCHAR(300),
+      password VARCHAR(20),
+      role VARCHAR(100)
     )`;
 
     const createTagTableQuery = `

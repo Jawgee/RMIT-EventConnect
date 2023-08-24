@@ -4,18 +4,23 @@ module.exports = (express, app) => {
   
     // Create routes
   
-    router.get("/listTags", controller.listTags);
-    //http://localhost:4000/api/tags/getUserByTag/pitch
-    router.get("/getUserByTag/:column/:bool", controller.getUserByTag);
-    //http://localhost:4000/api/tags/getUserByTag/virtual/0
-    router.put("/updateUserInterests/:id", controller.updateUserInterests);
+    router.get("/UserByTag/:column/:bool", controller.getUserByTag);//returns users that either like or dislike a certain tag (2 parameters in URL)
+    //http://localhost:4000/api/tags/UserByTag/virtual/0
+
+    router.get("/UserTagList/:user_id", controller.getUserTagList); //returns list of a certain user's likes and dislikes
+    http://localhost:4000/api/tags/UserList/3
+
+    // router.get("/UserInterests/:user_id", controller.getUserInterests); //returns list of a user's likes NOT WORKING YET
+    //http://localhost:4000/api/tags/UserInterests/3
+
+    router.put("/UserInterests/:id", controller.updateUserInterests);
     /*
-    URL: http://localhost:4000/api/tags/updateUserInterests/1
+    URL: http://localhost:4000/api/tags/UserInterests/1
     JSON: {
-  "pitch": false,
-  "metaverse": true,
-  "stand": true
-    } 
+    "pitch": false,
+    "metaverse": true,
+    "stand": true
+        } 
     */
 
 

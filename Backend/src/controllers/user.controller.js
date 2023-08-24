@@ -36,20 +36,47 @@ exports.getUserByID = async (req, res) => {
   });
 };
 
+
 exports.createUser = async (req, res) => {
   const result = validateUser(req.body);
-  if(result.error) return res.status(400).send(result.error.details[0].message)
+  if (result.error) return res.status(400).send(result.error.details[0].message);
 
-  const { first_name, last_name } = req.body;
-  connectionPool.query('INSERT INTO users (first_name, last_name) VALUES (?, ?)', [first_name, last_name], (err, result) => { //your database needs to have first_name and last_name columns
+  const { first_name, last_name, photo, email, password, role } = req.body;
+
+  connectionPool.query(
+    'INSERT INTO users (first_name, last_name, photo, email, password, role) VALUES (?,?,?,?,?,?)',
+    [first_name, last_name, photo, email, password, role],
+    (err, result) => {
       if (err) {
-          console.error('Error executing query:', err.stack);
-          return res.status(500).json({ error: 'Error inserting user' });
+        console.error('Error executing query:', err.stack);
+        return res.status(500).json({ error: 'Error inserting user' });
       }
 
       const insertedUserId = result.insertId;
-      res.json({ id: insertedUserId, first_name, last_name });
-  });
+
+      // Insert the user_id into the Tags table
+      connectionPool.query(
+        'INSERT INTO Tags (user_id) VALUES (?)',
+        [insertedUserId],
+        (tagErr, tagResult) => {
+          if (tagErr) {
+            console.error('Error inserting tag:', tagErr.stack);
+            return res.status(500).json({ error: 'Error inserting tag for user' });
+          }
+
+          res.json({
+            id: insertedUserId,
+            first_name,
+            last_name,
+            photo,
+            email,
+            password,
+            role
+          });
+        }
+      );
+    }
+  );
 };
 
 exports.updateUser = async (req, res) => {
@@ -97,7 +124,11 @@ exports.deleteUser = async (req, res) => {
 function validateUser(user) {
   const userSchema = Joi.object({
       first_name: Joi.string().min(3).required(),
-      last_name: Joi.string().min(3).required()
+      last_name: Joi.string().min(3).required(),
+      photo: Joi.string(),
+      email: Joi.string().required(),
+      password: Joi.string().required(),
+      role: Joi.string()
   });
   return userSchema.validate(user);
 };

@@ -1,7 +1,6 @@
 // SHOULD NOT BE HERE NEED TO FIGURE OUT HOW TO DECLARE THIS AND EXPORT FROM APP FILE
 
 const mysql = require('mysql');
-const Joi = require('joi');
 
 const connectionPool = mysql.createPool({
   host: 'localhost',
@@ -44,13 +43,10 @@ exports.updateUserInterests = async (req, res) => {
     // Construct the SET part of the update query
     const setPart = Object.keys(updateData).map(column => `${column} = ?`).join(', ');
 
-    // Construct the update query
     const query = `UPDATE Tags SET ${setPart} WHERE user_id = ?`;
   
-    // Extract values from the updateData object and add the user ID
     const values = [...Object.values(updateData), userId];
   
-    // Execute the query
     connectionPool.query(query, values, (err, result) => {
       if (err) {
         console.error('Error executing query:', err.stack);

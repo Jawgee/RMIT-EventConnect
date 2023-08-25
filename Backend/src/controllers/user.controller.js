@@ -1,7 +1,8 @@
 // SHOULD NOT BE HERE NEED TO FIGURE OUT HOW TO DECLARE THIS AND EXPORT FROM APP FILE
 
 const mysql = require('mysql');
-const Joi = require('joi');
+const { validateUser } = require('../models/user.model.js'); // Adjust the path as needed
+const userModel = require('../models/user.model.js'); // Adjust the path as needed
 
 const connectionPool = mysql.createPool({
   host: 'localhost',
@@ -121,14 +122,11 @@ exports.deleteUser = async (req, res) => {
   );
 };
 
-function validateUser(user) {
-  const userSchema = Joi.object({
-      first_name: Joi.string().min(3).required(),
-      last_name: Joi.string().min(3).required(),
-      photo: Joi.string(),
-      email: Joi.string().required(),
-      password: Joi.string().required(),
-      role: Joi.string()
-  });
-  return userSchema.validate(user);
-};
+
+// example user JSON:
+// {
+//   "first_name": "validation",
+//   "last_name": "validation",
+//   "email": "validation@validation.com",
+//   "password": "Validation1?"
+// }

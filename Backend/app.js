@@ -27,15 +27,15 @@ connectionPool.getConnection((err, connection) => {
   console.error('Erase the table');
 
   const createUserTableQuery = `
-    CREATE TABLE IF NOT EXISTS users (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      first_name VARCHAR(100),
-      last_name VARCHAR(100),
-      photo VARCHAR(300),
-      email VARCHAR(300),
-      password VARCHAR(20),
-      role VARCHAR(100)
-    )`;
+  CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    photo VARCHAR(300),
+    email VARCHAR(300) NOT NULL,
+    password VARCHAR(20) NOT NULL,
+    role VARCHAR(100)
+  )`;
 
     const createTagTableQuery = `
     CREATE TABLE IF NOT EXISTS Tags (

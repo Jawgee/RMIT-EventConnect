@@ -11,6 +11,7 @@ import {
 } from "@ionic/react";
 // import './Login.css';
 import { useState } from "react";
+import { registerUser } from "../data/accounts.js";
 
 const Login = () => {
   const [user, setUser] = useState({ email: "", password: "" });
@@ -55,6 +56,7 @@ const Login = () => {
             ></IonInput>
           </IonItem>
           <IonButton onClick={(e) => console.log(user)}>Login</IonButton>
+          <IonButton onClick={(e) => registerUser("test", "ing")}>Test</IonButton>
         </IonList>
       </IonContent>
     </IonPage>

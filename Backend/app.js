@@ -1,11 +1,13 @@
 // Import the required modules and configurations
 const express = require("express"); 
+const cors = require('cors');
 const serverConfig = require("./src/serverConfig.js");  // Import server configuration
 const mysql = require('mysql'); 
 
 const app = express();
 
 app.use(express.json());
+app.use(cors())
 
 // Create a MySQL connection pool
 const connectionPool = mysql.createPool({

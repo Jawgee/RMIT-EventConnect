@@ -32,7 +32,7 @@ connectionPool.getConnection((err, connection) => {
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     photo VARCHAR(300),
-    email VARCHAR(300) NOT NULL,
+    email VARCHAR(300) NOT NULL UNIQUE,
     password VARCHAR(20) NOT NULL,
     role VARCHAR(100)
   )`;
@@ -81,6 +81,8 @@ app.get('/', (req, res) => {
 // Import and use user routes
 require("./src/routes/user.routes.js")(express, app);  // Include user-related routes
 require("./src/routes/tags.routes.js")(express, app);  // Include tag-related routes
+require("./src/routes/login.routes.js")(express, app);  // Include login-related routes
+
 
 // Start the server and listen for requests on the specified port
 app.listen(serverConfig.PORT, () => {

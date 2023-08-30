@@ -1,0 +1,38 @@
+const userModel = require('../models/user.model.js'); // Adjust the path as needed
+const mysql = require('mysql');
+const jwt = require('jsonwebtoken');
+const secretKey = 'testing'; // change after finishing testing
+
+const connectionPool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'test' // change this to your local database
+});
+
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+
+  connectionPool.query('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], (err, rows) => {
+    if (err) {
+      console.error('Error executing query:', err.stack);
+      return res.status(500).json({ error: 'Error retrieving user' });
+    }
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Generate a JWT token with a unique identifier for the user
+    const userId = rows[0].id;
+    const token = jwt.sign({ userId }, secretKey, { expiresIn: '1h' });
+
+    // Store the token in a cookie
+    res.cookie('token', token, {
+      httpOnly: true, // Cookie is accessible only through the HTTP(S) requests
+      maxAge: 3600000, // Cookie expiration time in milliseconds (1 hour)
+    });
+
+    res.json({ message: 'Login successful', token });
+  });
+};

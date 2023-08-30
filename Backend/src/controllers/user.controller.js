@@ -108,6 +108,19 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   const userId = req.params.id;
   connectionPool.query(
+    'DELETE FROM tags WHERE user_id = ?',[userId],(err, result) => {
+        if (err) {
+            console.error('Error executing query:', err.stack);
+            return res.status(500).json({ error: 'Error deleting user'});
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'User not found'});
+        }
+        res.json({ message: 'User deleted successfully' });
+    }
+);
+  connectionPool.query(
       'DELETE FROM users WHERE id = ?',[userId],(err, result) => {
           if (err) {
               console.error('Error executing query:', err.stack);

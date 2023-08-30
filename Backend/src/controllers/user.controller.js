@@ -1,7 +1,8 @@
 // SHOULD NOT BE HERE NEED TO FIGURE OUT HOW TO DECLARE THIS AND EXPORT FROM APP FILE
 
 const mysql = require('mysql');
-const Joi = require('joi');
+const { validateUser } = require('../models/user.model.js'); // Adjust the path as needed
+const userModel = require('../models/user.model.js'); // Adjust the path as needed
 
 const connectionPool = mysql.createPool({
   host: 'localhost',
@@ -36,20 +37,47 @@ exports.getUserByID = async (req, res) => {
   });
 };
 
+
 exports.createUser = async (req, res) => {
   const result = validateUser(req.body);
-  if(result.error) return res.status(400).send(result.error.details[0].message)
+  if (result.error) return res.status(400).send(result.error.details[0].message);
 
-  const { first_name, last_name } = req.body;
-  connectionPool.query('INSERT INTO users (first_name, last_name) VALUES (?, ?)', [first_name, last_name], (err, result) => { //your database needs to have first_name and last_name columns
+  const { first_name, last_name, photo, email, password, role } = req.body;
+
+  connectionPool.query(
+    'INSERT INTO users (first_name, last_name, photo, email, password, role) VALUES (?,?,?,?,?,?)',
+    [first_name, last_name, photo, email, password, role],
+    (err, result) => {
       if (err) {
-          console.error('Error executing query:', err.stack);
-          return res.status(500).json({ error: 'Error inserting user' });
+        console.error('Error executing query:', err.stack);
+        return res.status(500).json({ error: 'Error inserting user' });
       }
 
       const insertedUserId = result.insertId;
-      res.json({ id: insertedUserId, first_name, last_name });
-  });
+
+      // Insert the user_id into the Tags table
+      connectionPool.query(
+        'INSERT INTO Tags (user_id) VALUES (?)',
+        [insertedUserId],
+        (tagErr, tagResult) => {
+          if (tagErr) {
+            console.error('Error inserting tag:', tagErr.stack);
+            return res.status(500).json({ error: 'Error inserting tag for user' });
+          }
+
+          res.json({
+            id: insertedUserId,
+            first_name,
+            last_name,
+            photo,
+            email,
+            password,
+            role
+          });
+        }
+      );
+    }
+  );
 };
 
 exports.updateUser = async (req, res) => {
@@ -80,6 +108,19 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   const userId = req.params.id;
   connectionPool.query(
+    'DELETE FROM tags WHERE user_id = ?',[userId],(err, result) => {
+        if (err) {
+            console.error('Error executing query:', err.stack);
+            return res.status(500).json({ error: 'Error deleting user'});
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'User not found'});
+        }
+        res.json({ message: 'User deleted successfully' });
+    }
+);
+  connectionPool.query(
       'DELETE FROM users WHERE id = ?',[userId],(err, result) => {
           if (err) {
               console.error('Error executing query:', err.stack);
@@ -94,10 +135,11 @@ exports.deleteUser = async (req, res) => {
   );
 };
 
-function validateUser(user) {
-  const userSchema = Joi.object({
-      first_name: Joi.string().min(3).required(),
-      last_name: Joi.string().min(3).required()
-  });
-  return userSchema.validate(user);
-};
+
+// example user JSON:
+// {
+//   "first_name": "validation",
+//   "last_name": "validation",
+//   "email": "validation@validation.com",
+//   "password": "Validation1?"
+// }

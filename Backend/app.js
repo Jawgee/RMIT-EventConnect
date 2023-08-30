@@ -28,23 +28,51 @@ connectionPool.getConnection((err, connection) => {
   connection.query(`DROP TABLE users`);
   console.error('Erase the table');
 
-  const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS users (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      first_name VARCHAR(255),
-      last_name VARCHAR(255)
+  const createUserTableQuery = `
+  CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    photo VARCHAR(300),
+    email VARCHAR(300) NOT NULL UNIQUE,
+    password VARCHAR(20) NOT NULL,
+    role VARCHAR(100)
+  )`;
+
+    const createTagTableQuery = `
+    CREATE TABLE IF NOT EXISTS Tags (
+        user_id INT PRIMARY KEY,
+        pitch BOOLEAN DEFAULT 0,
+        metaverse BOOLEAN DEFAULT 0,
+        virtual BOOLEAN DEFAULT 0,
+        stand BOOLEAN DEFAULT 0,
+        round_table BOOLEAN DEFAULT 0,
+        FOREIGN KEY (user_id) REFERENCES users(id)
     )`;
 
-  connection.query(createTableQuery, (err) => {
-    connection.release();
+  connection.query(createUserTableQuery, (err) => {
 
     if (err) {
-      console.error('Error creating table:', err.stack);
+      console.error('Error creating user table:', err.stack);
       return;
     }
 
-    console.log('Table created successfully.');
+    console.log('User table created successfully.');
+
   });
+
+  connection.query(createTagTableQuery, (err) => {
+    connection.release();
+
+    if (err) {
+      console.error('Error creating tag table:', err.stack);
+      return;
+    }
+
+    console.log('Tag table created successfully.');
+
+  });
+
 });
 
 // Define a route for the root URL
@@ -54,6 +82,9 @@ app.get('/', (req, res) => {
 
 // Import and use user routes
 require("./src/routes/user.routes.js")(express, app);  // Include user-related routes
+require("./src/routes/tags.routes.js")(express, app);  // Include tag-related routes
+require("./src/routes/login.routes.js")(express, app);  // Include login-related routes
+
 
 // Start the server and listen for requests on the specified port
 app.listen(serverConfig.PORT, () => {

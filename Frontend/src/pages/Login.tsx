@@ -9,15 +9,17 @@ import {
   IonInput,
   IonButton,
 } from "@ionic/react";
-// import './Register.css';
+// import './Login.css';
 import { useState } from "react";
+// import { registerUser } from "../data/accounts.js";
 
-const Register = () => {
-  const [user, setUser] = useState({ name: "", email: "", password: "" });
+const Login = () => {
+  const [user, setUser] = useState({ email: "", password: "" });
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     // Sets value of changed element in the user state
     const tmp = { ...user };
+    // @ts-ignore
     tmp[e.target.label.toLowerCase()] = e.target.value;
     setUser(tmp);
   };
@@ -26,25 +28,16 @@ const Register = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Register</IonTitle>
+          <IonTitle>Login</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Register</IonTitle>
+            <IonTitle size="large">Login</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonList>
-          <IonItem>
-            <IonInput
-              label="Name"
-              type="email"
-              labelPlacement="floating"
-              value={user.name}
-              onIonChange={handleChange}
-            ></IonInput>
-          </IonItem>
           <IonItem>
             <IonInput
               label="Email"
@@ -63,11 +56,12 @@ const Register = () => {
               onIonChange={handleChange}
             ></IonInput>
           </IonItem>
-          <IonButton onClick={(e) => console.log(user)}>Register</IonButton>
+          <IonButton onClick={(e) => console.log(user)}>Login</IonButton>
+          {/* <IonButton onClick={(e) => registerUser("test", "ing")}>Test</IonButton> */}
         </IonList>
       </IonContent>
     </IonPage>
   );
 };
 
-export default Register;
+export default Login;

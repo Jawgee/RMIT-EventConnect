@@ -3,6 +3,8 @@
 const mysql = require('mysql');
 const { validateUser } = require('../models/user.model.js'); // Adjust the path as needed
 const userModel = require('../models/user.model.js'); // Adjust the path as needed
+const jwt = require('jsonwebtoken');
+const secretKey = 'testing'; // change after finishing testing
 
 const connectionPool = mysql.createPool({
   host: 'localhost',
@@ -69,6 +71,11 @@ exports.createUser = async (req, res) => {
           }
 
           const insertedUserId = insertResult.insertId;
+          const token = jwt.sign({ insertedUserId }, secretKey, { expiresIn: '1h' });
+          res.cookie('token', token, {
+            httpOnly: true, // Cookie is accessible only through the HTTP(S) requests
+            maxAge: 3600000, // Cookie expiration time in milliseconds (1 hour)
+          });
 
           // Insert the user_id into the Tags table
           connectionPool.query(
@@ -87,7 +94,8 @@ exports.createUser = async (req, res) => {
                 photo,
                 email,
                 password,
-                role
+                role,
+                token
               });
             }
           );

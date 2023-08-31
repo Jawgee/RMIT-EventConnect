@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-// TODO: Add URL for backend here
 const client = axios.create({
-    baseURL: `http://localhost:4000/api`,
+    baseURL: `http://localhost:4000/api/users`,
 });
 
 // Constants for localStorage
@@ -13,24 +12,27 @@ const verifyUser = async (email, password) => {
     try {
         let res = await client.post('/login', { email: email, password: password });
         if (res.status === 200) {
-            // localStorage.setItem(res.data.email);
+            // TODO: Add token to cookie
             console.log("success")
-            return true;
+            console.log(res)
+            document.cookie = res.data.token;
+            return [true, ""];
         }
-        return false;
+        return [false, "Something went wrong, try again"];
     } catch (e) {
+        // TODO: return message from backend
+        console.log(e.response);
         // return e.response.status;
-        return false;
+        return [false, e.response.data.error];
     }
 };
 
-const registerUser = async (/*email, password,*/ first_name, last_name) => {
+const registerUser = async (email, password, first_name, last_name) => {
     // Sends the user to the backend
     try {
-        let res = await client.post('/createUser', { /*email: email, password: password,*/ first_name: first_name, last_name: last_name });
+        let res = await client.post('/createUser', { email: email, password: password, first_name: first_name, last_name: last_name });
 
         if (res.status === 200) {
-            // localStorage.setItem(res.data.email);
             console.log("success")
             return true;
         }

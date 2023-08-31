@@ -10,18 +10,46 @@ import {
   IonButton,
 } from "@ionic/react";
 // import './Login.css';
+import { useIonRouter } from "@ionic/react";
+import { useForm } from "react-hook-form";
+import Input, { InputProps } from "../components/Input";
+import { verifyUser } from "../data/accounts.js";
 import { useState } from "react";
-// import { registerUser } from "../data/accounts.js";
 
 const Login = () => {
-  const [user, setUser] = useState({ email: "", password: "" });
+  const { control, handleSubmit } = useForm();
+  const router = useIonRouter();
 
-  const handleChange = (e: any) => {
-    // Sets value of changed element in the user state
-    const tmp = { ...user };
-    // @ts-ignore
-    tmp[e.target.label.toLowerCase()] = e.target.value;
-    setUser(tmp);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const formFields: InputProps[] = [
+    {
+      name: "email",
+      type: "email",
+      label: "Email",
+    },
+    {
+      name: "password",
+      label: "Password",
+      type: "password",
+      clearOnEdit: false,
+      min: 7,
+      pattern: "^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$",
+      helperText: "Password should have at least 1 uppercase letter, 1 digit and 1 special character.",
+    },
+  ];
+
+  const loginUserOnSubmit = (data: any) => {
+    verifyUser(data.email, data.password).then((e) => {
+      let [successful, message] = e;
+
+      if (successful) {
+        // TODO: Add redirect to home page here
+        router.push("/home", "root", "replace");
+      } else {
+        setErrorMessage(message);
+      }
+    });
   };
 
   return (
@@ -37,28 +65,23 @@ const Login = () => {
             <IonTitle size="large">Login</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonList>
-          <IonItem>
-            <IonInput
-              label="Email"
-              type="email"
-              labelPlacement="floating"
-              value={user.email}
-              onIonChange={handleChange}
-            ></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonInput
-              label="Password"
-              type="password"
-              labelPlacement="floating"
-              value={user.password}
-              onIonChange={handleChange}
-            ></IonInput>
-          </IonItem>
-          <IonButton onClick={(e) => console.log(user)}>Login</IonButton>
-          {/* <IonButton onClick={(e) => registerUser("test", "ing")}>Test</IonButton> */}
-        </IonList>
+        <form onSubmit={handleSubmit(loginUserOnSubmit)}>
+          {/* TODO: Decide if should make it into a list or not (aesthetic choice) */}
+          {/* <IonList> */}
+          {formFields.map(
+            (field, index) => (
+              /* <IonItem> */
+              <Input {...field} control={control} key={index} />
+            )
+            /* </IonItem> */
+          )}
+          <IonButton expand="block" type="submit" className="ion-margin-top">
+            Login
+          </IonButton>
+          {/* </IonList> */}
+          {/* TODO: make this look better */}
+          {errorMessage && <p>{errorMessage}</p>}
+        </form>
       </IonContent>
     </IonPage>
   );

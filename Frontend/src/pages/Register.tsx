@@ -1,14 +1,10 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonButton } from "@ionic/react";
-import { useForm } from "react-hook-form";
 // import './Register.css';
-import { registerUser } from "../data/accounts.js";
+import { useForm } from "react-hook-form";
 import Input, { InputProps } from "../components/Input";
+import { registerUser } from "../data/accounts.js";
 
 const Register = () => {
-  const registerUserOnSubmit = (data: any) => {
-    registerUser(/* data.email, data.password, */ data.first_name, data.last_name);
-  };
-
   const { control, handleSubmit } = useForm();
 
   const formFields: InputProps[] = [
@@ -35,6 +31,10 @@ const Register = () => {
       helperText: "Password should have at least 1 uppercase letter, 1 digit and 1 special character.",
     },
   ];
+
+  const registerUserOnSubmit = (data: any) => {
+    registerUser(data.email, data.password, data.first_name, data.last_name);
+  };
 
   return (
     <IonPage>

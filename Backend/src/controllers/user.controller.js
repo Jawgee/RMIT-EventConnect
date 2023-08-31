@@ -44,41 +44,59 @@ exports.createUser = async (req, res) => {
 
   const { first_name, last_name, photo, email, password, role } = req.body;
 
+  // Check if the email already exists in the database
   connectionPool.query(
-    'INSERT INTO users (first_name, last_name, photo, email, password, role) VALUES (?,?,?,?,?,?)',
-    [first_name, last_name, photo, email, password, role],
-    (err, result) => {
-      if (err) {
-        console.error('Error executing query:', err.stack);
-        return res.status(500).json({ error: 'Error inserting user' });
+    'SELECT * FROM users WHERE email = ?',
+    [email],
+    (checkErr, checkResults) => {
+      if (checkErr) {
+        console.error('Error executing query:', checkErr.stack);
+        return res.status(500).json({ error: 'Error checking user email' });
       }
 
-      const insertedUserId = result.insertId;
+      if (checkResults.length > 0) {
+        return res.status(409).json({ error: 'User with this email already exists' });
+      }
 
-      // Insert the user_id into the Tags table
+      // If email is not already in use, insert the new user
       connectionPool.query(
-        'INSERT INTO Tags (user_id) VALUES (?)',
-        [insertedUserId],
-        (tagErr, tagResult) => {
-          if (tagErr) {
-            console.error('Error inserting tag:', tagErr.stack);
-            return res.status(500).json({ error: 'Error inserting tag for user' });
+        'INSERT INTO users (first_name, last_name, photo, email, password, role) VALUES (?,?,?,?,?,?)',
+        [first_name, last_name, photo, email, password, role],
+        (insertErr, insertResult) => {
+          if (insertErr) {
+            console.error('Error executing query:', insertErr.stack);
+            return res.status(500).json({ error: 'Error inserting user' });
           }
 
-          res.json({
-            id: insertedUserId,
-            first_name,
-            last_name,
-            photo,
-            email,
-            password,
-            role
-          });
+          const insertedUserId = insertResult.insertId;
+
+          // Insert the user_id into the Tags table
+          connectionPool.query(
+            'INSERT INTO Tags (user_id) VALUES (?)',
+            [insertedUserId],
+            (tagErr, tagResult) => {
+              if (tagErr) {
+                console.error('Error inserting tag:', tagErr.stack);
+                return res.status(500).json({ error: 'Error inserting tag for user' });
+              }
+
+              res.json({
+                id: insertedUserId,
+                first_name,
+                last_name,
+                photo,
+                email,
+                password,
+                role
+              });
+            }
+          );
         }
       );
     }
   );
 };
+
 
 exports.updateUser = async (req, res) => {
   const result = validateUser(req.body);

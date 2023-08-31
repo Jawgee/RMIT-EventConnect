@@ -133,33 +133,51 @@ exports.updateUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   const userId = req.params.id;
-  connectionPool.query(
-    'DELETE FROM tags WHERE user_id = ?',[userId],(err, result) => {
-        if (err) {
-            console.error('Error executing query:', err.stack);
-            return res.status(500).json({ error: 'Error deleting user'});
-        }
 
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'User not found'});
-        }
-        res.json({ message: 'User deleted successfully' });
-    }
-);
-  connectionPool.query(
-      'DELETE FROM users WHERE id = ?',[userId],(err, result) => {
+  try {
+    // Delete tags associated with the user
+    const tagsDeletionResult = await new Promise((resolve, reject) => {
+      connectionPool.query(
+        'DELETE FROM tags WHERE user_id = ?',
+        [userId],
+        (err, result) => {
           if (err) {
-              console.error('Error executing query:', err.stack);
-              return res.status(500).json({ error: 'Error deleting user'});
+            console.error('Error executing tags query:', err.stack);
+            reject(err);
+          } else {
+            resolve(result);
           }
+        }
+      );
+    });
 
-          if (result.affectedRows === 0) {
-              return res.status(404).json({ error: 'User not found'});
+    // Delete the user
+    const userDeletionResult = await new Promise((resolve, reject) => {
+      connectionPool.query(
+        'DELETE FROM users WHERE id = ?',
+        [userId],
+        (err, result) => {
+          if (err) {
+            console.error('Error executing users query:', err.stack);
+            reject(err);
+          } else {
+            resolve(result);
           }
-          res.json({ message: 'User deleted successfully' });
-      }
-  );
+        }
+      );
+    });
+
+    if (tagsDeletionResult.affectedRows === 0 && userDeletionResult.affectedRows === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json({ message: 'User and associated tags deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting user:', error.stack);
+    res.status(500).json({ error: 'Error deleting user' });
+  }
 };
+
 
 
 // example user JSON:

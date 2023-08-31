@@ -8,10 +8,10 @@ const client = axios.create({
 // Constants for localStorage
 const LS_USER = 'user';
 
-const verifyUser = async (email, pass) => {
+const verifyUser = async (email, password) => {
     // Sends the user to the backend
     try {
-        let res = await client.post('/login', { email: email, password: pass });
+        let res = await client.post('/login', { email: email, password: password });
         if (res.status === 200) {
             // localStorage.setItem(res.data.email);
             console.log("success")
@@ -19,15 +19,15 @@ const verifyUser = async (email, pass) => {
         }
         return false;
     } catch (e) {
-        return false;
         // return e.response.status;
+        return false;
     }
 };
 
-const registerUser = async (/*email, pass,*/ first_name, last_name) => {
+const registerUser = async (/*email, password,*/ first_name, last_name) => {
     // Sends the user to the backend
     try {
-        let res = await client.post('/createUser', { /*email: email, password: pass,*/ first_name: first_name, last_name: last_name });
+        let res = await client.post('/createUser', { /*email: email, password: password,*/ first_name: first_name, last_name: last_name });
 
         if (res.status === 200) {
             // localStorage.setItem(res.data.email);
@@ -36,7 +36,9 @@ const registerUser = async (/*email, pass,*/ first_name, last_name) => {
         }
         return false;
     } catch (e) {
-        return e.response.status;
+        // return e.response.status;
+        console.log(e)
+        return false;
     }
 };
 

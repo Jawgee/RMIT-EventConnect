@@ -1,46 +1,52 @@
 import axios from 'axios';
 
+// Axios stuff, will make sure that things are consistent etc
+// Also handles all of the HTTP requests easily
 const client = axios.create({
     baseURL: `http://localhost:4000/api/users`,
 });
 
-// Constants for localStorage
-const LS_USER = 'user';
-
+// Verifies the user via login
 const verifyUser = async (email, password) => {
+    // Return format: If it was successful, error message to be shown to the user
     // Sends the user to the backend
     try {
         let res = await client.post('/login', { email: email, password: password });
+
+        // If there was success
         if (res.status === 200) {
-            // TODO: Add token to cookie
-            console.log("success")
-            console.log(res)
             document.cookie = res.data.token;
             return [true, ""];
         }
+
+        // Fallback, in case the code reaches here
         return [false, "Something went wrong, try again"];
     } catch (e) {
-        // TODO: return message from backend
-        console.log(e.response);
-        // return e.response.status;
+        // If there was a 4xx/5xx response, it throws an error
         return [false, e.response.data.error];
     }
 };
 
+// Registers the user
+// TODO: Add tag information here when that has been implemented
 const registerUser = async (email, password, first_name, last_name) => {
+    // Return format: If it was successful, error message to be shown to the user
     // Sends the user to the backend
     try {
         let res = await client.post('/createUser', { email: email, password: password, first_name: first_name, last_name: last_name });
 
+        // If there was success
         if (res.status === 200) {
-            console.log("success")
-            return true;
+            // document.cookie = res.data.token;
+            return [true, ""];
         }
-        return false;
+
+        // Fallback, in case the code reaches here
+        return [false, "Something went wrong, try again"];
     } catch (e) {
-        // return e.response.status;
-        console.log(e)
-        return false;
+
+        // If there was a 4xx/5xx response, it throws an error
+        return [false, e.response.data.error];
     }
 };
 

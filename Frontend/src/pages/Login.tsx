@@ -1,27 +1,23 @@
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  IonList,
-  IonItem,
-  IonInput,
-  IonButton,
-} from "@ionic/react";
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonButton } from "@ionic/react";
 // import './Login.css';
+import { useState } from "react";
 import { useIonRouter } from "@ionic/react";
 import { useForm } from "react-hook-form";
 import Input, { InputProps } from "../components/Input";
 import { verifyUser } from "../data/accounts.js";
-import { useState } from "react";
 
 const Login = () => {
+  // Controller for the forms
   const { control, handleSubmit } = useForm();
+
+  // Routing to allow to manually redirect the user
   const router = useIonRouter();
 
+  // Used for error message handling
+  // When there was a fail from the backend
   const [errorMessage, setErrorMessage] = useState("");
 
+  // Holds all of the fields and their information
   const formFields: InputProps[] = [
     {
       name: "email",
@@ -39,19 +35,24 @@ const Login = () => {
     },
   ];
 
+  // Handles submit
   const loginUserOnSubmit = (data: any) => {
     verifyUser(data.email, data.password).then((e) => {
+      // Get the information from the backend
       let [successful, message] = e;
 
+      // If there were no issues
       if (successful) {
-        // TODO: Add redirect to home page here
+        // Send the user to the home page
         router.push("/home", "root", "replace");
       } else {
+        // Set an error to show on the page
         setErrorMessage(message);
       }
     });
   };
 
+  // TODO: Create proper design
   return (
     <IonPage>
       <IonHeader>

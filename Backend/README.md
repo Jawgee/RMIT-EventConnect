@@ -36,9 +36,14 @@ Navigate to [localhost on port 4000](http://localhost:4000/), where you should g
 
 Current routes (all under `/api`):
 
-- GET: `/listUsers`
-- GET: `/getUser/:id`
-- POST: `/createUser`
-- PUT: `/updateUser/:id`
-- DELETE: `/deleteUser/:id`
-  :sunglasses:
+- GET: `/users/all`
+- GET: `/users/:id`
+- POST: `/users/register`
+- PUT: `/users/:id`
+- DELETE: `/users/:id`
+- POST: `/users/login`
+- GET: `/tags/UserByTag/:column/:bool`
+- GET: `/tags/UserTagList/:user_id`
+- PUT: `/tags/UserInterests/:id`
+
+:sunglasses:

@@ -1,14 +1,10 @@
 module.exports = (express, app) => {
-    const controller = require("../controllers/login.controller.js");
-    const router = express.Router();
-  
-    // Create routes
+  const controller = require("../controllers/login.controller.js");
+  const router = express.Router();
 
-    router.post("/login",controller.login);
+  // Login to app
+  router.post("/login", controller.login);
 
-  
-    // Add routes to server.
-    app.use("/api/users", router);
-  };
-  
-  
+  // Add routes to server.
+  app.use("/api/users", router);
+};

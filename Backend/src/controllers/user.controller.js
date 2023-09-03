@@ -97,30 +97,42 @@ exports.createUser = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-  // TODO: Fix as per Discord message
-  const result = validateUser(req.body);
-  if (result.error) return res.status(400).send(result.error.details[0].message);
-
   const userId = req.params.id;
-  const { first_name, last_name } = req.body;
+  const updatedFields = req.body;
 
-  connectionPool.query(
-    "UPDATE users SET first_name = ?, last_name = ? WHERE id = ?",
-    [first_name, last_name, userId],
-    (err, result) => {
-      if (err) {
-        console.error("Error executing query:", err.stack);
-        return res.status(500).json({ error: "Error updating user" });
-      }
+  // Check if there are any fields to update
+  if (Object.keys(updatedFields).length === 0) {
+    return res.status(400).json({ error: "No fields to update provided" });
+  }
 
-      if (result.affectedRows === 0) {
-        return res.status(404).json({ error: "User not found" });
-      }
+  const setStatements = [];
+  const values = [];
 
-      res.json({ id: userId, first_name, last_name });
+  // Build the SET part of the SQL query dynamically
+  for (const [key, value] of Object.entries(updatedFields)) {
+    setStatements.push(`${key} = ?`);
+    values.push(value);
+  }
+
+  values.push(userId); // Add the userId for the WHERE clause
+
+  const updateQuery = `UPDATE users SET ${setStatements.join(', ')} WHERE id = ?`;
+
+  connectionPool.query(updateQuery, values, (err, result) => {
+    if (err) {
+      console.error("Error executing query:", err.stack);
+      return res.status(500).json({ error: "Error updating user" });
     }
-  );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ id: userId, ...updatedFields });
+  });
 };
+
+
 
 exports.deleteUser = async (req, res) => {
   const userId = req.params.id;

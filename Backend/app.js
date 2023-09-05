@@ -90,3 +90,5 @@ require("./src/routes/login.routes.js")(express, app);  // Include login-related
 app.listen(serverConfig.PORT, () => {
   console.log(`Server is running on port ${serverConfig.PORT}.`);
 });
+
+exports.module = app;

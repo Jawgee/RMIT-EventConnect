@@ -11,10 +11,12 @@ import {
     setupIonicReact,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { images, square, triangle } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
+import { home, personCircle, search, mail, addCircle } from 'ionicons/icons';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
+import Explore from './pages/Explore';
+import Inbox from './pages/Inbox';
+import EventAdd from './pages/EventAdd';
 import Login from './pages/Login';
 import { useIonRouter } from '@ionic/react';
 
@@ -51,43 +53,57 @@ export const toPage = (page: string, router: UseIonRouterResult, shouldReplace: 
 const App: React.FC = () => (
     <IonApp>
         <IonReactRouter>
-            {/* <IonTabs> */}
-            <IonRouterOutlet>
-                <Route exact path="/login">
-                    <Login />
-                </Route>
-                <Route exact path="/register">
-                    <Register />
-                    {/* <RegisterTest /> */}
-                </Route>
-                <Route exact path="/home">
-                    <Tab1 />
-                </Route>
-                <Route exact path="/tab2">
-                    <Tab2 />
-                </Route>
-                <Route path="/tab3">
-                    <Tab3 />
-                </Route>
-                <Route exact path="/">
-                    <Redirect to="/register" />
-                </Route>
-            </IonRouterOutlet>
-            {/* <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/tab1">
-            <IonIcon aria-hidden="true" icon={triangle} />
-            <IonLabel>Tab 1</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
-            <IonIcon icon={images} />
-            <IonLabel>Photos</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon aria-hidden="true" icon={square} />
-            <IonLabel>Tab 3</IonLabel>
-          </IonTabButton>
-        </IonTabBar> */}
-            {/* </IonTabs> */}
+            <IonTabs>
+                <IonRouterOutlet>
+                    <Route exact path="/login">
+                        <Login />
+                    </Route>
+                    <Route exact path="/register">
+                        <Register />
+                        {/* <RegisterTest /> */}
+                    </Route>
+                    <Route exact path="/home">
+                        <Home />
+                    </Route>
+                    <Route exact path="/profile">
+                        <Profile />
+                    </Route>
+                    <Route path="/explore">
+                        <Explore />
+                    </Route>
+                    <Route path="/inbox">
+                        <Inbox />
+                    </Route>
+                    <Route path="/eventadd">
+                        <EventAdd />
+                    </Route>
+                    <Route exact path="/">
+                        <Redirect to="/register" />
+                    </Route>
+                </IonRouterOutlet>
+                <IonTabBar slot="bottom">
+                    <IonTabButton tab="home" href="/home">
+                        <IonIcon aria-hidden="true" icon={home} />
+                        <IonLabel>Home</IonLabel>
+                    </IonTabButton>
+                    <IonTabButton tab="explore" href="/explore">
+                        <IonIcon aria-hidden="true" icon={search} />
+                        <IonLabel>Explore</IonLabel>
+                    </IonTabButton>
+                    <IonTabButton tab="eventadd" href="/eventadd">
+                        <IonIcon aria-hidden="true" icon={addCircle} />
+                        <IonLabel>Add Event</IonLabel>
+                    </IonTabButton>
+                    <IonTabButton tab="inbox" href="/inbox">
+                        <IonIcon aria-hidden="true" icon={mail} />
+                        <IonLabel>Inbox</IonLabel>
+                    </IonTabButton>
+                    <IonTabButton tab="profile" href="/profile">
+                        <IonIcon icon={personCircle} />
+                        <IonLabel>Profile</IonLabel>
+                    </IonTabButton>
+                </IonTabBar>
+            </IonTabs>
         </IonReactRouter>
     </IonApp>
 );

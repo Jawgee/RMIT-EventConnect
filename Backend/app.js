@@ -38,17 +38,33 @@ connectionPool.getConnection((err, connection) => {
     password VARCHAR(20) NOT NULL,
     role VARCHAR(100)
   )`;
+  
+  const createEventTableQuery = `
+  CREATE TABLE IF NOT EXISTS events (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    owner VARCHAR(255) NOT NULL,
+    privacy ENUM('public', 'private') NOT NULL DEFAULT 'public', -- Added DEFAULT 'public'
+    description VARCHAR(255) NOT NULL,
+    location VARCHAR(255) NOT NULL
+  )`;
+  
+  const createTagTableQuery = `
+  CREATE TABLE IF NOT EXISTS tags (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    metaverse TINYINT(1) NOT NULL,
+    pitch TINYINT(1) NOT NULL,
+    round_table TINYINT(1) NOT NULL,
+    stand TINYINT(1) NOT NULL,
+    virtual TINYINT(1) NOT NULL,
+    tag_type ENUM('event', 'user') NOT NULL,
+    event_id INT,
+    user_id INT,
+    FOREIGN KEY (event_id) REFERENCES events(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  )`;
+  
 
-    const createTagTableQuery = `
-    CREATE TABLE IF NOT EXISTS Tags (
-        user_id INT PRIMARY KEY,
-        pitch BOOLEAN DEFAULT 0,
-        metaverse BOOLEAN DEFAULT 0,
-        virtual BOOLEAN DEFAULT 0,
-        stand BOOLEAN DEFAULT 0,
-        round_table BOOLEAN DEFAULT 0,
-        FOREIGN KEY (user_id) REFERENCES users(id)
-    )`;
 
   connection.query(createUserTableQuery, (err) => {
 
@@ -62,14 +78,24 @@ connectionPool.getConnection((err, connection) => {
   });
 
   connection.query(createTagTableQuery, (err) => {
-    connection.release();
-
     if (err) {
       console.error('Error creating tag table:', err.stack);
       return;
     }
 
     console.log('Tag table created successfully.');
+
+  });
+
+  connection.query(createEventTableQuery, (err) => {
+    connection.release();
+
+    if (err) {
+      console.error('Error creating event table:', err.stack);
+      return;
+    }
+
+    console.log('event table created successfully.');
 
   });
 
@@ -84,11 +110,10 @@ app.get('/', (req, res) => {
 require("./src/routes/user.routes.js")(express, app);  // Include user-related routes
 require("./src/routes/tags.routes.js")(express, app);  // Include tag-related routes
 require("./src/routes/login.routes.js")(express, app);  // Include login-related routes
+require("./src/routes/event.routes.js")(express, app);  // Include event-related routes
 
 
 // Start the server and listen for requests on the specified port
 app.listen(serverConfig.PORT, () => {
   console.log(`Server is running on port ${serverConfig.PORT}.`);
 });
-
-exports.module = app;

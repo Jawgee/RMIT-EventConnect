@@ -39,63 +39,6 @@ exports.getUserByID = async (req, res) => {
   });
 };
 
-// exports.createUser = async (req, res) => {
-//   const result = validateUser(req.body);
-//   if (result.error) return res.status(400).send(result.error.details[0].message);
-
-//   const { first_name, last_name, photo, email, password, role } = req.body;
-
-//   // Check if the email already exists in the database
-//   connectionPool.query("SELECT * FROM users WHERE email = ?", [email], (checkErr, checkResults) => {
-//     if (checkErr) {
-//       console.error("Error executing query:", checkErr.stack);
-//       return res.status(500).json({ error: "Error checking user email" });
-//     }
-
-//     if (checkResults.length > 0) {
-//       return res.status(409).json({ error: "User with this email already exists" });
-//     }
-
-//     // If email is not already in use, insert the new user
-//     connectionPool.query(
-//       "INSERT INTO users (first_name, last_name, photo, email, password, role) VALUES (?,?,?,?,?,?)",
-//       [first_name, last_name, photo, email, password, role],
-//       (insertErr, insertResult) => {
-//         if (insertErr) {
-//           console.error("Error executing query:", insertErr.stack);
-//           return res.status(500).json({ error: "Error inserting user" });
-//         }
-
-//         const insertedUserId = insertResult.insertId;
-//         const token = jwt.sign({ insertedUserId }, secretKey, { expiresIn: "1h" });
-//         res.cookie("token", token, {
-//           httpOnly: true, // Cookie is accessible only through the HTTP(S) requests
-//           maxAge: 3600000, // Cookie expiration time in milliseconds (1 hour)
-//         });
-
-//         // Insert the user_id into the Tags table
-//         connectionPool.query("INSERT INTO Tags (user_id) VALUES (?)", [insertedUserId], (tagErr, tagResult) => {
-//           if (tagErr) {
-//             console.error("Error inserting tag:", tagErr.stack);
-//             return res.status(500).json({ error: "Error inserting tag for user" });
-//           }
-
-//           res.json({
-//             id: insertedUserId,
-//             first_name,
-//             last_name,
-//             photo,
-//             email,
-//             password,
-//             role,
-//             token,
-//           });
-//         });
-//       }
-//     );
-//   });
-// };
-
 
 exports.createUser = async (req, res) => {
   const result = validateUser(req.body);
@@ -132,8 +75,8 @@ exports.createUser = async (req, res) => {
             maxAge: 3600000,
           });
 
-          // Insert the user_id into the Tags table
-          connectionPool.query("INSERT INTO Tags (user_id) VALUES (?)", [insertedUserId], (tagErr, tagResult) => {
+          // Insert the user_id into the Tags table with 'user' as the tag_type
+          connectionPool.query("INSERT INTO Tags (user_id, tag_type) VALUES (?, 'user')", [insertedUserId], (tagErr, tagResult) => {
             if (tagErr) {
               console.error("Error inserting tag:", tagErr.stack);
               return res.status(500).json({ error: "Error inserting tag for user" });
@@ -156,9 +99,6 @@ exports.createUser = async (req, res) => {
   } catch (error) {
     console.error("Error creating user:", error.stack);
     res.status(500).json({ error: "Error creating user" });
-  } finally {
-    // Close the database connection here
-    connectionPool.end(); // Make sure to call the 'end' method to close the connection
   }
 };
 

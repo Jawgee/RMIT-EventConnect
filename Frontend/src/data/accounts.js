@@ -16,11 +16,11 @@ const verifyUser = async (email, password) => {
         // If there was success
         if (res.status === 200) {
             document.cookie = res.data.token;
-            return [true, ""];
+            return [true, ''];
         }
 
         // Fallback, in case the code reaches here
-        return [false, "Something went wrong, try again"];
+        return [false, 'Something went wrong, try again'];
     } catch (e) {
         // If there was a 4xx/5xx response, it throws an error
         return [false, e.response.data.error];
@@ -33,21 +33,25 @@ const registerUser = async (email, password, first_name, last_name) => {
     // Return format: If it was successful, error message to be shown to the user
     // Sends the user to the backend
     try {
-        let res = await client.post('/createUser', { email: email, password: password, first_name: first_name, last_name: last_name });
+        let res = await client.post('/register', {
+            email: email,
+            password: password,
+            first_name: first_name,
+            last_name: last_name,
+        });
 
         // If there was success
         if (res.status === 200) {
             // document.cookie = res.data.token;
-            return [true, ""];
+            return [true, ''];
         }
 
         // Fallback, in case the code reaches here
-        return [false, "Something went wrong, try again"];
+        return [false, 'Something went wrong, try again'];
     } catch (e) {
-
         // If there was a 4xx/5xx response, it throws an error
         return [false, e.response.data.error];
     }
 };
 
-export {verifyUser, registerUser}
+export { verifyUser, registerUser };

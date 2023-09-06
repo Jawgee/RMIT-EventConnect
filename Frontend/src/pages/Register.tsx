@@ -6,7 +6,7 @@ import Input, { InputProps } from '../components/Input';
 import { registerUser } from '../data/accounts.js';
 import { toPage } from '../App';
 
-const Register = () => {
+const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | null>> }> = ({ setUser }) => {
     // Controller for the forms
     const { control, handleSubmit } = useForm();
 
@@ -52,6 +52,10 @@ const Register = () => {
 
             // If there were no issues
             if (successful) {
+                // TODO: Add the proper information here
+                // TODO: use data.email probably
+                // Set the user to be used elsewhere
+                setUser('test');
                 // Send the user to the home page
                 toPage('home', router);
             } else {

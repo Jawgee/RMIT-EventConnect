@@ -1,12 +1,12 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, useIonRouter } from '@ionic/react';
 // import './Login.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input, { InputProps } from '../components/Input';
 import { verifyUser } from '../data/accounts.js';
 import { toPage } from '../App';
 
-const Login = () => {
+const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | null>> }> = ({ setUser }) => {
     // Controller for the forms
     const { control, handleSubmit } = useForm();
 
@@ -43,6 +43,10 @@ const Login = () => {
 
             // If there were no issues
             if (successful) {
+                // TODO: Add the proper information here
+                // TODO: use data.email probably
+                // Set the user to be used elsewhere
+                setUser('test');
                 // Send the user to the home page
                 toPage('home', router);
             } else {

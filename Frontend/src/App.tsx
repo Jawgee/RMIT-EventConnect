@@ -40,6 +40,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import Register from './pages/Register';
 import RegisterTest from './pages/RegisterTest';
+import { useState } from 'react';
 
 setupIonicReact();
 
@@ -50,16 +51,17 @@ export const toPage = (page: string, router: UseIonRouterResult, shouldReplace: 
 // Note: Things that are commented out are going to be moved
 // To be a part of the "main" app later
 // But right now they are not necessary
-const App: React.FC = () => (
-    <IonApp>
-        <IonReactRouter>
-            <IonTabs>
+const App: React.FC = () => {
+    const [user, setUser] = useState<string | null>(null);
+    return (
+        <IonApp>
+            <IonReactRouter>
                 <IonRouterOutlet>
                     <Route exact path="/login">
-                        <Login />
+                        <Login setUser={setUser} />
                     </Route>
                     <Route exact path="/register">
-                        <Register />
+                        <Register setUser={setUser} />
                         {/* <RegisterTest /> */}
                     </Route>
                     <Route exact path="/home">
@@ -81,31 +83,35 @@ const App: React.FC = () => (
                         <Redirect to="/register" />
                     </Route>
                 </IonRouterOutlet>
-                <IonTabBar slot="bottom">
-                    <IonTabButton tab="home" href="/home">
-                        <IonIcon aria-hidden="true" icon={home} />
-                        <IonLabel>Home</IonLabel>
-                    </IonTabButton>
-                    <IonTabButton tab="explore" href="/explore">
-                        <IonIcon aria-hidden="true" icon={search} />
-                        <IonLabel>Explore</IonLabel>
-                    </IonTabButton>
-                    <IonTabButton tab="eventadd" href="/eventadd">
-                        <IonIcon aria-hidden="true" icon={addCircle} />
-                        <IonLabel>Add Event</IonLabel>
-                    </IonTabButton>
-                    <IonTabButton tab="inbox" href="/inbox">
-                        <IonIcon aria-hidden="true" icon={mail} />
-                        <IonLabel>Inbox</IonLabel>
-                    </IonTabButton>
-                    <IonTabButton tab="profile" href="/profile">
-                        <IonIcon icon={personCircle} />
-                        <IonLabel>Profile</IonLabel>
-                    </IonTabButton>
-                </IonTabBar>
-            </IonTabs>
-        </IonReactRouter>
-    </IonApp>
-);
-
+                {/* TODO: Don't show this when not logged in */}
+                {user && (
+                    <IonTabs>
+                        <IonTabBar slot="bottom">
+                            <IonTabButton tab="home" href="/home">
+                                <IonIcon aria-hidden="true" icon={home} />
+                                <IonLabel>Home</IonLabel>
+                            </IonTabButton>
+                            <IonTabButton tab="explore" href="/explore">
+                                <IonIcon aria-hidden="true" icon={search} />
+                                <IonLabel>Explore</IonLabel>
+                            </IonTabButton>
+                            <IonTabButton tab="eventadd" href="/eventadd">
+                                <IonIcon aria-hidden="true" icon={addCircle} />
+                                <IonLabel>Add Event</IonLabel>
+                            </IonTabButton>
+                            <IonTabButton tab="inbox" href="/inbox">
+                                <IonIcon aria-hidden="true" icon={mail} />
+                                <IonLabel>Inbox</IonLabel>
+                            </IonTabButton>
+                            <IonTabButton tab="profile" href="/profile">
+                                <IonIcon icon={personCircle} />
+                                <IonLabel>Profile</IonLabel>
+                            </IonTabButton>
+                        </IonTabBar>
+                    </IonTabs>
+                )}
+            </IonReactRouter>
+        </IonApp>
+    );
+};
 export default App;

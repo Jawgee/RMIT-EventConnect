@@ -48,11 +48,15 @@ export const toPage = (page: string, router: UseIonRouterResult, shouldReplace: 
     router.push(`/${page}`, 'root', shouldReplace ? 'replace' : 'push');
 };
 
-// Note: Things that are commented out are going to be moved
-// To be a part of the "main" app later
-// But right now they are not necessary
+// the useState is most likely temporary
+// Or will be used later, with added functionality
+// To get info from storage somewhere and add it into the app
 const App: React.FC = () => {
     const [user, setUser] = useState<string | null>(null);
+
+    const logout = () => {
+        setUser(null);
+    };
     return (
         <IonApp>
             <IonReactRouter>
@@ -68,7 +72,7 @@ const App: React.FC = () => {
                         <Home />
                     </Route>
                     <Route exact path="/profile">
-                        <Profile />
+                        <Profile logout={logout} />
                     </Route>
                     <Route path="/explore">
                         <Explore />

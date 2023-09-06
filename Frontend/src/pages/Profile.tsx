@@ -1,7 +1,9 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar /*, useIonRouter*/ } from '@ionic/react';
 // import './Tab2.css';
 
-const Tab2: React.FC = () => {
+const Profile: React.FC<{ logout: Function }> = ({ logout }) => {
+    // const router = useIonRouter();
+
     return (
         <IonPage>
             <IonHeader>
@@ -16,9 +18,11 @@ const Tab2: React.FC = () => {
                     </IonToolbar>
                 </IonHeader>
                 <p>TODO: Add stuff here</p>
+                {/* TODO: redirect to /login after logging out, or implement that into logout function (probably the former) */}
+                <button onClick={() => logout()}>Log out</button>
             </IonContent>
         </IonPage>
     );
 };
 
-export default Tab2;
+export default Profile;

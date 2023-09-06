@@ -14,6 +14,9 @@ module.exports = (express, app) => {
     // Create new user/register
     router.post("/register", controller.createUser);
 
+    // enlist into event
+    router.post("/enlist/:id", controller.enlistUser);
+
     // Update user
     router.put("/:id", controller.updateUser);
 

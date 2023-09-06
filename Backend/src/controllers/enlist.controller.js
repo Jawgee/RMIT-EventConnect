@@ -8,7 +8,7 @@ const connectionPool = mysql.createPool({
 });
 
 exports.usersAttendingEvent = async (req, res) => {
-    const eventId = req.params.id;
+    const event_id = req.params.id;
   
     connectionPool.query(
       `SELECT u.first_name, u.last_name, e.name as event_name
@@ -16,7 +16,7 @@ exports.usersAttendingEvent = async (req, res) => {
        JOIN user_event ue ON u.id = ue.user_id
        JOIN events e ON e.id = ue.event_id
        WHERE ue.event_id = ?;`,
-      [eventId],
+      [event_id],
       (err, rows) => {
         if (err) {
           console.error("Error executing query:", err.stack);
@@ -84,3 +84,31 @@ exports.usersAttendingEvent = async (req, res) => {
     }
   };
   
+  exports.unenlistUser = async (req, res) =>{
+    const eventData = req.body;
+
+    // Ensure the request body contains the necessary data
+    if (!eventData || !eventData.event_id || !eventData.user_id) {
+      return res.status(400).json({ error: 'event_id and user_id are required in the request body' });
+    }
+  
+    const { event_id, user_id } = eventData;
+  
+    // Delete the user from the event in the user_event table
+    connectionPool.query(
+      'DELETE FROM user_event WHERE event_id = ? AND user_id = ?',
+      [event_id, user_id],
+      (err, result) => {
+        if (err) {
+          console.error('Error deleting user from event:', err);
+          return res.status(500).json({ error: 'Error deleting user from event' });
+        }
+  
+        if (result.affectedRows === 0) {
+          return res.status(404).json({ error: 'User or event not found' });
+        }
+  
+        res.status(204).end(); // Respond with a 204 No Content status on successful deletion
+      }
+    );
+  };

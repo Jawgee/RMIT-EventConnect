@@ -171,6 +171,33 @@ exports.updateUser = async (req, res) => {
   });
 };
 
+exports.enlistUser = async (req, res) => {
+  const user_id = req.params.id;
+  const { event_id } = req.body;
+
+  // Ensure that eventId is provided in the request body
+  if (!event_id) {
+    return res.status(400).json({ error: 'event_id is required in the request body' });
+  }
+
+  // Insert the user into the event in the event_user table
+  connectionPool.query(
+    'INSERT INTO user_event (event_id, user_id) VALUES (?, ?)',
+    [event_id, user_id],
+    (err, result) => {
+      if (err) {
+        console.error('Error inserting user into event:', err);
+        return res.status(500).json({ error: 'Error inserting user into event' });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      res.status(201).json({ message: 'User added to event successfully' });
+    }
+  );
+};
 
 
 exports.deleteUser = async (req, res) => {

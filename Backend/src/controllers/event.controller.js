@@ -1,5 +1,7 @@
 const mysql = require("mysql");
 const secretKey = "testing"; // change after finishing testing
+const { validateEvent } = require("../models/event.model.js"); // Adjust the path as needed
+
 
 const connectionPool = mysql.createPool({
   host: "localhost",
@@ -76,6 +78,8 @@ exports.getEventByID = async (req, res) => {
 
 
   exports.createEvent = async (req, res) => {
+    const result = validateEvent(req.body);
+    if(result.error) return res.status(400).send(result.error.details[0].message);
   
     const { name, owner, privacy, description, location } = req.body;
   
@@ -126,6 +130,99 @@ exports.getEventByID = async (req, res) => {
       res.status(500).json({ error: "Error creating event" });
     }
   };
+
+  exports.addAttendee = async (req, res) => {
+    const eventId = req.params.id;
+    const { userId } = req.body;
+  
+    // Ensure that userId is provided in the request body
+    if (!userId) {
+      return res.status(400).json({ error: 'userId is required in the request body' });
+    }
+  
+    // Insert the user into the event in the event_user table
+    connectionPool.query(
+      'INSERT INTO user_event (event_id, user_id) VALUES (?, ?)',
+      [eventId, userId],
+      (err, result) => {
+        if (err) {
+          console.error('Error inserting user into event:', err);
+          return res.status(500).json({ error: 'Error inserting user into event' });
+        }
+  
+        if (result.affectedRows === 0) {
+          return res.status(404).json({ error: 'Event not found' });
+        }
+  
+        res.status(201).json({ message: 'User added to event successfully' });
+      }
+    );
+  };
+
+
+  exports.editEvent = async (req, res) => {
+    const eventId = req.params.id;
+    const eventData = req.body;
+  
+    if (!eventId) {
+      return res.status(400).json({ error: 'Event ID is required' });
+    }
+  
+    if (!eventData || Object.keys(eventData).length === 0) {
+      return res.status(400).json({ error: 'Request body is empty' });
+    }
+  
+    // Update the event in the database
+    connectionPool.query(
+      'UPDATE events SET ? WHERE id = ?',
+      [eventData, eventId],
+      (err, result) => {
+        if (err) {
+          console.error('Error updating event:', err.stack);
+          return res.status(500).json({ error: 'Error updating event' });
+        }
+  
+        if (result.affectedRows === 0) {
+          return res.status(404).json({ error: 'Event not found' });
+        }
+  
+        res.status(200).json({ message: 'Event updated successfully' });
+      }
+    );
+  };
+
+  
+// Define a route to delete an event and its attendees
+exports.deleteEvent= async (req, res) => {
+  const eventId = req.params.id;
+
+  // Delete users attending the event
+  connectionPool.query('DELETE FROM user_event WHERE event_id = ?', [eventId], (err, result) => {
+    if (err) {
+      console.error('Error deleting users attending event:', err);
+      return res.status(500).json({ error: 'Error deleting users attending event' });
+    }
+
+    // Check if any users were deleted
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Event not found or no users attending' });
+    }
+
+    // Delete the event itself
+    connectionPool.query('DELETE FROM events WHERE id = ?', [eventId], (err, result) => {
+      if (err) {
+        console.error('Error deleting event:', err);
+        return res.status(500).json({ error: 'Error deleting event' });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ error: 'Event not found' });
+      }
+
+      res.status(204).end(); // Respond with a 204 No Content status on successful deletion
+    });
+  });
+};
 
 // example EVENT JSON:
 // {

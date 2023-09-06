@@ -84,7 +84,7 @@ exports.getEventByID = async (req, res) => {
     const { name, owner, privacy, description, location } = req.body;
   
     try {
-      // Check if the email already exists in the database
+      // Check if the name already exists in the database
       connectionPool.query("SELECT * FROM events WHERE name = ?", [name], (checkErr, checkResults) => {
         if (checkErr) {
           console.error("Error executing query:", checkErr.stack);
@@ -108,7 +108,7 @@ exports.getEventByID = async (req, res) => {
             const insertedEventId = insertResult.insertId;
   
             // Insert the event_id into the Tags table with 'event' as the tag_type
-            connectionPool.query("INSERT INTO Tags (id, tag_type) VALUES (?, 'event')", [insertedEventId], (tagErr, tagResult) => {
+            connectionPool.query("INSERT INTO Tags (event_id, tag_type) VALUES (?, 'event')", [insertedEventId], (tagErr, tagResult) => {
               if (tagErr) {
                 console.error("Error inserting tag:", tagErr.stack);
                 return res.status(500).json({ error: "Error inserting tag for Event" });

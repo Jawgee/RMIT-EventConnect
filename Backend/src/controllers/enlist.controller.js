@@ -8,7 +8,7 @@ const connectionPool = mysql.createPool({
 });
 
 exports.usersAttendingEvent = async (req, res) => {
-    const event_id = req.params.id;
+    const event_id = req.params.event_id;
   
     connectionPool.query(
       `SELECT u.first_name, u.last_name, e.name as event_name
@@ -29,6 +29,30 @@ exports.usersAttendingEvent = async (req, res) => {
       }
     );
   };
+
+  exports.eventsUserIsAttending = async (req, res) => {
+    const user_id = req.params.user_id;
+  
+    connectionPool.query(
+      `SELECT e.name as event_name, e.owner
+       FROM events e
+       JOIN user_event ue ON e.id = ue.event_id
+       JOIN users u ON u.id = ue.user_id
+       WHERE ue.user_id = ?;`,
+      [user_id],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query:", err.stack);
+          return res.status(500).json({ error: "Error retrieving user" });
+        }
+        if (rows.length === 0) {
+          return res.status(404).json({ error: "User not found" });
+        }
+        res.json(rows);
+      }
+    );
+  }
+
 
   exports.addUserEvent = async (req, res) => {
     const { user_id, event_id } = req.body;

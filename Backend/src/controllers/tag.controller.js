@@ -29,8 +29,69 @@ exports.getUserByTag = async (req, res) => {
     });
 };
 
+
+exports.getUserTagList = async (req, res) => {
+    const user_id = req.params.user_id;
+
+    const query = `
+      SELECT 
+        users.first_name,
+        users.last_name,
+        Tags.pitch,
+        Tags.metaverse,
+        Tags.virtual,
+        Tags.stand,
+        Tags.round_table
+      FROM users
+      JOIN Tags ON users.id = Tags.user_id
+      WHERE users.id = ?`;
+
+    connectionPool.query(query, [user_id], (err, rows) => {
+        if (err) {
+            console.error("Error executing query:", err.stack);
+            return res.status(500).json({ error: "Error retrieving user interests" });
+        }
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: "User not found or no interests found" });
+        }
+
+        res.json(rows);
+    });
+};
+
+exports.getEventTagList = async (req, res) => {
+    const event_id = req.params.event_id;
+    const query = `
+      SELECT 
+        events.name,
+        events.owner,
+        Tags.pitch,
+        Tags.metaverse,
+        Tags.virtual,
+        Tags.stand,
+        Tags.round_table
+      FROM events
+      JOIN Tags ON events.id = Tags.event_id
+      WHERE events.id = ?`;
+
+    connectionPool.query(query, [event_id], (err, rows) => {
+        if (err) {
+            console.error("Error executing query:", err.stack);
+            return res.status(500).json({ error: "Error retrieving event tags" });
+        }
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: "Event not found or no tags associated" });
+        }
+
+        res.json(rows);
+    });
+
+}
+
 exports.updateUserInterests = async (req, res) => {
-    const userId = req.params.id; // User ID
+    const userId = req.params.user_id; // User ID
     const updateData = req.body; // JSON object with interests to update
 
     // Validate the columns using the validation function
@@ -59,73 +120,35 @@ exports.updateUserInterests = async (req, res) => {
     });
 };
 
-exports.getUserTagList = async (req, res) => {
-    const user_id = req.params.user_id;
+exports.updateEventInterests = async (req, res) => {
+    const event_id = req.params.event_id; // User ID
+    const updateData = req.body; // JSON object with interests to update
 
-    const query = `
-      SELECT 
-        users.first_name,
-        users.last_name,
-        Tags.pitch,
-        Tags.metaverse,
-        Tags.virtual,
-        Tags.stand,
-        Tags.round_table
-      FROM users
-      JOIN Tags ON users.id = Tags.user_id
-      WHERE users.id = ? AND (
-        Tags.pitch = 1 OR
-        Tags.metaverse = 1 OR
-        Tags.virtual = 1 OR
-        Tags.stand = 1 OR
-        Tags.round_table = 1
-      )`;
+    // Validate the columns using the validation function
+    validateColumns(updateData);
 
-    connectionPool.query(query, [user_id], (err, rows) => {
+    // Construct the SET part of the update query
+    const setPart = Object.keys(updateData)
+        .map((column) => `${column} = ?`)
+        .join(", ");
+
+    const query = `UPDATE Tags SET ${setPart} WHERE event_id = ?`;
+
+    const values = [...Object.values(updateData), event_id];
+
+    connectionPool.query(query, values, (err, result) => {
         if (err) {
             console.error("Error executing query:", err.stack);
-            return res.status(500).json({ error: "Error retrieving user interests" });
+            return res.status(500).json({ error: "Error updating event tags" });
         }
 
-        if (rows.length === 0) {
-            return res.status(404).json({ error: "User not found or no interests found" });
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "event not found or no changes made" });
         }
 
-        res.json(rows);
+        res.json({ message: "Event tags updated successfully", OriginalJSON: updateData });
     });
 };
-
-//THIS IS NOT WORKING
-//TODO: FIX THIS
-
-//   exports.getUserInterests = async (req, res) => {
-//     const user_id = req.params.user_id;
-
-//     const query = `
-//       SELECT
-//         users.first_name,
-//         users.last_name,
-//         ${Object.keys(allowedColumns)
-//           .filter(column => allowedColumns[column] === 1)
-//           .map(column => `Tags.${column}`)
-//           .join(',\n      ')}
-//       FROM users
-//       JOIN Tags ON users.id = Tags.user_id
-//       WHERE users.id = ?`;
-
-//     connectionPool.query(query, [user_id], (err, rows) => {
-//       if (err) {
-//         console.error('Error executing query:', err.stack);
-//         return res.status(500).json({ error: 'Error retrieving user interests' });
-//       }
-
-//       if (rows.length === 0) {
-//         return res.status(404).json({ error: 'User not found or no interests found' });
-//       }
-
-//       res.json(rows);
-//     });
-//   };
 
 const validateColumns = (updateData) => {
     const allowedColumns = ["pitch", "metaverse", "virtual", "stand", "round_table"];

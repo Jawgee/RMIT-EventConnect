@@ -3,24 +3,26 @@ module.exports = (express, app) => {
     const router = express.Router();
 
     // Get all events
-    router.get("/all", controller.listEvents);
+    router.get("/All", controller.listEvents);
 
     // Get a event by ID
     router.get("/:id", controller.getEventByID);
     
     // Get attendee list
-    router.get("/attendees/:id", controller.getAttendeeList);
+    router.get("/Attendees/:id", controller.getAttendeeList);
 
-    router.put("/edit/:id", controller.editEvent);
+    // edit event's list of tags
+    router.put("/Edit/:id", controller.editEvent);
 
-    router.post("/create", controller.createEvent);
+    // create new event
+    router.post("/Create", controller.createEvent);
 
     //MIGHT GET RID OF THIS ONE
-    router.post("/addAttendee/:id", controller.addAttendee);
+    router.post("/AddAttendee/:id", controller.addAttendee);
 
+    // delete event
     router.delete("/:id", controller.deleteEvent);
 
 
-    // Add routes to server.
-    app.use("/api/events", router);
+    app.use("/api/Events", router);
 };

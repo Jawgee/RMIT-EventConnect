@@ -63,6 +63,16 @@ connectionPool.getConnection((err, connection) => {
     FOREIGN KEY (event_id) REFERENCES events(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
   )`;
+
+const createEventJunctionTableQuery = `
+  CREATE TABLE IF NOT EXISTS user_event (
+    user_id INT,
+    event_id INT,
+    PRIMARY KEY (user_id, event_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (event_id) REFERENCES events(id)
+  )`;
+
   
 
 
@@ -88,7 +98,6 @@ connectionPool.getConnection((err, connection) => {
   });
 
   connection.query(createEventTableQuery, (err) => {
-    connection.release();
 
     if (err) {
       console.error('Error creating event table:', err.stack);
@@ -96,6 +105,18 @@ connectionPool.getConnection((err, connection) => {
     }
 
     console.log('event table created successfully.');
+
+  });
+
+  connection.query(createEventJunctionTableQuery, (err) => {
+    connection.release();
+
+    if (err) {
+      console.error('Error creating event junction table:', err.stack);
+      return;
+    }
+
+    console.log('event junction table created successfully.');
 
   });
 
@@ -111,6 +132,7 @@ require("./src/routes/user.routes.js")(express, app);  // Include user-related r
 require("./src/routes/tags.routes.js")(express, app);  // Include tag-related routes
 require("./src/routes/login.routes.js")(express, app);  // Include login-related routes
 require("./src/routes/event.routes.js")(express, app);  // Include event-related routes
+require("./src/routes/enlist.routes.js")(express, app);  // Include event-related routes
 
 
 // Start the server and listen for requests on the specified port

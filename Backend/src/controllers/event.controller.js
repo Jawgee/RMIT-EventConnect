@@ -1,5 +1,4 @@
 const mysql = require("mysql");
-const jwt = require("jsonwebtoken");
 const secretKey = "testing"; // change after finishing testing
 
 const connectionPool = mysql.createPool({
@@ -34,6 +33,45 @@ exports.getEventByID = async (req, res) => {
       }
       res.json(rows[0]);
     });
+  };
+
+  exports.getAttendeeList = async (req, res) => {
+    const eventId = req.params.id;
+
+    if (!eventId) {
+      return res.status(400).json({ error: "Event ID is required" });
+    }
+  
+    try {
+      // Fetch the users enlisted in the event
+      connectionPool.query(
+        `SELECT u.first_name, u.last_name
+         FROM users u
+         JOIN user_event ue ON u.id = ue.user_id
+         WHERE ue.event_id = ?;`,
+        [eventId],
+        (err, rows) => {
+          if (err) {
+            console.error("Error executing query:", err.stack);
+            return res.status(500).json({ error: "Error retrieving enlisted users" });
+          }
+  
+          if (rows.length === 0) {
+            return res.status(404).json({ error: "No users enlisted in this event" });
+          }
+  
+          // Extract user names from the query result
+          const enlistedUsers = rows.map((row) => ({
+            first_name: row.first_name,
+            last_name: row.last_name,
+          }));
+          res.json({ enlistedUsers });
+        }
+      );
+    } catch (error) {
+      console.error("Error retrieving enlisted users:", error.stack);
+      res.status(500).json({ error: "Error retrieving enlisted users" });
+    }
   };
 
 

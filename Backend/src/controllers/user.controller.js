@@ -39,6 +39,38 @@ exports.getUserByID = async (req, res) => {
   });
 };
 
+exports.getEventList = async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    // Fetch the event names associated with the user
+    connectionPool.query(
+      `SELECT e.name
+       FROM events e
+       JOIN user_event ue ON e.id = ue.event_id
+       WHERE ue.user_id = ?;`,
+      [userId],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query:", err.stack);
+          return res.status(500).json({ error: "Error retrieving events" });
+        }
+
+        if (rows.length === 0) {
+          return res.status(404).json({ error: "User has not attended any events" });
+        }
+
+        // Extract event names from the query result
+        const eventNames = rows.map((row) => row.name);
+        res.json({ eventNames });
+      }
+    );
+  } catch (error) {
+    console.error("Error retrieving events:", error.stack);
+    res.status(500).json({ error: "Error retrieving events" });
+  }
+};
+
 
 exports.createUser = async (req, res) => {
   const result = validateUser(req.body);
@@ -179,6 +211,8 @@ exports.deleteUser = async (req, res) => {
     res.status(500).json({ error: "Error deleting user" });
   }
 };
+
+
 
 // example user JSON:
 // {

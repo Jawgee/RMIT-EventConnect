@@ -193,6 +193,7 @@ exports.getEventByID = async (req, res) => {
 
   
 // Define a route to delete an event and its attendees
+// TODO: Delete the users assoicated with event
 exports.deleteEvent= async (req, res) => {
   const eventId = req.params.id;
 

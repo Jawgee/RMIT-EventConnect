@@ -59,88 +59,81 @@ const App: React.FC = () => {
     };
     if (user) {
         return (
-            <IonApp>
-                <IonReactRouter>
-                    <IonTabs>
-                        <IonRouterOutlet>
-                            <LoggedInOutlet logout={logout} />
-                        </IonRouterOutlet>
-                        <IonTabBar slot="bottom">
-                            <IonTabButton tab="home" href="/home">
-                                <IonIcon aria-hidden="true" icon={home} />
-                                <IonLabel>Home</IonLabel>
-                            </IonTabButton>
-                            <IonTabButton tab="explore" href="/explore">
-                                <IonIcon aria-hidden="true" icon={search} />
-                                <IonLabel>Explore</IonLabel>
-                            </IonTabButton>
-                            <IonTabButton tab="eventadd" href="/eventadd">
-                                <IonIcon aria-hidden="true" icon={addCircle} />
-                                <IonLabel>Add Event</IonLabel>
-                            </IonTabButton>
-                            <IonTabButton tab="inbox" href="/inbox">
-                                <IonIcon aria-hidden="true" icon={mail} />
-                                <IonLabel>Inbox</IonLabel>
-                            </IonTabButton>
-                            <IonTabButton tab="profile" href="/profile">
-                                <IonIcon aria-hidden="true" icon={personCircle} />
-                                <IonLabel>Profile</IonLabel>
-                            </IonTabButton>
-                        </IonTabBar>
-                    </IonTabs>
-                </IonReactRouter>
-            </IonApp>
+            <>
+                <IonApp>
+                    <IonReactRouter>
+                        <IonTabs>
+                            <IonRouterOutlet>
+                                <Route path="/home">
+                                    <Home />
+                                </Route>
+                                <Route path="/profile">
+                                    <Profile logout={logout} />
+                                </Route>
+                                <Route path="/explore">
+                                    <Explore />
+                                </Route>
+                                <Route path="/inbox">
+                                    <Inbox />
+                                </Route>
+                                <Route path="/eventadd">
+                                    <EventAdd />
+                                </Route>
+                                <Route exact path="/">
+                                    <Redirect to="/home" />
+                                </Route>
+                                <Route render={() => <Redirect to={'/home'} />} />
+                            </IonRouterOutlet>
+                            <IonTabBar slot="bottom">
+                                <IonTabButton tab="home" href="/home">
+                                    <IonIcon aria-hidden="true" icon={home} />
+                                    <IonLabel>Home</IonLabel>
+                                </IonTabButton>
+                                <IonTabButton tab="explore" href="/explore">
+                                    <IonIcon aria-hidden="true" icon={search} />
+                                    <IonLabel>Explore</IonLabel>
+                                </IonTabButton>
+                                <IonTabButton tab="eventadd" href="/eventadd">
+                                    <IonIcon aria-hidden="true" icon={addCircle} />
+                                    <IonLabel>Add Event</IonLabel>
+                                </IonTabButton>
+                                <IonTabButton tab="inbox" href="/inbox">
+                                    <IonIcon aria-hidden="true" icon={mail} />
+                                    <IonLabel>Inbox</IonLabel>
+                                </IonTabButton>
+                                <IonTabButton tab="profile" href="/profile">
+                                    <IonIcon aria-hidden="true" icon={personCircle} />
+                                    <IonLabel>Profile</IonLabel>
+                                </IonTabButton>
+                            </IonTabBar>
+                        </IonTabs>
+                    </IonReactRouter>
+                </IonApp>
+            </>
         );
     } else {
         return (
-            <IonApp>
-                <IonReactRouter>
-                    <IonRouterOutlet>
-                        <LoggedOutOutlet setUser={setUser} />
-                    </IonRouterOutlet>
-                </IonReactRouter>
-            </IonApp>
+            <>
+                <IonApp>
+                    <IonReactRouter>
+                        <IonRouterOutlet>
+                            <Route path="/login">
+                                <Login setUser={setUser} />
+                            </Route>
+                            <Route path="/register">
+                                <Register setUser={setUser} />
+                                {/* <RegisterTest /> */}
+                            </Route>
+                            <Route exact path="/">
+                                <Redirect to="/register" />
+                            </Route>
+                            <Route render={() => <Redirect to={'/register'} />} />
+                        </IonRouterOutlet>
+                    </IonReactRouter>
+                </IonApp>
+            </>
         );
     }
 };
 
-const LoggedInOutlet: React.FC<{ logout: Function }> = ({ logout }) => (
-    <>
-        <Route exact path="/home">
-            <Home />
-        </Route>
-        <Route exact path="/profile">
-            <Profile logout={logout} />
-        </Route>
-        <Route path="/explore">
-            <Explore />
-        </Route>
-        <Route path="/inbox">
-            <Inbox />
-        </Route>
-        <Route path="/eventadd">
-            <EventAdd />
-        </Route>
-        <Route render={() => <Redirect to={'/home'} />} />
-        <Route exact path="/">
-            <Redirect to="/home" />
-        </Route>
-    </>
-);
-
-const LoggedOutOutlet: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | null>> }> = ({ setUser }) => (
-    <>
-        <Route exact path="/login">
-            <Login setUser={setUser} />
-        </Route>
-        <Route exact path="/register">
-            <Register setUser={setUser} />
-            {/* <RegisterTest /> */}
-        </Route>
-        <Route render={() => <Redirect to={'/register'} />} />
-        <Route exact path="/">
-            <Redirect to="/register" />
-        </Route>
-    </>
-);
 export default App;

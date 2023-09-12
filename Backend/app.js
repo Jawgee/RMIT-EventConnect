@@ -25,8 +25,8 @@ connectionPool.getConnection((err, connection) => {
     return;
   }
 //Erase the table to avoid conflicta or errors
-  connection.query(`DROP TABLE users`);
-  console.error('Erase the table');
+  // connection.query(`DROP TABLE users`);
+  // console.error('Erase the table');
 
   const createUserTableQuery = `
   CREATE TABLE IF NOT EXISTS users (
@@ -36,7 +36,7 @@ connectionPool.getConnection((err, connection) => {
     photo VARCHAR(300),
     email VARCHAR(300) NOT NULL UNIQUE,
     password VARCHAR(20) NOT NULL,
-    role VARCHAR(100)
+    profile ENUM('Entrepreneur','Corporate','Investor','Startup','Academy','Ecosystem Facilitator','Acelerator','Incubator','SME','Agency','NGO') NOT NULL
   )`;
   
   const createEventTableQuery = `
@@ -44,7 +44,15 @@ connectionPool.getConnection((err, connection) => {
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     owner VARCHAR(255) NOT NULL,
+    sector ENUM('Tourism','Tech','Bio','Health','Sustainability','Agro','Fintech','GreenTech','Mobility','Logistic','Food','Smart Cities','Blue Economy','Space') NOT NULL,
+    profile ENUM('Entrepreneur','Corporate','Investor','Startup','Academy','Ecosystem Facilitator','Acelerator','Incubator','SME','Agency','NGO') NOT NULL,
+    category ENUM('State of the art','Round Table','Living Test','Stand','Pitch','ShowRoom') NOT NULL,
+    frequency ENUM('Unique', 'Yearly', 'Monthly'),
+    environment ENUM('Red Carpet','Informal','Cocktail','Party','Prize'),
     privacy ENUM('public', 'private') NOT NULL DEFAULT 'public', -- Added DEFAULT 'public'
+    entrance ENUM('Free', 'Paid'),
+    accessibility ENUM('In-person', 'Online', 'Hybrid'),
+    motivation ENUM('Validation', 'Investor', 'Partner', 'Scouting'),
     description VARCHAR(255) NOT NULL,
     location VARCHAR(255) NOT NULL
   )`;
@@ -57,12 +65,28 @@ connectionPool.getConnection((err, connection) => {
     round_table TINYINT(1) NOT NULL,
     stand TINYINT(1) NOT NULL,
     virtual TINYINT(1) NOT NULL,
+    tourism TINYINT(1) NOT NULL,
+    tech TINYINT(1) NOT NULL,
+    bio TINYINT(1) NOT NULL,
+    health TINYINT(1) NOT NULL,
+    sustainability TINYINT(1) NOT NULL,
+    agro TINYINT(1) NOT NULL,
+    fintech TINYINT(1) NOT NULL,
+    greenTech TINYINT(1) NOT NULL,
+    mobility TINYINT(1) NOT NULL,
+    logistic TINYINT(1) NOT NULL,
+    food TINYINT(1) NOT NULL,
+    smart_cities TINYINT(1) NOT NULL,
+    blue_economy TINYINT(1) NOT NULL,
+    space TINYINT(1) NOT NULL,
     tag_type ENUM('event', 'user') NOT NULL,
     event_id INT,
     user_id INT,
     FOREIGN KEY (event_id) REFERENCES events(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
-  )`;
+  )
+`;
+
 
 const createEventJunctionTableQuery = `
   CREATE TABLE IF NOT EXISTS user_event (
@@ -87,15 +111,6 @@ const createEventJunctionTableQuery = `
 
   });
 
-  connection.query(createTagTableQuery, (err) => {
-    if (err) {
-      console.error('Error creating tag table:', err.stack);
-      return;
-    }
-
-    console.log('Tag table created successfully.');
-
-  });
 
   connection.query(createEventTableQuery, (err) => {
 
@@ -105,6 +120,16 @@ const createEventJunctionTableQuery = `
     }
 
     console.log('event table created successfully.');
+
+  });
+
+  connection.query(createTagTableQuery, (err) => {
+    if (err) {
+      console.error('Error creating tag table:', err.stack);
+      return;
+    }
+
+    console.log('Tag table created successfully.');
 
   });
 

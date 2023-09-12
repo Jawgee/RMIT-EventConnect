@@ -76,7 +76,7 @@ exports.createUser = async (req, res) => {
   const result = validateUser(req.body);
   if (result.error) return res.status(400).send(result.error.details[0].message);
 
-  const { first_name, last_name, photo, email, password, role } = req.body;
+  const { first_name, last_name, photo, email, password, profile } = req.body;
 
   try {
     // Check if the email already exists in the database
@@ -92,8 +92,8 @@ exports.createUser = async (req, res) => {
 
       // If email is not already in use, insert the new user
       connectionPool.query(
-        "INSERT INTO users (first_name, last_name, photo, email, password, role) VALUES (?,?,?,?,?,?)",
-        [first_name, last_name, photo, email, password, role],
+        "INSERT INTO users (first_name, last_name, photo, email, password, profile) VALUES (?,?,?,?,?,?)",
+        [first_name, last_name, photo, email, password, profile],
         (insertErr, insertResult) => {
           if (insertErr) {
             console.error("Error executing query:", insertErr.stack);
@@ -121,7 +121,7 @@ exports.createUser = async (req, res) => {
               photo,
               email,
               password,
-              role,
+              profile,
               token,
             });
           });
@@ -243,8 +243,11 @@ exports.deleteUser = async (req, res) => {
 
 // example user JSON:
 // {
-//   "first_name": "validation",
-//   "last_name": "validation",
-//   "email": "validation@validation.com",
-//   "password": "Validation1?"
+//   "first_name": "John",
+//   "last_name": "Doe",
+//   "photo": "https://example.com/profile.jpg",
+//   "email": "john.doe@example.com",
+//   "password": "P@ssw0rd123",
+//   "profile": "Entrepreneur"
 // }
+

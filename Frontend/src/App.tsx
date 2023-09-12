@@ -18,7 +18,8 @@ import Explore from './pages/Explore';
 import Inbox from './pages/Inbox';
 import EventAdd from './pages/EventAdd';
 import Login from './pages/Login';
-import { useIonRouter } from '@ionic/react';
+import Welcome from './pages/Welcome';
+// import { useIonRouter } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -39,7 +40,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import Register from './pages/Register';
-import RegisterTest from './pages/RegisterTest';
+// import RegisterTest from './pages/RegisterTest';
 import { useState } from 'react';
 
 setupIonicReact();
@@ -122,12 +123,14 @@ const App: React.FC = () => {
                             </Route>
                             <Route path="/register">
                                 <Register setUser={setUser} />
-                                {/* <RegisterTest /> */}
+                            </Route>
+                            <Route path="/welcome">
+                                <Welcome />
                             </Route>
                             <Route exact path="/">
-                                <Redirect to="/register" />
+                                <Redirect to="/welcome" />
                             </Route>
-                            <Route render={() => <Redirect to={'/register'} />} />
+                            <Route render={() => <Redirect to={'/welcome'} />} />
                         </IonRouterOutlet>
                     </IonReactRouter>
                 </IonApp>

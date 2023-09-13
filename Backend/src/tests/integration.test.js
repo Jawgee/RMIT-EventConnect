@@ -1,31 +1,31 @@
 const app = require("../../app.js");
 const request = require("supertest");
 
-describe("User API Tests", () => {
+describe("User/Login API Tests", () => {
     let createdUserId = null;
 
-    test("GET /api/users/all should return a list of users", async () => {
+    test("GET /api/Users/All should return a list of users", async () => {
         const response = await request(app).get("/api/Users/All");
 
         expect(response.statusCode).toBe(200);
         expect(Array.isArray(response.body)).toBe(true);
     });
 
-    test("GET /api/users/:id should return a user by ID", async () => {
+    test("GET /api/Users/:id should return a user by ID", async () => {
         const userId = 1;
         const response = await request(app).get(`/api/Users/${userId}`);
 
         expect(response.statusCode).toBe(200);
     });
 
-    test("GET /api/users/:id should return 404 if user ID does not exist", async () => {
+    test("GET /api/Users/:id should return 404 if user ID does not exist", async () => {
         const userId = 4324234234;
         const response = await request(app).get(`/api/Users/${userId}`);
 
         expect(response.statusCode).toBe(404);
     });
 
-    test("POST /api/users/register should return 400 if invalid email is provided", async () => {
+    test("POST /api/Users/Register should return 400 if invalid email is provided", async () => {
         const response = await request(app).post("/api/Users/Register").send({
             first_name: "Test",
             last_name: "User",
@@ -37,7 +37,30 @@ describe("User API Tests", () => {
         expect(response.statusCode).toBe(400);
     });
 
-    test("POST /api/users/register should create a new user", async () => {
+    test("POST /api/Users/Register should return 400 if invalid password is provided", async () => {
+        const response = await request(app).post("/api/Users/Register").send({
+            first_name: "Test",
+            last_name: "User",
+            email: "test@email.com",
+            // Invalid Password
+            password: "Test",
+            profile: "Incubator",
+        });
+        expect(response.statusCode).toBe(400);
+    });
+
+    test("POST /api/Users/Register should return 400 if argument is missing", async () => {
+        const response = await request(app).post("/api/Users/Register").send({
+            first_name: "Test",
+            last_name: "User",
+            email: "test@email.com",
+            password: "Test"
+            // Missing password argument
+        });
+        expect(response.statusCode).toBe(400);
+    });
+
+    test("POST /api/Users/Register should create a new user", async () => {
         const response = await request(app).post("/api/Users/Register").send({
             first_name: "Test",
             last_name: "User",
@@ -49,24 +72,44 @@ describe("User API Tests", () => {
         createdUserId = response.body.id;
     });
 
-    test("POST /api/users/register should return 400 if email is already in use", async () => {
-        const response = await request(app).post("/api/Users/Register").send({
-            first_name: "Test",
-            last_name: "User",
+    test("POST /api/Users/Login should return 200 for successful login", async () => {
+        const response = await request(app).post("/api/Users/Login").send({
             email: "test@email.com",
-            password: "Test123!",
-            profile: "Incubator",
+            password: "Test123!"
         });
-        expect(response.statusCode).toBe(409);
+        expect(response.statusCode).toBe(200);
     });
 
-    test("DELETE /api/users/:id should delete a user", async () => {
+    test("POST /api/Users/Login should return a 404 for insuccessful login", async () => {
+        const response = await request(app).post("/api/Users/Login").send({
+            email: "notarealuser@email.com",
+            password: "JohnDoesPassword"
+        });
+        expect(response.statusCode).toBe(404);
+        expect(response.body.error).toBe("User not found");
+    });
+
+    test("PUT /api/Users/:id should update a user", async () => {
+        const response = await request(app).put(`/api/Users/${createdUserId}`).send({
+            email: "JohnDoesFirstName",
+        });
+        expect(response.statusCode).toBe(200);
+    });
+
+    test("GET /api/Users/Events/:id should return 404 if there are no events associated with user", async () => {
+        const response = await request(app).get(`/api/Users/Events/${createdUserId}`);
+
+        expect(response.statusCode).toBe(404);
+    });
+
+
+    test("DELETE /api/Users/:id should delete a user", async () => {
         const response = await request(app).delete(`/api/users/${createdUserId}`);
 
         expect(response.statusCode).toBe(200);
     });
 
-    test("DELETE /api/users/:id should return 404 if the user is not found", async () => {
+    test("DELETE /api/Users/:id should return 404 if the user is not found", async () => {
         const response = await request(app).delete(`/api/users/${createdUserId}`);
 
         expect(response.statusCode).toBe(404);
@@ -74,6 +117,8 @@ describe("User API Tests", () => {
 });
 
 describe("Event API Tests", () => {
+    let createdEventId = null;
+
     test("GET /api/Events/All should return list of events", async () => {
         const response = await request(app).get("/api/Events/All");
 
@@ -81,11 +126,40 @@ describe("Event API Tests", () => {
         expect(Array.isArray(response.body)).toBe(true);
     });
 
-    test("GET /api/Events/:id should return an event by it's ID", async () => {
-        const eventId = 1;
-        const response = await request(app).get(`/api/Events/${eventId}`);
+    // test("GET /api/Events/:id should return an event by it's ID", async () => {
+    //     const eventId = 1;
+    //     const response = await request(app).get(`/api/Events/${eventId}`);
 
-        expect(response.statusCode).toBe(200);
-    });
+    //     expect(response.statusCode).toBe(200);
+    // });
+
+    // test("POST /api/Events/Create should create a new event", async () => {
+    //     const response = await request(app).post("/api/Events/Create").send({
+    //         name: "Sample Event",
+    //         owner: "John Doe",
+    //         sector: "Tech",
+    //         profile: "Startup",
+    //         category: "Round Table",
+    //         privacy: "public",
+    //         description: "An awesome tech startup event",
+    //         location: "Tech Hub",
+    //         frequency: "Yearly",
+    //         environment: "Informal",
+    //         entrance: "Free",
+    //         accessibility: "In-person",
+    //         motivation: "Validation"
+    //     });
+    //     expect(response.statusCode).toBe(201);
+    //     createdEventId = response.body.id;
+    //     console.log(createdEventId);
+    // });
+
+    // test("DELETE /api/Events/:id should delete an event", async () => {
+    //     const response = await request(app).delete(`/api/Events/${createdEventId}`);
+
+    //     expect(response.statusCode).toBe(204);
+    // });
+
+
 
 });

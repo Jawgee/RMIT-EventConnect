@@ -107,7 +107,7 @@ const createEventJunctionTableQuery = `
       return;
     }
 
-    console.log('User table created successfully.');
+
 
   });
 
@@ -119,7 +119,7 @@ const createEventJunctionTableQuery = `
       return;
     }
 
-    console.log('event table created successfully.');
+
 
   });
 
@@ -129,7 +129,7 @@ const createEventJunctionTableQuery = `
       return;
     }
 
-    console.log('Tag table created successfully.');
+
 
   });
 
@@ -141,7 +141,7 @@ const createEventJunctionTableQuery = `
       return;
     }
 
-    console.log('event junction table created successfully.');
+
 
   });
 
@@ -149,7 +149,7 @@ const createEventJunctionTableQuery = `
 
 // Define a route for the root URL
 app.get('/', (req, res) => {
-  res.send(`Testing connection to port ${serverConfig.PORT}`);  // Respond with a message
+
 });
 
 // Import and use user routes
@@ -162,5 +162,7 @@ require("./src/routes/enlist.routes.js")(express, app);  // Include event-relate
 
 // Start the server and listen for requests on the specified port
 app.listen(serverConfig.PORT, () => {
-  console.log(`Server is running on port ${serverConfig.PORT}.`);
+
 });
+
+module.exports = app;  // Export the app for testing purposes

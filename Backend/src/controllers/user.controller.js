@@ -137,7 +137,7 @@ exports.createUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   const userId = req.params.id;
-  const updatedFields = req.body;
+  const updatedFields = validateUser(req.body);
 
   // Check if there are any fields to update
   if (Object.keys(updatedFields).length === 0) {
@@ -203,41 +203,39 @@ exports.enlistUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   const userId = req.params.id;
 
-  try {
-    // Delete tags associated with the user
-    const tagsDeletionResult = await new Promise((resolve, reject) => {
-      connectionPool.query("DELETE FROM tags WHERE user_id = ?", [userId], (err, result) => {
-        if (err) {
-          console.error("Error executing tags query:", err.stack);
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-    });
-
-    // Delete the user
-    const userDeletionResult = await new Promise((resolve, reject) => {
-      connectionPool.query("DELETE FROM users WHERE id = ?", [userId], (err, result) => {
-        if (err) {
-          console.error("Error executing users query:", err.stack);
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-    });
-
-    if (tagsDeletionResult.affectedRows === 0 && userDeletionResult.affectedRows === 0) {
-      return res.status(404).json({ error: "User not found" });
+  // Delete user tags first
+  connectionPool.query('DELETE FROM tags WHERE user_id = ?', [userId], (err, tagResult) => {
+    if (err) {
+      console.error('Error deleting user tags:', err);
+      return res.status(500).json({ error: 'Error deleting user tags' });
     }
 
-    res.json({ message: "User and associated tags deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting user:", error.stack);
-    res.status(500).json({ error: "Error deleting user" });
-  }
+    // Delete user-event associations (junction table)
+    connectionPool.query('DELETE FROM user_event WHERE user_id = ?', [userId], (err, eventResult) => {
+      if (err) {
+        console.error('Error deleting user-event associations:', err);
+        return res.status(500).json({ error: 'Error deleting user-event associations' });
+      }
+
+      // Delete the user itself
+      connectionPool.query('DELETE FROM users WHERE id = ?', [userId], (err, userResult) => {
+        if (err) {
+          console.error('Error deleting user:', err);
+          return res.status(500).json({ error: 'Error deleting user' });
+        }
+
+        if (userResult.affectedRows === 0) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.json({message: 'User deleted successfully'});
+
+        res.status(204).end(); // Respond with a 204 No Content status on successful deletion
+      });
+    });
+  });
 };
+
 
 
 

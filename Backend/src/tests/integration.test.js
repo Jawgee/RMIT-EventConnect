@@ -25,6 +25,18 @@ describe("User API Tests", () => {
         expect(response.statusCode).toBe(404);
     });
 
+    test("POST /api/users/register should return 400 if invalid email is provided", async () => {
+        const response = await request(app).post("/api/Users/Register").send({
+            first_name: "Test",
+            last_name: "User",
+            // Invalid Email
+            email: "testemail.com",
+            password: "Test123!",
+            profile: "Incubator",
+        });
+        expect(response.statusCode).toBe(400);
+    });
+
     test("POST /api/users/register should create a new user", async () => {
         const response = await request(app).post("/api/Users/Register").send({
             first_name: "Test",
@@ -49,10 +61,15 @@ describe("User API Tests", () => {
     });
 
     test("DELETE /api/users/:id should delete a user", async () => {
-        console.log(createdUserId);
         const response = await request(app).delete(`/api/users/${createdUserId}`);
 
         expect(response.statusCode).toBe(200);
+    });
+
+    test("DELETE /api/users/:id should return 404 if the user is not found", async () => {
+        const response = await request(app).delete(`/api/users/${createdUserId}`);
+
+        expect(response.statusCode).toBe(404);
     });
 });
 

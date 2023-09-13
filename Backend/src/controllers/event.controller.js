@@ -228,36 +228,41 @@ exports.createEvent = async (req, res) => {
   
 // Define a route to delete an event and its attendees
 // TODO: Delete the users assoicated with event
-exports.deleteEvent= async (req, res) => {
+exports.deleteEvent = async (req, res) => {
   const eventId = req.params.id;
 
   // Delete users attending the event
-  connectionPool.query('DELETE FROM user_event WHERE event_id = ?', [eventId], (err, result) => {
+  connectionPool.query('DELETE FROM user_event WHERE event_id = ?', [eventId], (err, userEventResult) => {
     if (err) {
       console.error('Error deleting users attending event:', err);
       return res.status(500).json({ error: 'Error deleting users attending event' });
     }
 
-    // Check if any users were deleted
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ error: 'Event not found or no users attending' });
-    }
-
-    // Delete the event itself
-    connectionPool.query('DELETE FROM events WHERE id = ?', [eventId], (err, result) => {
+    // Delete event tags
+    connectionPool.query('DELETE FROM tags WHERE event_id = ?', [eventId], (err, tagResult) => {
       if (err) {
-        console.error('Error deleting event:', err);
-        return res.status(500).json({ error: 'Error deleting event' });
+        console.error('Error deleting event tags:', err);
+        return res.status(500).json({ error: 'Error deleting event tags' });
       }
 
-      if (result.affectedRows === 0) {
-        return res.status(404).json({ error: 'Event not found' });
-      }
+      // Delete the event itself
+      connectionPool.query('DELETE FROM events WHERE id = ?', [eventId], (err, eventResult) => {
+        if (err) {
+          console.error('Error deleting event:', err);
+          return res.status(500).json({ error: 'Error deleting event' });
+        }
 
-      res.status(204).end(); // Respond with a 204 No Content status on successful deletion
+        if (eventResult.affectedRows === 0) {
+          return res.status(404).json({ error: 'Event not found' });
+        }
+
+        res.json({ message: 'Event deleted successfully' });
+        res.status(204).end(); // Respond with a 204 No Content status on successful deletion
+      });
     });
   });
 };
+
 
 // example EVENT JSON:
 // {

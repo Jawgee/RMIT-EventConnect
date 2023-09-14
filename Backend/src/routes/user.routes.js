@@ -7,6 +7,9 @@ module.exports = (express, app) => {
 
     // Get a user by ID
     router.get("/:id", controller.getUserByID);
+    
+    // Get a user by email (email in URL)
+    router.get("/Email/:email", controller.getUserByEmail);
 
     // Get a user's list of events they're attending
     router.get("/Events/:id", controller.getEventList);

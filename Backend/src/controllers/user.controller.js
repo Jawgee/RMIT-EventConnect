@@ -39,6 +39,21 @@ exports.getUserByID = async (req, res) => {
   });
 };
 
+exports.getUserByEmail = async (req, res) => {
+const email = req.params.email;
+
+connectionPool.query("SELECT * FROM users WHERE email = ?", [email], (err, rows) => {
+  if (err) {
+    console.error("Error executing query:", err.stack);
+    return res.status(500).json({ error: "Error retrieving user" });
+  }
+  if (rows.length === 0) {
+    return res.status(404).json({ error: "User not found" });
+  }
+  res.json(rows[0]);
+});
+};
+
 exports.getEventList = async (req, res) => {
   const userId = req.params.id;
 

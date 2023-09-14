@@ -249,7 +249,7 @@ const validateColumns = (updateData) => {
 
   if (invalidColumns.length > 0) {
     return {
-      errorCode: 400,
+      errorCode: 422,
       errorMessage: `Invalid column name(s): ${invalidColumns.join(", ")}`,
     };
   }

@@ -7,7 +7,7 @@ import {
     IonTabBar,
     IonTabButton,
     IonTabs,
-    UseIonRouterResult,
+    type UseIonRouterResult,
     setupIonicReact,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
@@ -18,7 +18,6 @@ import Explore from './pages/Explore';
 import Inbox from './pages/Inbox';
 import EventAdd from './pages/EventAdd';
 import Login from './pages/Login';
-import { useIonRouter } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -39,12 +38,12 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import Register from './pages/Register';
-import RegisterTest from './pages/RegisterTest';
+// import RegisterTest from './pages/RegisterTest'
 import { useState } from 'react';
 
 setupIonicReact();
 
-export const toPage = (page: string, router: UseIonRouterResult, shouldReplace: Boolean = true) => {
+export const toPage = (page: string, router: UseIonRouterResult, shouldReplace: boolean = true) => {
     router.push(`/${page}`, 'root', shouldReplace ? 'replace' : 'push');
 };
 
@@ -52,7 +51,8 @@ export const toPage = (page: string, router: UseIonRouterResult, shouldReplace: 
 // Or will be used later, with added functionality
 // To get info from storage somewhere and add it into the app
 const App: React.FC = () => {
-    const [user, setUser] = useState<string | null>(null);
+    // const [user, setUser] = useState<string | null>(null);
+    const [user, setUser] = useState<string | null>('test@ing.com');
 
     const logout = () => {
         setUser(null);

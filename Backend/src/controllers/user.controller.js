@@ -137,7 +137,7 @@ exports.createUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   const userId = req.params.id;
-  const updatedFields = validateUser(req.body);
+  const updatedFields = req.body;
 
   // Check if there are any fields to update
   if (Object.keys(updatedFields).length === 0) {
@@ -166,6 +166,8 @@ exports.updateUser = async (req, res) => {
     if (result.affectedRows === 0) {
       return res.status(404).json({ error: "User not found" });
     }
+
+    console.log(updateQuery);
 
     res.json({ id: userId, ...updatedFields });
   });

@@ -104,73 +104,143 @@ exports.getEventTagList = async (req, res) => {
   });
 };
 
-exports.updateUserInterests = async (req, res) => {
-  const userId = req.params.user_id; // User ID
-  const updateData = req.body; // JSON object with interests to update
+// exports.updateUserInterests = async (req, res) => {
+//   const userId = req.params.user_id; // User ID
+//   const updateData = req.body; // JSON object with interests to update
 
-  // Validate the columns using the validation function
-  const validationError = validateColumns(updateData);
+//   // Validate the columns using the validation function
+//   const validationError = validateColumns(updateData);
+
+//   if (validationError) {
+//     return res.status(validationError.errorCode).json({ error: validationError.errorMessage });
+//   }
+
+//   // Construct the SET part of the update query
+// // Construct the SET part of the update query
+// const setPart = allowedColumns
+//   .filter((col) => updateData[col] !== undefined)
+//   .map((col) => `${col} = ?`)
+//   .join(", ");
+
+// // Prepare the values array for the query
+// const values = [...allowedColumns.map((col) => updateData[col]), userId];
+
+
+//   // Check if there are any columns to update
+//   if (setPart === "") {
+//     return res.status(400).json({ error: "No valid columns provided for update" });
+//   }
+
+//   // Build the SQL query
+//   const query = `UPDATE tags SET ${setPart} WHERE user_id = ?`;
+
+//   // Execute the query
+//   connectionPool.query(query, values, (err, result) => {
+//     if (err) {
+//       console.error("Error executing query:", err.stack);
+//       return res.status(500).json({ error: "Error updating user interests" });
+//     }
+
+
+//     console.log("User ID:", userId);
+//     console.log("Update Data:", updateData);
+//     console.log("Generated Query:", query);
+//     console.log("Query Values:", values);
+
+
+//     if (result.affectedRows === 0) {
+//       return res.status(404).json({ error: "User not found or no changes made" });
+//     }
+
+//     res.json({ message: "User interests updated successfully", OriginalJSON: updateData });
+//   });
+// };
+
+exports.updateUserInterests = async (req, res) => {
+  const userId = req.params.user_id;
+  const updatedFields = req.body;
+  const validationError = validateColumns(updatedFields);
 
   if (validationError) {
     return res.status(validationError.errorCode).json({ error: validationError.errorMessage });
   }
 
-  // Construct the SET part of the update query
-  const setPart = allowedColumns
-    .filter((col) => updateData[col] !== undefined)
-    .map((col) => `${col} = ?`)
-    .join(", ");
+  // Check if there are any fields to update
+  if (Object.keys(updatedFields).length === 0) {
+    return res.status(400).json({ error: "No fields to update provided" });
+  }
 
-  const query = `UPDATE tags SET ${setPart} WHERE user_id = ?`;
+  const setStatements = [];
+  const values = [];
 
-  const values = [...allowedColumns.map((col) => updateData[col]), userId];
+  // Build the SET part of the SQL query dynamically
+  for (const [key, value] of Object.entries(updatedFields)) {
+    setStatements.push(`${key} = ?`);
+    values.push(value);
+  }
 
-  connectionPool.query(query, values, (err, result) => {
+  values.push(userId); // Add the userId for the WHERE clause
+
+  const updateQuery = `UPDATE tags SET ${setStatements.join(', ')} WHERE user_id = ?`;
+
+
+  connectionPool.query(updateQuery, values, (err, result) => {
     if (err) {
       console.error("Error executing query:", err.stack);
-      return res.status(500).json({ error: "Error updating user interests" });
+      return res.status(500).json({ error: "Error updating user" });
     }
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ error: "User not found or no changes made" });
+      return res.status(404).json({ error: "User not found" });
     }
 
-    res.json({ message: "User interests updated successfully", OriginalJSON: updateData });
+
+    res.json({ id: userId, ...updatedFields });
   });
 };
 
-exports.updateEventInterests = async (req, res) => {
-  const event_id = req.params.event_id; // Event ID
-  const updateData = req.body; // JSON object with interests to update
 
-  // Validate the columns using the validation function
-  const validationError = validateColumns(updateData);
+
+exports.updateEventInterests = async (req, res) => {
+  const event_id = req.params.event_id;
+  const updatedFields = req.body;
+  const validationError = validateColumns(updatedFields);
 
   if (validationError) {
     return res.status(validationError.errorCode).json({ error: validationError.errorMessage });
   }
 
-  // Construct the SET part of the update query
-  const setPart = allowedColumns
-    .filter((col) => updateData[col] !== undefined)
-    .map((col) => `${col} = ?`)
-    .join(", ");
+  // Check if there are any fields to update
+  if (Object.keys(updatedFields).length === 0) {
+    return res.status(400).json({ error: "No fields to update provided" });
+  }
 
-  const query = `UPDATE tags SET ${setPart} WHERE event_id = ?`;
+  const setStatements = [];
+  const values = [];
 
-  const values = [...allowedColumns.map((col) => updateData[col]), event_id];
+  // Build the SET part of the SQL query dynamically
+  for (const [key, value] of Object.entries(updatedFields)) {
+    setStatements.push(`${key} = ?`);
+    values.push(value);
+  }
 
-  connectionPool.query(query, values, (err, result) => {
+  values.push(event_id); // Add the userId for the WHERE clause
+
+  const updateQuery = `UPDATE tags SET ${setStatements.join(', ')} WHERE event_id = ?`;
+
+
+  connectionPool.query(updateQuery, values, (err, result) => {
     if (err) {
       console.error("Error executing query:", err.stack);
-      return res.status(500).json({ error: "Error updating event tags" });
+      return res.status(500).json({ error: "Error updating event" });
     }
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ error: "Event not found or no changes made" });
+      return res.status(404).json({ error: "event not found" });
     }
 
-    res.json({ message: "Event tags updated successfully", OriginalJSON: updateData });
+
+    res.json({ id: event_id, ...updatedFields });
   });
 };
 

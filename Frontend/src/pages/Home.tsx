@@ -1,8 +1,8 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import './Tab1.css';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react'
+import './Tab1.css'
 
 const Tab1: React.FC = () => {
-    return (
+  return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
@@ -18,7 +18,7 @@ const Tab1: React.FC = () => {
                 <p>TODO: Add stuff here</p>
             </IonContent>
         </IonPage>
-    );
-};
+  )
+}
 
-export default Tab1;
+export default Tab1

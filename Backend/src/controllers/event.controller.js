@@ -180,7 +180,6 @@ exports.createEvent = async (req, res) => {
       [eventId, userId],
       (err, result) => {
         if (err) {
-          console.error('Error inserting user into event:', err);
           return res.status(500).json({ error: 'Error inserting user into event' });
         }
   

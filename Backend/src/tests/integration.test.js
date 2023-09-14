@@ -11,13 +11,6 @@ describe("User/Login API Tests", () => {
         expect(Array.isArray(response.body)).toBe(true);
     });
 
-    test("GET /api/Users/:id should return a user by ID", async () => {
-        const userId = 1;
-        const response = await request(app).get(`/api/Users/${userId}`);
-
-        expect(response.statusCode).toBe(200);
-    });
-
     test("GET /api/Users/:id should return 404 if user ID does not exist", async () => {
         const userId = 4324234234;
         const response = await request(app).get(`/api/Users/${userId}`);
@@ -72,6 +65,12 @@ describe("User/Login API Tests", () => {
         createdUserId = response.body.id;
     });
 
+    test("GET /api/Users/:id should return a user by ID", async () => {
+        const response = await request(app).get(`/api/Users/${createdUserId}`);
+
+        expect(response.statusCode).toBe(200);
+    });
+
     test("POST /api/Users/Login should return 200 for successful login", async () => {
         const response = await request(app).post(`/api/Users/Login`).send({
             email: "test@email.com",
@@ -121,7 +120,6 @@ describe("Event API Tests", () => {
     let MockUserId = null;
 
     beforeAll(async () => {
-        // Create a user specifically for event-related tests
         const response = await request(app).post(`/api/Users/Register`).send({
             first_name: "Test",
             last_name: "User",
@@ -130,7 +128,6 @@ describe("Event API Tests", () => {
             profile: "Incubator",
         });
         MockUserId = response.body.id;
-        console.log(MockUserId)
     });
 
     test("GET /api/Events/All should return list of events", async () => {
@@ -161,7 +158,6 @@ describe("Event API Tests", () => {
     });
 
     test("POST /api/Events/AddAttendee should enlist an attendee into an event", async () => {
-        console.log(MockUserId)
         const response = await request(app).post(`/api/Events/AddAttendee/${createdEventId}`).send({
             userId: MockUserId
         });
@@ -220,7 +216,6 @@ describe("Event API Tests", () => {
     });
 
     test("POST /api/Events/AddAttendee should return 500 (should be 404) if event does not exist", async () => {
-        console.log(MockUserId)
         const response = await request(app).post(`/api/Events/AddAttendee/${createdEventId}`).send({
             userId: MockUserId
         });
@@ -232,4 +227,39 @@ describe("Event API Tests", () => {
         await request(app).delete(`/api/Users/${MockUserId}`);
     });
 
+
 });
+
+// describe("Tags API Tests", () => {
+//     let MockUserId = null;
+
+//     beforeAll(async () => {
+//         const response = await request(app).post(`/api/Users/Register`).send({
+//             first_name: "Test",
+//             last_name: "User",
+//             email: "event_test@email.com",
+//             password: "Test123!",
+//             profile: "Incubator",
+//         });
+//         MockUserId = response.body.id;
+//     });
+
+//     test("PUT api/Tags/UserInterests/:user_id should return 200 if user preferences are updated successfully", async () => {
+//         const response = await request(app).put(`/api/Tags/UserInterests/${MockUserId}`).send({
+//             pitch: false,
+//             metaverse: true,
+//             stand: true
+//         });
+//         expect(response.statusCode).toBe(200);
+//     });
+
+//     afterAll(async () => {
+//         await request(app).delete(`/api/Users/${MockUserId}`);
+//     });
+// });
+
+// describe("Enlist API Tests", () => {
+
+
+// });
+

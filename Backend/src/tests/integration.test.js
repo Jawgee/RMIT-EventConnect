@@ -121,7 +121,7 @@ describe("Event API Tests", () => {
 
     beforeAll(async () => {
         const response = await request(app).post(`/api/Users/Register`).send({
-            first_name: "Test",
+            first_name: "NEWTest",
             last_name: "User",
             email: "event_test@email.com",
             password: "Test123!",

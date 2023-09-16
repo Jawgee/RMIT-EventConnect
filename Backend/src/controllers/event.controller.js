@@ -165,16 +165,31 @@ exports.createEvent = async (req, res) => {
 
 
 
-  exports.addAttendee = async (req, res) => {
-    const eventId = req.params.id;
-    const { userId } = req.body;
-  
-    // Ensure that userId is provided in the request body
-    if (!userId) {
-      return res.status(400).json({ error: 'userId is required in the request body' });
+exports.addAttendee = async (req, res) => {
+  const eventId = req.params.id;
+  const { userId } = req.body;
+
+  // Ensure that userId is provided in the request body
+  if (!userId) {
+    return res.status(400).json({ error: 'userId is required in the request body' });
+  }
+
+  try {
+    // Check if the user with userId exists
+    const userExists = await checkIfUserExists(userId);
+
+    if (!userExists) {
+      return res.status(404).json({ error: 'User not found' });
     }
-  
-    // Insert the user into the event in the event_user table
+
+    // Check if the event with eventId exists
+    const eventExists = await checkIfEventExists(eventId);
+
+    if (!eventExists) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+
+    // Insert the user into the event in the user_event table
     connectionPool.query(
       'INSERT INTO user_event (event_id, user_id) VALUES (?, ?)',
       [eventId, userId],
@@ -183,15 +198,53 @@ exports.createEvent = async (req, res) => {
           console.error('Error inserting user into event:', err);
           return res.status(500).json({ error: 'Error inserting user into event' });
         }
-  
+
         if (result.affectedRows === 0) {
           return res.status(404).json({ error: 'Event not found' });
         }
-  
+
         res.status(201).json({ message: 'User added to event successfully' });
       }
     );
-  };
+  } catch (error) {
+    console.error('Error:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+// Helper function to check if the user with userId exists
+function checkIfUserExists(userId) {
+  return new Promise((resolve, reject) => {
+    connectionPool.query(
+      'SELECT id FROM users WHERE id = ?',
+      [userId],
+      (err, rows) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(rows.length > 0);
+      }
+    );
+  });
+}
+
+// Helper function to check if the event with eventId exists
+function checkIfEventExists(eventId) {
+  return new Promise((resolve, reject) => {
+    connectionPool.query(
+      'SELECT id FROM events WHERE id = ?',
+      [eventId],
+      (err, rows) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(rows.length > 0);
+      }
+    );
+  });
+}
 
 
   exports.editEvent = async (req, res) => {

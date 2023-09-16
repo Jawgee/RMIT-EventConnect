@@ -120,6 +120,7 @@ describe("Event API Tests", () => {
     let MockUserId = null;
 
     beforeAll(async () => {
+        // Create a temporary dummy user to test the event endpoints
         const response = await request(app).post(`/api/Users/Register`).send({
             first_name: "NEWTest",
             last_name: "User",
@@ -300,6 +301,7 @@ describe("Tags API Tests", () => {
     });
 
     afterAll(async () => {
+        // Delete the temporary user and event created for tag testing
         await request(app).delete(`/api/Users/${MockUserId}`);
         await request(app).delete(`/api/Events/${MockEventId}`);
     });
@@ -368,6 +370,7 @@ describe("Enlist API Tests", () => {
     });
 
     afterAll(async () => {
+        // Delete the temporary user and event created for enlist testing
         await request(app).delete(`/api/Users/${MockUserId}`);
         await request(app).delete(`/api/Events/${MockEventId}`);
     });

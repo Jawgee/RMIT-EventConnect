@@ -109,8 +109,6 @@ connectionPool.getConnection((err, connection) => {
       logError('Error creating user table:', err);
       return;
     }
-
-    console.log('User table created successfully.');
   });
 
   connection.query(createEventTableQuery, (err) => {
@@ -118,8 +116,6 @@ connectionPool.getConnection((err, connection) => {
       logError('Error creating event table:', err);
       return;
     }
-
-    console.log('Event table created successfully.');
   });
 
   connection.query(createTagTableQuery, (err) => {
@@ -127,8 +123,6 @@ connectionPool.getConnection((err, connection) => {
       logError('Error creating tag table:', err);
       return;
     }
-
-    console.log('Tag table created successfully.');
   });
 
   connection.query(createEventJunctionTableQuery, (err) => {
@@ -138,8 +132,6 @@ connectionPool.getConnection((err, connection) => {
       logError('Error creating event junction table:', err);
       return;
     }
-
-    console.log('Event junction table created successfully.');
   });
 });
 
@@ -157,5 +149,7 @@ require("./src/routes/enlist.routes.js")(express, app);  // Include event-relate
 
 // Start the server and listen for requests on the specified port
 app.listen(serverConfig.PORT, () => {
-  console.log(`Server is running on port ${serverConfig.PORT}.`);
+
 });
+
+module.exports = app;  // Export the app for testing purposes

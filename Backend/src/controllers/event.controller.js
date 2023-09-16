@@ -1,7 +1,7 @@
 const mysql = require("mysql");
 const secretKey = "testing"; // change after finishing testing
 const { validateEvent } = require("../models/event.model.js"); // Adjust the path as needed
-  
+
 
 const columns = [
   "name",
@@ -28,72 +28,72 @@ const connectionPool = mysql.createPool({
 
 
 exports.listEvents = async (req, res) => {
-    connectionPool.query("SELECT name, owner FROM events", (err, rows) => {
-      if (err) {
-        console.error("Error executing query:", err.stack);
-        return res.status(500).json({ error: "Error retrieving events" });
-      }
-  
-      res.json(rows);
-    });
-  };
-  
-exports.getEventByID = async (req, res) => {
-    const eventId = req.params.id;
-  
-    connectionPool.query("SELECT * FROM events WHERE id = ?", [eventId], (err, rows) => {
-      if (err) {
-        console.error("Error executing query:", err.stack);
-        return res.status(500).json({ error: "Error retrieving event" });
-      }
-      if (rows.length === 0) {
-        return res.status(404).json({ error: "Event not found" });
-      }
-      res.json(rows[0]);
-    });
-  };
-
-  exports.getAttendeeList = async (req, res) => {
-    const eventId = req.params.id;
-
-    if (!eventId) {
-      return res.status(400).json({ error: "Event ID is required" });
+  connectionPool.query("SELECT name, owner FROM events", (err, rows) => {
+    if (err) {
+      console.error("Error executing query:", err.stack);
+      return res.status(500).json({ error: "Error retrieving events" });
     }
-  
-    try {
-      // Fetch the users enlisted in the event
-      connectionPool.query(
-        `SELECT u.first_name, u.last_name
+
+    res.json(rows);
+  });
+};
+
+exports.getEventByID = async (req, res) => {
+  const eventId = req.params.id;
+
+  connectionPool.query("SELECT * FROM events WHERE id = ?", [eventId], (err, rows) => {
+    if (err) {
+      console.error("Error executing query:", err.stack);
+      return res.status(500).json({ error: "Error retrieving event" });
+    }
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Event not found" });
+    }
+    res.json(rows[0]);
+  });
+};
+
+exports.getAttendeeList = async (req, res) => {
+  const eventId = req.params.id;
+
+  if (!eventId) {
+    return res.status(400).json({ error: "Event ID is required" });
+  }
+
+  try {
+    // Fetch the users enlisted in the event
+    connectionPool.query(
+      `SELECT u.first_name, u.last_name
          FROM users u
          JOIN user_event ue ON u.id = ue.user_id
          WHERE ue.event_id = ?;`,
-        [eventId],
-        (err, rows) => {
-          if (err) {
-            console.error("Error executing query:", err.stack);
-            return res.status(500).json({ error: "Error retrieving enlisted users" });
-          }
-  
-          if (rows.length === 0) {
-            return res.status(404).json({ error: "No users enlisted in this event" });
-          }
-  
-          // Extract user names from the query result
-          const enlistedUsers = rows.map((row) => ({
-            first_name: row.first_name,
-            last_name: row.last_name,
-          }));
-          res.json({ enlistedUsers });
+      [eventId],
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query:", err.stack);
+          return res.status(500).json({ error: "Error retrieving enlisted users" });
         }
-      );
-    } catch (error) {
-      console.error("Error retrieving enlisted users:", error.stack);
-      res.status(500).json({ error: "Error retrieving enlisted users" });
-    }
-  };
+
+        if (rows.length === 0) {
+          return res.status(404).json({ error: "No users enlisted in this event" });
+        }
+
+        // Extract user names from the query result
+        const enlistedUsers = rows.map((row) => ({
+          first_name: row.first_name,
+          last_name: row.last_name,
+        }));
+        res.json({ enlistedUsers });
+      }
+    );
+  } catch (error) {
+    console.error("Error retrieving enlisted users:", error.stack);
+    res.status(500).json({ error: "Error retrieving enlisted users" });
+  }
+};
 
 
-  
+
 exports.createEvent = async (req, res) => {
   const result = validateEvent(req.body);
 
@@ -212,6 +212,8 @@ exports.addAttendee = async (req, res) => {
   }
 };
 
+
+
 // Helper function to check if the user with userId exists
 function checkIfUserExists(userId) {
   return new Promise((resolve, reject) => {
@@ -247,38 +249,74 @@ function checkIfEventExists(eventId) {
 }
 
 
-  exports.editEvent = async (req, res) => {
-    const eventId = req.params.id;
-    const eventData = req.body;
-  
-    if (!eventId) {
-      return res.status(400).json({ error: 'Event ID is required' });
-    }
-  
-    if (!eventData || Object.keys(eventData).length === 0) {
-      return res.status(400).json({ error: 'Request body is empty' });
-    }
-  
-    // Update the event in the database
+
+// Helper function to check if the user with userId exists
+function checkIfUserExists(userId) {
+  return new Promise((resolve, reject) => {
     connectionPool.query(
-      'UPDATE events SET ? WHERE id = ?',
-      [eventData, eventId],
-      (err, result) => {
+      'SELECT id FROM users WHERE id = ?',
+      [userId],
+      (err, rows) => {
         if (err) {
-          console.error('Error updating event:', err.stack);
-          return res.status(500).json({ error: 'Error updating event' });
+          return reject(err);
         }
-  
-        if (result.affectedRows === 0) {
-          return res.status(404).json({ error: 'Event not found' });
-        }
-  
-        res.status(200).json({ message: 'Event updated successfully' });
+
+        resolve(rows.length > 0);
       }
     );
-  };
+  });
+}
 
-  
+// Helper function to check if the event with eventId exists
+function checkIfEventExists(eventId) {
+  return new Promise((resolve, reject) => {
+    connectionPool.query(
+      'SELECT id FROM events WHERE id = ?',
+      [eventId],
+      (err, rows) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(rows.length > 0);
+      }
+    );
+  });
+}
+
+
+exports.editEvent = async (req, res) => {
+  const eventId = req.params.id;
+  const eventData = req.body;
+
+  if (!eventId) {
+    return res.status(400).json({ error: 'Event ID is required' });
+  }
+
+  if (!eventData || Object.keys(eventData).length === 0) {
+    return res.status(400).json({ error: 'Request body is empty' });
+  }
+
+  // Update the event in the database
+  connectionPool.query(
+    'UPDATE events SET ? WHERE id = ?',
+    [eventData, eventId],
+    (err, result) => {
+      if (err) {
+        console.error('Error updating event:', err.stack);
+        return res.status(500).json({ error: 'Error updating event' });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ error: 'Event not found' });
+      }
+
+      res.status(200).json({ message: 'Event updated successfully' });
+    }
+  );
+};
+
+
 // Define a route to delete an event and its attendees
 // TODO: Delete the users assoicated with event
 exports.deleteEvent = async (req, res) => {

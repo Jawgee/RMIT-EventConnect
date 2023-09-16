@@ -1,4 +1,3 @@
-const userModel = require('../models/user.model.js'); // Adjust the path as needed
 const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 const secretKey = 'testing'; // change after finishing testing

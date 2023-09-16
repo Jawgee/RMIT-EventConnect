@@ -88,7 +88,7 @@ exports.getEventList = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   const result = validateUser(req.body);
-  if (result.error) return res.status(422).send(result.error.details[0].message);
+  if (result.error) return res.status(422).json({error: result.error.details[0].message});
 
   const { first_name, last_name, photo, email, password, profile } = req.body;
 

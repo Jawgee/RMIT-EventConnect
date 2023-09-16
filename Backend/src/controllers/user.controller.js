@@ -182,6 +182,8 @@ exports.updateUser = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
+    console.log(updateQuery);
+
     res.json({ id: userId, ...updatedFields });
   });
 };

@@ -4,13 +4,6 @@ const request = require("supertest");
 describe("User/Login API Tests", () => {
     let createdUserId = null;
 
-    test("GET /api/Users/All should return a list of users", async () => {
-        const response = await request(app).get(`/api/Users/All`);
-
-        expect(response.statusCode).toBe(200);
-        expect(Array.isArray(response.body)).toBe(true);
-    });
-
     test("GET /api/Users/:id should return 404 if user ID does not exist", async () => {
         const userId = 4324234234;
         const response = await request(app).get(`/api/Users/${userId}`);
@@ -18,7 +11,7 @@ describe("User/Login API Tests", () => {
         expect(response.statusCode).toBe(404);
     });
 
-    test("POST /api/Users/Register should return 400 if invalid email is provided", async () => {
+    test("POST /api/Users/Register should return 422 if invalid email is provided", async () => {
         const response = await request(app).post(`/api/Users/Register`).send({
             first_name: "Test",
             last_name: "User",
@@ -27,10 +20,10 @@ describe("User/Login API Tests", () => {
             password: "Test123!",
             profile: "Incubator",
         });
-        expect(response.statusCode).toBe(400);
+        expect(response.statusCode).toBe(422);
     });
 
-    test("POST /api/Users/Register should return 400 if invalid password is provided", async () => {
+    test("POST /api/Users/Register should return 422 if invalid password is provided", async () => {
         const response = await request(app).post(`/api/Users/Register`).send({
             first_name: "Test",
             last_name: "User",
@@ -39,10 +32,10 @@ describe("User/Login API Tests", () => {
             password: "Test",
             profile: "Incubator",
         });
-        expect(response.statusCode).toBe(400);
+        expect(response.statusCode).toBe(422);
     });
 
-    test("POST /api/Users/Register should return 400 if argument is missing", async () => {
+    test("POST /api/Users/Register should return 422 if argument is missing", async () => {
         const response = await request(app).post(`/api/Users/Register`).send({
             first_name: "Test",
             last_name: "User",
@@ -50,7 +43,7 @@ describe("User/Login API Tests", () => {
             password: "Test"
             // Missing password argument
         });
-        expect(response.statusCode).toBe(400);
+        expect(response.statusCode).toBe(422);
     });
 
     test("POST /api/Users/Register should create a new user", async () => {
@@ -63,6 +56,13 @@ describe("User/Login API Tests", () => {
         });
         expect(response.statusCode).toBe(200);
         createdUserId = response.body.id;
+    });
+
+    test("GET /api/Users/All should return a list of users", async () => {
+        const response = await request(app).get(`/api/Users/All`);
+
+        expect(response.statusCode).toBe(200);
+        expect(Array.isArray(response.body)).toBe(true);
     });
 
     test("GET /api/Users/:id should return a user by ID", async () => {
@@ -230,36 +230,147 @@ describe("Event API Tests", () => {
 
 });
 
-// describe("Tags API Tests", () => {
-//     let MockUserId = null;
+describe("Tags API Tests", () => {
+    let MockUserId = null;
+    let MockEventId = null;
 
-//     beforeAll(async () => {
-//         const response = await request(app).post(`/api/Users/Register`).send({
-//             first_name: "Test",
-//             last_name: "User",
-//             email: "event_test@email.com",
-//             password: "Test123!",
-//             profile: "Incubator",
-//         });
-//         MockUserId = response.body.id;
-//     });
+    beforeAll(async () => {
+        // Create a temporary dummy user to test the tag endpoints
+        const UserResponse = await request(app).post(`/api/Users/Register`).send({
+            first_name: "Test",
+            last_name: "User",
+            email: "event_test@email.com",
+            password: "Test123!",
+            profile: "Incubator",
+        });
+        MockUserId = UserResponse.body.id;
+        // Create a temporary dummy event to test the tag endpoints
+        const EventResponse = await request(app).post(`/api/Events/Create`).send({
+            name: "Sample Event",
+            owner: "John Doe",
+            sector: "Tech",
+            profile: "Startup",
+            category: "Round Table",
+            privacy: "public",
+            description: "An awesome tech startup event",
+            location: "Tech Hub",
+            frequency: "Yearly",
+            environment: "Informal",
+            entrance: "Free",
+            accessibility: "In-person",
+            motivation: "Validation"
+        });
+        MockEventId = EventResponse.body.id;
+    });
 
-//     test("PUT api/Tags/UserInterests/:user_id should return 200 if user preferences are updated successfully", async () => {
-//         const response = await request(app).put(`/api/Tags/UserInterests/${MockUserId}`).send({
-//             pitch: false,
-//             metaverse: true,
-//             stand: true
-//         });
-//         expect(response.statusCode).toBe(200);
-//     });
+    test("PUT api/Tags/UserInterests/:user_id should return 200 if user preferences are updated successfully", async () => {
+        const response = await request(app).put(`/api/Tags/UserInterests/${MockUserId}`).send({
+            pitch: false,
+            metaverse: true,
+            stand: true
+        });
+        expect(response.statusCode).toBe(200);
+    });
 
-//     afterAll(async () => {
-//         await request(app).delete(`/api/Users/${MockUserId}`);
-//     });
-// });
+    test("PUT api/Tags/EventTags/:event_id should return 200 if event preferences are updated successfully", async () => {
+        const response = await request(app).put(`/api/Tags/EventTags/${MockEventId}`).send({
+            pitch: false,
+            metaverse: true,
+            stand: true
+        });
+        expect(response.statusCode).toBe(200);
+    });
 
-// describe("Enlist API Tests", () => {
+    test("GET api/Tags/UserByTag/:column/:bool should return 200 if a user with the tag exists", async () => {
+        const response = await request(app).get(`/api/Tags/UserByTag/metaverse/1`);
 
+        expect(response.statusCode).toBe(200);
+    });
 
-// });
+    test("GET api/Tags/UserTagList/:user_id should return a user's tag list", async () => {
+        const response = await request(app).get(`/api/Tags/UserTagList/${MockUserId}`);
+
+        expect(response.statusCode).toBe(200);
+    });
+
+    test("GET api/Tags/EventTagList/:event_id should return an events tag list", async () => {
+        const response = await request(app).get(`/api/Tags/EventTagList/${MockEventId}`);
+
+        expect(response.statusCode).toBe(200);
+    });
+
+    afterAll(async () => {
+        await request(app).delete(`/api/Users/${MockUserId}`);
+        await request(app).delete(`/api/Events/${MockEventId}`);
+    });
+});
+
+describe("Enlist API Tests", () => {
+    let MockUserId = null;
+    let MockEventId = null;
+
+    beforeAll(async () => {
+        // Create a temporary dummy user to test the enlist endpoints
+        const UserResponse = await request(app).post(`/api/Users/Register`).send({
+            first_name: "Test",
+            last_name: "User",
+            email: "event_test@email.com",
+            password: "Test123!",
+            profile: "Incubator",
+        });
+        MockUserId = UserResponse.body.id;
+        // Create a temporary dummy event to test the enlist endpoints
+        const EventResponse = await request(app).post(`/api/Events/Create`).send({
+            name: "Sample Event",
+            owner: "John Doe",
+            sector: "Tech",
+            profile: "Startup",
+            category: "Round Table",
+            privacy: "public",
+            description: "An awesome tech startup event",
+            location: "Tech Hub",
+            frequency: "Yearly",
+            environment: "Informal",
+            entrance: "Free",
+            accessibility: "In-person",
+            motivation: "Validation"
+        });
+        MockEventId = EventResponse.body.id;
+    });
+
+    test("POST /api/Enlist/ should return 200 if a user is successfully enlisted to an event", async () => {
+        const response = await request(app).post(`/api/Enlist/`).send({
+            user_id: MockUserId,
+            event_id: MockEventId
+        });
+
+        expect(response.statusCode).toBe(200);
+    });
+
+    test("GET api/Enlist/Events/:user_id should return a list of events the user is attending", async () => {
+        const response = await request(app).get(`/api/Enlist/Events/${MockUserId}`);
+
+        expect(response.statusCode).toBe(200);
+    });
+
+    test("GET api/Enlist/Attendees/:event_id should return a list of users attending an event", async () => {
+        const response = await request(app).get(`/api/Enlist/Attendees/${MockEventId}`);
+
+        expect(response.statusCode).toBe(200);
+    });
+
+    test("DELETE /api/Enlist/ should return 204 if the user is removed from the event successfully", async () => {
+        const response = await request(app).delete(`/api/Enlist/`).send({
+            user_id: MockUserId,
+            event_id: MockEventId
+        });
+        expect(response.statusCode).toBe(204);
+    });
+
+    afterAll(async () => {
+        await request(app).delete(`/api/Users/${MockUserId}`);
+        await request(app).delete(`/api/Events/${MockEventId}`);
+    });
+
+});
 

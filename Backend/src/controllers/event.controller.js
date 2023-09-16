@@ -98,7 +98,7 @@ exports.createEvent = async (req, res) => {
   const result = validateEvent(req.body);
 
   if (result.error) {
-    return res.status(400).send(result.error.details[0].message);
+    return res.status(422).send(result.error.details[0].message);
   }
 
   const eventData = columns.reduce((data, column) => {
@@ -261,6 +261,7 @@ exports.deleteEvent = async (req, res) => {
     });
   });
 };
+
 
 // example EVENT JSON:
 // {

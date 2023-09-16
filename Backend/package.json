@@ -4,7 +4,7 @@
   "description": "`node app.js`",
   "main": "app.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --forceExit"
   },
   "keywords": [],
   "author": "",

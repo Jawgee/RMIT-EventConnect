@@ -13,7 +13,7 @@ app.use(cors());
 function logError(message, error) {
   const logMessage = `${new Date().toISOString()} - ${message}\n${error.stack}\n\n`;
   
-  fs.appendFile('error.log', logMessage, (err) => {
+  fs.appendFile('logs/error.log', logMessage, (err) => {
     if (err) {
       console.error('Error writing to the log file:', err);
     }

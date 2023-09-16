@@ -28,4 +28,7 @@ yarn-error.log*
 # Optional eslint cache
 .eslintcache
 
+#logs
+error.log
+
 # Add other stuff that shouldn't be in the backend folder here

@@ -10,14 +10,18 @@ import {
     type UseIonRouterResult,
     setupIonicReact,
 } from '@ionic/react';
+import { useState } from 'react';
 import { IonReactRouter } from '@ionic/react-router';
 import { home, personCircle, search, mail, addCircle } from 'ionicons/icons';
+
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Explore from './pages/Explore';
 import Inbox from './pages/Inbox';
 import EventAdd from './pages/EventAdd';
 import Login from './pages/Login';
+import Register from './pages/Register';
+import ProfileEdit from './pages/ProfileEdit';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -37,9 +41,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import Register from './pages/Register';
-// import RegisterTest from './pages/RegisterTest'
-import { useState } from 'react';
+import { getUserInfo } from './data/accounts';
 
 setupIonicReact();
 
@@ -57,6 +59,7 @@ const App: React.FC = () => {
     const logout = () => {
         setUser(null);
     };
+
     if (user) {
         return (
             <>
@@ -67,8 +70,11 @@ const App: React.FC = () => {
                                 <Route path="/home">
                                     <Home />
                                 </Route>
-                                <Route path="/profile">
-                                    <Profile logout={logout} />
+                                <Route exact path="/profile">
+                                    <Profile logout={logout} user={user} />
+                                </Route>
+                                <Route path="/profile/edit">
+                                    <ProfileEdit />
                                 </Route>
                                 <Route path="/explore">
                                     <Explore />

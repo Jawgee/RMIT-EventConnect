@@ -1,13 +1,24 @@
-// Import the required modules and configurations
-const express = require("express"); 
+const express = require("express");
 const cors = require('cors');
-const serverConfig = require("./src/serverConfig.js");  // Import server configuration
-const mysql = require('mysql'); 
+const serverConfig = require("./src/serverConfig.js");
+const mysql = require('mysql');
+const fs = require('fs');
 
 const app = express();
 
 app.use(express.json());
-app.use(cors())
+app.use(cors());
+
+// Custom error logging function
+function logError(message, error) {
+  const logMessage = `${new Date().toISOString()} - ${message}\n${error.stack}\n\n`;
+  
+  fs.appendFile('logs/error.log', logMessage, (err) => {
+    if (err) {
+      console.error('Error writing to the log file:', err);
+    }
+  });
+}
 
 // Create a MySQL connection pool
 const connectionPool = mysql.createPool({
@@ -21,135 +32,112 @@ const connectionPool = mysql.createPool({
 // Acquire a connection from the pool and execute a query to create a table
 connectionPool.getConnection((err, connection) => {
   if (err) {
-    console.error('Error connecting to the database:', err.stack);
+    logError('Error connecting to the database:', err);
     return;
   }
-//Erase the table to avoid conflicta or errors
-  // connection.query(`DROP TABLE users`);
-  // console.error('Erase the table');
 
   const createUserTableQuery = `
-  CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(100) NOT NULL,
-    last_name VARCHAR(100) NOT NULL,
-    photo VARCHAR(300),
-    email VARCHAR(300) NOT NULL UNIQUE,
-    password VARCHAR(20) NOT NULL,
-    profile ENUM('Entrepreneur','Corporate','Investor','Startup','Academy','Ecosystem Facilitator','Acelerator','Incubator','SME','Agency','NGO') NOT NULL
-  )`;
+    CREATE TABLE IF NOT EXISTS users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      first_name VARCHAR(100) NOT NULL,
+      last_name VARCHAR(100) NOT NULL,
+      photo VARCHAR(300),
+      email VARCHAR(300) NOT NULL UNIQUE,
+      password VARCHAR(20) NOT NULL,
+      profile ENUM('Entrepreneur','Corporate','Investor','Startup','Academy','Ecosystem Facilitator','Accelerator','Incubator','SME','Agency','NGO') NOT NULL
+    )`;
   
   const createEventTableQuery = `
-  CREATE TABLE IF NOT EXISTS events (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    owner VARCHAR(255) NOT NULL,
-    sector ENUM('Tourism','Tech','Bio','Health','Sustainability','Agro','Fintech','GreenTech','Mobility','Logistic','Food','Smart Cities','Blue Economy','Space') NOT NULL,
-    profile ENUM('Entrepreneur','Corporate','Investor','Startup','Academy','Ecosystem Facilitator','Acelerator','Incubator','SME','Agency','NGO') NOT NULL,
-    category ENUM('State of the art','Round Table','Living Test','Stand','Pitch','ShowRoom') NOT NULL,
-    frequency ENUM('Unique', 'Yearly', 'Monthly'),
-    environment ENUM('Red Carpet','Informal','Cocktail','Party','Prize'),
-    privacy ENUM('public', 'private') NOT NULL DEFAULT 'public', -- Added DEFAULT 'public'
-    entrance ENUM('Free', 'Paid'),
-    accessibility ENUM('In-person', 'Online', 'Hybrid'),
-    motivation ENUM('Validation', 'Investor', 'Partner', 'Scouting'),
-    description VARCHAR(255) NOT NULL,
-    location VARCHAR(255) NOT NULL
-  )`;
+    CREATE TABLE IF NOT EXISTS events (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      owner VARCHAR(255) NOT NULL,
+      sector ENUM('Tourism','Tech','Bio','Health','Sustainability','Agro','Fintech','GreenTech','Mobility','Logistic','Food','Smart Cities','Blue Economy','Space') NOT NULL,
+      profile ENUM('Entrepreneur','Corporate','Investor','Startup','Academy','Ecosystem Facilitator','Accelerator','Incubator','SME','Agency','NGO') NOT NULL,
+      category ENUM('State of the art','Round Table','Living Test','Stand','Pitch','ShowRoom') NOT NULL,
+      frequency ENUM('Unique', 'Yearly', 'Monthly'),
+      environment ENUM('Red Carpet','Informal','Cocktail','Party','Prize'),
+      privacy ENUM('public', 'private') NOT NULL DEFAULT 'public',
+      entrance ENUM('Free', 'Paid'),
+      accessibility ENUM('In-person', 'Online', 'Hybrid'),
+      motivation ENUM('Validation', 'Investor', 'Partner', 'Scouting'),
+      description VARCHAR(255) NOT NULL,
+      location VARCHAR(255) NOT NULL
+    )`;
   
   const createTagTableQuery = `
-  CREATE TABLE IF NOT EXISTS tags (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    metaverse TINYINT(1) NOT NULL,
-    pitch TINYINT(1) NOT NULL,
-    round_table TINYINT(1) NOT NULL,
-    stand TINYINT(1) NOT NULL,
-    virtual TINYINT(1) NOT NULL,
-    tourism TINYINT(1) NOT NULL,
-    tech TINYINT(1) NOT NULL,
-    bio TINYINT(1) NOT NULL,
-    health TINYINT(1) NOT NULL,
-    sustainability TINYINT(1) NOT NULL,
-    agro TINYINT(1) NOT NULL,
-    fintech TINYINT(1) NOT NULL,
-    greenTech TINYINT(1) NOT NULL,
-    mobility TINYINT(1) NOT NULL,
-    logistic TINYINT(1) NOT NULL,
-    food TINYINT(1) NOT NULL,
-    smart_cities TINYINT(1) NOT NULL,
-    blue_economy TINYINT(1) NOT NULL,
-    space TINYINT(1) NOT NULL,
-    tag_type ENUM('event', 'user') NOT NULL,
-    event_id INT,
-    user_id INT,
-    FOREIGN KEY (event_id) REFERENCES events(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
-  )
-`;
+    CREATE TABLE IF NOT EXISTS tags (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      metaverse TINYINT(1) NOT NULL,
+      pitch TINYINT(1) NOT NULL,
+      round_table TINYINT(1) NOT NULL,
+      stand TINYINT(1) NOT NULL,
+      virtual TINYINT(1) NOT NULL,
+      tourism TINYINT(1) NOT NULL,
+      tech TINYINT(1) NOT NULL,
+      bio TINYINT(1) NOT NULL,
+      health TINYINT(1) NOT NULL,
+      sustainability TINYINT(1) NOT NULL,
+      agro TINYINT(1) NOT NULL,
+      fintech TINYINT(1) NOT NULL,
+      greenTech TINYINT(1) NOT NULL,
+      mobility TINYINT(1) NOT NULL,
+      logistic TINYINT(1) NOT NULL,
+      food TINYINT(1) NOT NULL,
+      smart_cities TINYINT(1) NOT NULL,
+      blue_economy TINYINT(1) NOT NULL,
+      space TINYINT(1) NOT NULL,
+      tag_type ENUM('event', 'user') NOT NULL,
+      event_id INT,
+      user_id INT,
+      FOREIGN KEY (event_id) REFERENCES events(id),
+      FOREIGN KEY (user_id) REFERENCES users(id)
+    )
+  `;
 
-
-const createEventJunctionTableQuery = `
-  CREATE TABLE IF NOT EXISTS user_event (
-    user_id INT,
-    event_id INT,
-    PRIMARY KEY (user_id, event_id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (event_id) REFERENCES events(id)
-  )`;
-
-  
-
+  const createEventJunctionTableQuery = `
+    CREATE TABLE IF NOT EXISTS user_event (
+      user_id INT,
+      event_id INT,
+      PRIMARY KEY (user_id, event_id),
+      FOREIGN KEY (user_id) REFERENCES users(id),
+      FOREIGN KEY (event_id) REFERENCES events(id)
+    )`;
 
   connection.query(createUserTableQuery, (err) => {
-
     if (err) {
-      console.error('Error creating user table:', err.stack);
+      logError('Error creating user table:', err);
       return;
     }
-
-
-
   });
 
-
   connection.query(createEventTableQuery, (err) => {
-
     if (err) {
-      console.error('Error creating event table:', err.stack);
+      logError('Error creating event table:', err);
       return;
     }
-
-
-
   });
 
   connection.query(createTagTableQuery, (err) => {
     if (err) {
-      console.error('Error creating tag table:', err.stack);
+      logError('Error creating tag table:', err);
       return;
     }
-
-
-
   });
 
   connection.query(createEventJunctionTableQuery, (err) => {
     connection.release();
 
     if (err) {
-      console.error('Error creating event junction table:', err.stack);
+      logError('Error creating event junction table:', err);
       return;
     }
-
-
-
   });
-
 });
 
 // Define a route for the root URL
 app.get('/', (req, res) => {
-
+  res.send(`Testing connection to port ${serverConfig.PORT}`);
 });
 
 // Import and use user routes
@@ -158,7 +146,6 @@ require("./src/routes/tags.routes.js")(express, app);  // Include tag-related ro
 require("./src/routes/login.routes.js")(express, app);  // Include login-related routes
 require("./src/routes/event.routes.js")(express, app);  // Include event-related routes
 require("./src/routes/enlist.routes.js")(express, app);  // Include event-related routes
-
 
 // Start the server and listen for requests on the specified port
 app.listen(serverConfig.PORT, () => {

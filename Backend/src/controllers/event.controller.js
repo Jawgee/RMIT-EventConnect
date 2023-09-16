@@ -212,6 +212,44 @@ exports.addAttendee = async (req, res) => {
   }
 };
 
+
+
+// Helper function to check if the user with userId exists
+function checkIfUserExists(userId) {
+  return new Promise((resolve, reject) => {
+    connectionPool.query(
+      'SELECT id FROM users WHERE id = ?',
+      [userId],
+      (err, rows) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(rows.length > 0);
+      }
+    );
+  });
+}
+
+// Helper function to check if the event with eventId exists
+function checkIfEventExists(eventId) {
+  return new Promise((resolve, reject) => {
+    connectionPool.query(
+      'SELECT id FROM events WHERE id = ?',
+      [eventId],
+      (err, rows) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(rows.length > 0);
+      }
+    );
+  });
+}
+
+
+
 // Helper function to check if the user with userId exists
 function checkIfUserExists(userId) {
   return new Promise((resolve, reject) => {

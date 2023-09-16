@@ -1,5 +1,4 @@
 const mysql = require("mysql");
-const secretKey = "testing"; // change after finishing testing
 const { validateEvent } = require("../models/event.model.js"); // Adjust the path as needed
 
 
@@ -139,7 +138,7 @@ exports.createEvent = async (req, res) => {
             connectionPool.query(
               "INSERT INTO Tags (event_id, tag_type) VALUES (?, 'event')",
               [insertedEventId],
-              (tagErr, tagResult) => {
+              (tagErr, _) => {
                 if (tagErr) {
                   console.error("Error inserting tag:", tagErr.stack);
                   return res
@@ -211,44 +210,6 @@ exports.addAttendee = async (req, res) => {
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
-
-
-// Helper function to check if the user with userId exists
-function checkIfUserExists(userId) {
-  return new Promise((resolve, reject) => {
-    connectionPool.query(
-      'SELECT id FROM users WHERE id = ?',
-      [userId],
-      (err, rows) => {
-        if (err) {
-          return reject(err);
-        }
-
-        resolve(rows.length > 0);
-      }
-    );
-  });
-}
-
-// Helper function to check if the event with eventId exists
-function checkIfEventExists(eventId) {
-  return new Promise((resolve, reject) => {
-    connectionPool.query(
-      'SELECT id FROM events WHERE id = ?',
-      [eventId],
-      (err, rows) => {
-        if (err) {
-          return reject(err);
-        }
-
-        resolve(rows.length > 0);
-      }
-    );
-  });
-}
-
-
 
 // Helper function to check if the user with userId exists
 function checkIfUserExists(userId) {
@@ -323,14 +284,14 @@ exports.deleteEvent = async (req, res) => {
   const eventId = req.params.id;
 
   // Delete users attending the event
-  connectionPool.query('DELETE FROM user_event WHERE event_id = ?', [eventId], (err, userEventResult) => {
+  connectionPool.query('DELETE FROM user_event WHERE event_id = ?', [eventId], (err, _) => {
     if (err) {
       console.error('Error deleting users attending event:', err);
       return res.status(500).json({ error: 'Error deleting users attending event' });
     }
 
     // Delete event tags
-    connectionPool.query('DELETE FROM tags WHERE event_id = ?', [eventId], (err, tagResult) => {
+    connectionPool.query('DELETE FROM tags WHERE event_id = ?', [eventId], (err, _) => {
       if (err) {
         console.error('Error deleting event tags:', err);
         return res.status(500).json({ error: 'Error deleting event tags' });

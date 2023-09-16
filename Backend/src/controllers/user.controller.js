@@ -2,7 +2,6 @@
 
 const mysql = require("mysql");
 const { validateUser } = require("../models/user.model.js"); // Adjust the path as needed
-const userModel = require("../models/user.model.js"); // Adjust the path as needed
 const jwt = require("jsonwebtoken");
 const secretKey = "testing"; // change after finishing testing
 
@@ -123,7 +122,7 @@ exports.createUser = async (req, res) => {
           });
 
           // Insert the user_id into the Tags table with 'user' as the tag_type
-          connectionPool.query("INSERT INTO Tags (user_id, tag_type) VALUES (?, 'user')", [insertedUserId], (tagErr, tagResult) => {
+          connectionPool.query("INSERT INTO Tags (user_id, tag_type) VALUES (?, 'user')", [insertedUserId], (tagErr, _) => {
             if (tagErr) {
               console.error("Error inserting tag:", tagErr.stack);
               return res.status(500).json({ error: "Error inserting tag for user" });
@@ -221,14 +220,14 @@ exports.deleteUser = async (req, res) => {
   const userId = req.params.id;
 
   // Delete user tags first
-  connectionPool.query('DELETE FROM tags WHERE user_id = ?', [userId], (err, tagResult) => {
+  connectionPool.query('DELETE FROM tags WHERE user_id = ?', [userId], (err, _) => {
     if (err) {
       console.error('Error deleting user tags:', err);
       return res.status(500).json({ error: 'Error deleting user tags' });
     }
 
     // Delete user-event associations (junction table)
-    connectionPool.query('DELETE FROM user_event WHERE user_id = ?', [userId], (err, eventResult) => {
+    connectionPool.query('DELETE FROM user_event WHERE user_id = ?', [userId], (err, _) => {
       if (err) {
         console.error('Error deleting user-event associations:', err);
         return res.status(500).json({ error: 'Error deleting user-event associations' });

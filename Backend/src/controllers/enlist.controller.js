@@ -90,7 +90,7 @@ exports.usersAttendingEvent = async (req, res) => {
               connectionPool.query(
                 "INSERT INTO user_event (user_id, event_id) VALUES (?, ?)",
                 [user_id, event_id],
-                (insertErr, insertResult) => {
+                (insertErr, _) => {
                   if (insertErr) {
                     console.error("Error executing query:", insertErr.stack);
                     return res.status(500).json({ error: "Error inserting user_event record" });

@@ -2,10 +2,10 @@ name: VC-268-EventConnect CI Pipeline
 on:
   push:
     branches:
-    - 'test-suite'
+    - 'zain-backend-testing'
   pull_request:
     branches:
-    - 'test-suite'
+    - 'zain-backend-testing'
 jobs:
   BackEnd-Lint:
     runs-on: ubuntu-latest

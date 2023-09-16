@@ -1,8 +1,10 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react'
-import './Tab1.css'
+import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
+import './Tab1.css';
+// import { toPage } from '../App';
 
 const Tab1: React.FC = () => {
-  return (
+    // const router = useIonRouter();
+    return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
@@ -16,9 +18,16 @@ const Tab1: React.FC = () => {
                     </IonToolbar>
                 </IonHeader>
                 <p>TODO: Add stuff here</p>
+                {/* <IonButton
+                    onClick={() => {
+                        toPage('profile', router);
+                    }}
+                > 
+                    test
+                </IonButton>*/}
             </IonContent>
         </IonPage>
-  )
-}
+    );
+};
 
-export default Tab1
+export default Tab1;

@@ -216,12 +216,12 @@ describe("Event API Tests", () => {
         expect(response.statusCode).toBe(200);
     });
 
-    test("POST /api/Events/AddAttendee should return 500 (should be 404) if event does not exist", async () => {
+    test("POST /api/Events/AddAttendee should return 404 if event does not exist", async () => {
         const response = await request(app).post(`/api/Events/AddAttendee/${createdEventId}`).send({
             userId: MockUserId
         });
 
-        expect(response.statusCode).toBe(500);
+        expect(response.statusCode).toBe(404);
     });
 
     afterAll(async () => {

@@ -1,6 +1,7 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, useIonRouter } from '@ionic/react';
 // import './Register.css';
 import { toPage } from '../App';
+import "../components/welcome.css";
 
 const Register = () => {
     // Routing to allow to manually redirect the user
@@ -22,7 +23,7 @@ const Register = () => {
                 </IonHeader>
 
                 {/* Link to login page */}
-                <IonButton onClick={() => toPage('login', router)}>Login</IonButton>
+                <IonButton className="new-button" onClick={() => toPage('login', router)}>Login</IonButton>
                 <IonButton onClick={() => toPage('register', router)}>Register</IonButton>
             </IonContent>
         </IonPage>

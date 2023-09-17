@@ -1,32 +1,23 @@
-import { IonContent, 
-    IonHeader, 
-    IonPage, 
-    IonTitle, 
-    IonToolbar, 
-    IonSearchbar, 
-    IonCard, 
+import {
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    IonSearchbar,
+    IonCard,
     IonCardHeader,
-    IonCardTitle, 
-    IonCardContent, 
+    IonCardTitle,
+    IonCardContent,
     IonCardSubtitle,
     IonImg,
     IonText,
     IonChip,
-    IonList
+    IonList,
 } from '@ionic/react';
-import './Home.css';
-
-// Add this 👇
-interface Post {
-	id: string;
-	image: string;
-	name: string;
-	description?: string;
-}
+// import './Home.css';
 
 const Tab1: React.FC = () => {
-
-
     return (
         <IonPage>
             <IonHeader>
@@ -44,34 +35,35 @@ const Tab1: React.FC = () => {
                         <IonTitle size="large">Home here</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                
+
                 <IonCard>
                     <IonCardHeader>
-                        <IonImg src=""/> 
+                        <IonImg src="" />
                         {/* ^^^ not sure how to add image source */}
                         <IonCardTitle>Live Festival!</IonCardTitle>
                         <IonCardSubtitle>Location: </IonCardSubtitle>
                     </IonCardHeader>
                     <IonCardContent>
-                    Here's a small text description for the card content. Nothing more, nothing less.
+                        Here's a small text description for the card content. Nothing more, nothing less.
                     </IonCardContent>
                 </IonCard>
 
-                <IonText>related to <IonChip color="secondary">#XXXXX</IonChip></IonText> 
+                <IonText>
+                    related to <IonChip color="secondary">#XXXXX</IonChip>
+                </IonText>
 
                 <IonCard>
                     <IonCardHeader>
-                        <IonImg src=""/>
+                        <IonImg src="" />
                         <IonCardTitle>Live Festival!</IonCardTitle>
                         <IonCardSubtitle>Location: </IonCardSubtitle>
                     </IonCardHeader>
                     <IonCardContent>
-                    Here's a small text description for the card content. Nothing more, nothing less.
+                        Here's a small text description for the card content. Nothing more, nothing less.
                     </IonCardContent>
                 </IonCard>
 
                 <p>TODO: Add stuff here</p>
-        
             </IonContent>
         </IonPage>
     );

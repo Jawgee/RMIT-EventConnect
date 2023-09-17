@@ -42,6 +42,7 @@ import './theme/variables.css';
 import Register from './pages/Register';
 // import RegisterTest from './pages/RegisterTest';
 import { useState } from 'react';
+import HomePractice from './pages/HomePractice';
 
 setupIonicReact();
 
@@ -53,7 +54,7 @@ export const toPage = (page: string, router: UseIonRouterResult, shouldReplace: 
 // Or will be used later, with added functionality
 // To get info from storage somewhere and add it into the app
 const App: React.FC = () => {
-    const [user, setUser] = useState<string | null>(null);
+    const [user, setUser] = useState<string | null>("null");
 
     const logout = () => {
         setUser(null);
@@ -66,7 +67,7 @@ const App: React.FC = () => {
                         <IonTabs>
                             <IonRouterOutlet>
                                 <Route path="/home">
-                                    <Home />
+                                    <HomePractice />
                                 </Route>
                                 <Route path="/profile">
                                     <Profile logout={logout} />
@@ -85,7 +86,7 @@ const App: React.FC = () => {
                                 </Route>
                                 <Route render={() => <Redirect to={'/home'} />} />
                             </IonRouterOutlet>
-                            <IonTabBar slot="bottom">
+                            <IonTabBar slot="bottom" color="warning">
                                 <IonTabButton tab="home" href="/home">
                                     <IonIcon aria-hidden="true" icon={home} />
                                     <IonLabel>Home</IonLabel>

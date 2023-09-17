@@ -70,13 +70,13 @@ const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string |
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Register</IonTitle>
+                    <IonTitle>Sign Up</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
                 <IonHeader collapse="condense">
                     <IonToolbar>
-                        <IonTitle size="large">Register</IonTitle>
+                        <IonTitle size="large">Sign Up</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <form onSubmit={handleSubmit(registerUserOnSubmit)}>
@@ -90,7 +90,7 @@ const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string |
                         /* </IonItem> */
                     )}
                     <IonButton expand="block" type="submit" className="ion-margin-top">
-                        Register
+                        Sign Up
                     </IonButton>
                     {/* </IonList> */}
                     {/* TODO: make this look better */}
@@ -98,7 +98,7 @@ const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string |
                     <br />
                 </form>
                 {/* Link to login page */}
-                <button onClick={() => toPage('login', router)}>Have an account? Login here</button>
+                <button onClick={() => toPage('login', router)}>Have an account? Log in here</button>
             </IonContent>
         </IonPage>
     );

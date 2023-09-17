@@ -7,18 +7,19 @@ import {
     useIonRouter,
     IonList,
     IonItem,
-    //   IonLabel,
     IonButton,
 } from '@ionic/react';
 import { toPage } from '../App';
 import Input from '../components/Input';
 import { useForm } from 'react-hook-form';
+import { useAppSelector } from '../hooks';
 // import './Tab2.css';
 
 // TODO: Most likely have the "Profile" page send through the information
 const ProfileEdit = () => {
     // TODO: Get info from the backend and then make default info to put into the useForm
-    const { control, handleSubmit } = useForm();
+    const userInfo = useAppSelector((state) => state.value);
+    const { control, handleSubmit } = useForm({ defaultValues: userInfo });
     const router = useIonRouter();
 
     const onSubmit = () => {
@@ -41,11 +42,11 @@ const ProfileEdit = () => {
             name: 'last_name',
         },
         {
-            label: 'Tags',
-            name: 'tags',
-            // TODO: Change this to instead just link to the add/edit tags page
-            // TODO: make aforementioned page
+            label: 'Profile',
+            name: 'profile',
         },
+        // TODO: Create link to tag edit page
+        // TODO: make aforementioned page
     ];
 
     return (
@@ -61,6 +62,9 @@ const ProfileEdit = () => {
                         {profileFields.map((field, index) => (
                             <Input {...field} control={control} key={index} />
                         ))}
+                        <IonItem>
+                            <IonButton>Click to edit tags</IonButton>
+                        </IonItem>
                         <IonItem>
                             <IonButton type="submit">Submit</IonButton>
                         </IonItem>

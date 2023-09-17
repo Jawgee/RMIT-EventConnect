@@ -42,6 +42,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import { getUserInfo } from './data/accounts';
+import ProfileLoading from './pages/ProfileLoading';
 
 setupIonicReact();
 
@@ -71,10 +72,13 @@ const App: React.FC = () => {
                                     <Home />
                                 </Route>
                                 <Route exact path="/profile">
-                                    <Profile logout={logout} user={user} />
+                                    <Profile logout={logout} />
                                 </Route>
                                 <Route path="/profile/edit">
                                     <ProfileEdit />
+                                </Route>
+                                <Route path="/profile/load">
+                                    <ProfileLoading user={user} />
                                 </Route>
                                 <Route path="/explore">
                                     <Explore />

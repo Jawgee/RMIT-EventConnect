@@ -1,0 +1,16 @@
+/* .testing-button {
+
+}
+
+.testing-button-box {
+
+} */
+
+ion-grid.ion-justify-content-center {
+    align-items: stretch;
+    display:flex;
+}
+
+ion-grid.ion-justify-content-center ion-row {
+    height:100%;
+}

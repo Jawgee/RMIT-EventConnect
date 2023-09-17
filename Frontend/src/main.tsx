@@ -1,16 +1,20 @@
-import React from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App'
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App';
 
-import { defineCustomElements } from '@ionic/pwa-elements/loader'
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import { Provider } from 'react-redux';
+import store from './store';
 
 // Call the element loader after the platform has been bootstrapped
-defineCustomElements(window)
+defineCustomElements(window);
 
-const container = document.getElementById('root')
-const root = createRoot(container!)
+const container = document.getElementById('root');
+const root = createRoot(container!);
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
+    <React.StrictMode>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </React.StrictMode>
+);

@@ -16,7 +16,7 @@ const Register = () => {
             </IonHeader>
             <IonContent fullscreen>
                 <IonHeader collapse="condense">
-                    <IonToolbar>
+                    <IonToolbar color="primary">
                         <IonTitle size="large">Welcome</IonTitle>
                     </IonToolbar>
                 </IonHeader>

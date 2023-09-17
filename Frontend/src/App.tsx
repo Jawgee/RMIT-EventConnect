@@ -54,7 +54,7 @@ export const toPage = (page: string, router: UseIonRouterResult, shouldReplace: 
 // Or will be used later, with added functionality
 // To get info from storage somewhere and add it into the app
 const App: React.FC = () => {
-    const [user, setUser] = useState<string | null>(null);
+    const [user, setUser] = useState<string | null>('null');
 
     const logout = () => {
         setUser(null);

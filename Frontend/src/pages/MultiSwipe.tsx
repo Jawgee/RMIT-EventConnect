@@ -11,12 +11,10 @@ import {
 } from '@ionic/react';
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-// Import Swiper styles
-import 'swiper/css';
-
-import '@ionic/react/css/ionic-swiper.css';
-
 import { AnimatePresence, motion } from 'framer-motion';
+
+import 'swiper/css';
+import '@ionic/react/css/ionic-swiper.css';
 import './HomePractice.css';
 
 interface Post {

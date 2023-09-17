@@ -24,7 +24,7 @@ const Register = () => {
 
                 {/* Link to login page */}
                 <IonButton className="new-button" onClick={() => toPage('login', router)}>Login</IonButton>
-                <IonButton onClick={() => toPage('register', router)}>Register</IonButton>
+                <IonButton className="new-button" onClick={() => toPage('register', router)}>Register</IonButton>
             </IonContent>
         </IonPage>
     );

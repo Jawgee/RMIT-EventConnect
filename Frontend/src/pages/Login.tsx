@@ -1,63 +1,63 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, useIonRouter } from '@ionic/react'
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, useIonRouter } from '@ionic/react';
 // import './Login.css';
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import Input, { type InputProps } from '../components/Input'
-import { verifyUser } from '../data/accounts.js'
-import { toPage } from '../App'
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import Input, { type InputProps } from '../components/Input';
+import { verifyUser } from '../data/accounts.js';
+import { toPage } from '../App';
 
 const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | null>> }> = ({ setUser }) => {
-  // Controller for the forms
-  const { control, handleSubmit } = useForm()
+    // Controller for the forms
+    const { control, handleSubmit } = useForm();
 
-  // Routing to allow to manually redirect the user
-  const router = useIonRouter()
+    // Routing to allow to manually redirect the user
+    const router = useIonRouter();
 
-  // Used for error message handling
-  // When there was a fail from the backend
-  const [errorMessage, setErrorMessage] = useState('')
+    // Used for error message handling
+    // When there was a fail from the backend
+    const [errorMessage, setErrorMessage] = useState('');
 
-  // Holds all of the fields and their information
-  const formFields: InputProps[] = [
-    {
-      name: 'email',
-      type: 'email',
-      label: 'Email'
-    },
-    {
-      name: 'password',
-      label: 'Password',
-      type: 'password',
-      clearOnEdit: false,
-      min: 7,
-      pattern: '^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$',
-      helperText: 'Password should have at least 1 uppercase letter, 1 digit and 1 special character.'
-    }
-  ]
+    // Holds all of the fields and their information
+    const formFields: InputProps[] = [
+        {
+            name: 'email',
+            type: 'email',
+            label: 'Email',
+        },
+        {
+            name: 'password',
+            label: 'Password',
+            type: 'password',
+            clearOnEdit: false,
+            min: 7,
+            pattern: '^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$',
+            helperText: 'Password should have at least 1 uppercase letter, 1 digit and 1 special character.',
+        },
+    ];
 
-  // Handles submit
-  const loginUserOnSubmit = (data: any) => {
-    verifyUser(data.email, data.password).then((e) => {
-      // Get the information from the backend
-      const [successful, message] = e
+    // Handles submit
+    const loginUserOnSubmit = (data: any) => {
+        verifyUser(data.email, data.password).then((e) => {
+            // Get the information from the backend
+            const [successful, message] = e;
 
-      // If there were no issues
-      if (successful) {
-        // TODO: Add the proper information here
-        // TODO: use data.email probably
-        // Set the user to be used elsewhere
-        setUser(data.email)
-        // Send the user to the home page
-        toPage('home', router)
-      } else {
-        // Set an error to show on the page
-        setErrorMessage(message)
-      }
-    })
-  }
+            // If there were no issues
+            if (successful) {
+                // TODO: Add the proper information here
+                // TODO: use data.email probably
+                // Set the user to be used elsewhere
+                setUser(data.email);
+                // Send the user to the home page
+                toPage('home', router);
+            } else {
+                // Set an error to show on the page
+                setErrorMessage(message);
+            }
+        });
+    };
 
-  // TODO: Create proper design
-  return (
+    // TODO: Create proper design
+    return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
@@ -74,11 +74,11 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                     {/* TODO: Decide if should make it into a list or not (aesthetic choice) */}
                     {/* <IonList> */}
                     {formFields.map(
-                      (field, index) => (
+                        (field, index) => (
                             /* <IonItem> */
                             <Input {...field} control={control} key={index} />
-                      )
-                      /* </IonItem> */
+                        )
+                        /* </IonItem> */
                     )}
                     <IonButton expand="block" type="submit" className="ion-margin-top">
                         Login
@@ -88,10 +88,17 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                     {errorMessage && <p>{errorMessage}</p>}
                 </form>
                 {/* Link to register page */}
-                <button onClick={() => { toPage('register', router) }}>Don't have an account? Register now</button>
+                <IonButton
+                    color="secondary"
+                    onClick={() => {
+                        toPage('register', router);
+                    }}
+                >
+                    Don't have an account? Register now
+                </IonButton>
             </IonContent>
         </IonPage>
-  )
-}
+    );
+};
 
-export default Login
+export default Login;

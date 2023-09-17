@@ -1,5 +1,16 @@
-import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
-import './Tab1.css';
+import {
+    IonButton,
+    IonCol,
+    IonContent,
+    IonGrid,
+    IonHeader,
+    IonPage,
+    IonRow,
+    IonTitle,
+    IonToolbar,
+    useIonRouter,
+} from '@ionic/react';
+import './testing.css';
 // import { toPage } from '../App';
 
 const Tab1: React.FC = () => {
@@ -25,6 +36,18 @@ const Tab1: React.FC = () => {
                 > 
                     test
                 </IonButton>*/}
+                <IonGrid class="ion-justify-content-center">
+                    {/* <IonCol> */}
+                    <IonRow></IonRow>
+                    <IonRow></IonRow>
+                    <IonRow>
+                        <IonButton className="testing-button" color="secondary" shape="round">
+                            test
+                        </IonButton>
+                        <IonButton color="secondary">test</IonButton>
+                    </IonRow>
+                    {/* </IonCol> */}
+                </IonGrid>
             </IonContent>
         </IonPage>
     );

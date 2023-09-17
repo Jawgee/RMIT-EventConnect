@@ -60,8 +60,6 @@ const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string |
                 toPage('home', router);
             } else {
                 // Set an error to show on the page
-                console.log(e);
-                console.log(message);
                 setErrorMessage(message);
             }
         });

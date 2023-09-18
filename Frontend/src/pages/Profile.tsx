@@ -11,7 +11,7 @@ import {
     IonButton,
     IonText,
 } from '@ionic/react';
-import { toPage } from '../App';
+import { pushPage, replacePage } from '../App';
 import { clearProfileInfo } from '../data/profileReducer';
 import { useAppDispatch, useAppSelector } from '../hooks';
 
@@ -26,7 +26,7 @@ const Profile: React.FC<{
         // redirect to /login after logging out
         logout();
         dispatch(clearProfileInfo());
-        toPage('login', router);
+        replacePage('login', router);
     };
 
     const profileFields = [
@@ -52,7 +52,7 @@ const Profile: React.FC<{
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle size="large">Profile</IonTitle>
+                    <IonTitle>Profile</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
@@ -64,7 +64,7 @@ const Profile: React.FC<{
                         </IonItem>
                     ))}
                     <IonItem>
-                        <IonButton onClick={() => toPage('profile/edit', router, false)}>Edit</IonButton>
+                        <IonButton onClick={() => pushPage('profile/edit', router)}>Edit</IonButton>
                     </IonItem>
                     <IonItem>
                         <IonButton onClick={onLogoutClick}>Log out</IonButton>

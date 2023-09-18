@@ -8,11 +8,16 @@ import {
     IonList,
     IonItem,
     IonButton,
+    IonBackButton,
+    IonButtons,
 } from '@ionic/react';
-import { toPage } from '../App';
+import { replacePage } from '../App';
 import Input from '../components/Input';
-import { useForm } from 'react-hook-form';
-import { useAppSelector } from '../hooks';
+import { Controller, useForm } from 'react-hook-form';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { editUser } from '../data/accounts';
+import { useState } from 'react';
+import { setProfileInfo } from '../data/profileReducer';
 // import './Tab2.css';
 
 // TODO: Most likely have the "Profile" page send through the information
@@ -22,9 +27,39 @@ const ProfileEdit = () => {
     const { control, handleSubmit } = useForm({ defaultValues: userInfo });
     const router = useIonRouter();
 
-    const onSubmit = () => {
+    const dispatch = useAppDispatch();
+
+    // Used for error message handling
+    // When there was a fail from the backend
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const onSubmit = (data: any) => {
+        console.log(data);
+        editUser(data.id, data.email, data.first_name, data.last_name, data.profile).then((e) => {
+            // Get the information from the backend
+            const [successful, message] = e;
+
+            // If there were no issues
+            if (successful) {
+                // Change the userinfo
+                dispatch(
+                    setProfileInfo({
+                        first_name: data.first_name,
+                        last_name: data.last_name,
+                        email: data.email,
+                        profile: data.profile,
+                        id: data.id,
+                    })
+                );
+                // Send the user to the home page
+                router.goBack();
+            } else {
+                // Set an error to show on the page
+                setErrorMessage(message);
+            }
+        });
         // TODO: do something here
-        toPage('/profile', router);
+        replacePage('profile', router);
     };
 
     const profileFields = [
@@ -53,12 +88,23 @@ const ProfileEdit = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle size="large">Profile</IonTitle>
+                    <IonButtons slot="start">
+                        <IonBackButton></IonBackButton>
+                    </IonButtons>
+                    <IonTitle>Profile</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <IonList>
+                        <Controller
+                            // console.log(field);
+                            render={({ field }) => (
+                                <input onChange={field.onChange} value={field.value} type="hidden" />
+                            )}
+                            name="id"
+                            control={control}
+                        />
                         {profileFields.map((field, index) => (
                             <Input {...field} control={control} key={index} />
                         ))}
@@ -69,14 +115,8 @@ const ProfileEdit = () => {
                             <IonButton type="submit">Submit</IonButton>
                         </IonItem>
                     </IonList>
+                    {errorMessage && <p>{errorMessage}</p>}
                 </form>
-                <IonButton
-                    onClick={() => {
-                        toPage('profile', router);
-                    }}
-                >
-                    Return
-                </IonButton>
             </IonContent>
         </IonPage>
     );

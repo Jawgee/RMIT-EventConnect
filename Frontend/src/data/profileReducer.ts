@@ -5,6 +5,7 @@ export interface UserInfo {
     last_name: string;
     email: string;
     profile: string;
+    id: number;
 }
 
 export const defaultInfo: UserInfo = {
@@ -12,6 +13,7 @@ export const defaultInfo: UserInfo = {
     last_name: '',
     email: '',
     profile: '',
+    id: 0,
 };
 
 export const profileSlice = createSlice({

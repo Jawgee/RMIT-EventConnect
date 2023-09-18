@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';
 import { registerUser } from '../data/accounts.js';
-import { toPage } from '../App';
+import { replacePage } from '../App';
 
 const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | null>> }> = ({ setUser }) => {
     // Controller for the forms
@@ -57,7 +57,7 @@ const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string |
                 // Set the user to be used elsewhere
                 setUser('test');
                 // Send the user to the home page
-                toPage('home', router);
+                replacePage('home', router);
             } else {
                 // Set an error to show on the page
                 setErrorMessage(message);
@@ -74,9 +74,9 @@ const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string |
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonHeader collapse="condense">
+                <IonHeader>
                     <IonToolbar>
-                        <IonTitle size="large">Register</IonTitle>
+                        <IonTitle>Register</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <form onSubmit={handleSubmit(registerUserOnSubmit)}>
@@ -100,7 +100,7 @@ const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string |
                 {/* Link to login page */}
                 <button
                     onClick={() => {
-                        toPage('login', router);
+                        replacePage('login', router);
                     }}
                 >
                     Have an account? Login here

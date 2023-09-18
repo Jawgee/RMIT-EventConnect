@@ -4,9 +4,9 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 const Tab3: React.FC = () => {
     return (
         <IonPage>
-            <IonHeader collapse="condense">
+            <IonHeader>
                 <IonToolbar>
-                    <IonTitle size="large">Add Event</IonTitle>
+                    <IonTitle>Add Event</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>

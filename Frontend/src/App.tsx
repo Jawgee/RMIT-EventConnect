@@ -46,8 +46,13 @@ import ProfileLoading from './pages/ProfileLoading';
 
 setupIonicReact();
 
-export const toPage = (page: string, router: UseIonRouterResult, shouldReplace: boolean = true) => {
-    router.push(`/${page}`, 'root', shouldReplace ? 'replace' : 'push');
+export const replacePage = (page: string, router: UseIonRouterResult) => {
+    router.push(`/${page}`, 'root', 'replace');
+    console.log(router.routeInfo);
+};
+
+export const pushPage = (page: string, router: UseIonRouterResult) => {
+    router.push(`/${page}`, 'forward');
 };
 
 // the useState is most likely temporary
@@ -68,25 +73,25 @@ const App: React.FC = () => {
                     <IonReactRouter>
                         <IonTabs>
                             <IonRouterOutlet>
-                                <Route path="/home">
+                                <Route path="/:tab(home)">
                                     <Home />
                                 </Route>
-                                <Route exact path="/profile">
+                                <Route path="/:tab(profile)/info">
                                     <Profile logout={logout} />
                                 </Route>
-                                <Route path="/profile/edit">
+                                <Route path="/:tab(profile)/edit">
                                     <ProfileEdit />
                                 </Route>
-                                <Route path="/profile/load">
+                                <Route exact path="/:tab(profile)">
                                     <ProfileLoading user={user} />
                                 </Route>
-                                <Route path="/explore">
+                                <Route path="/:tab(explore)">
                                     <Explore />
                                 </Route>
-                                <Route path="/inbox">
+                                <Route path="/:tab(inbox)">
                                     <Inbox />
                                 </Route>
-                                <Route path="/eventadd">
+                                <Route path="/:tab(eventadd)">
                                     <EventAdd />
                                 </Route>
                                 <Route exact path="/">

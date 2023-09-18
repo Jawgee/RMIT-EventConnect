@@ -32,7 +32,6 @@ const Input: FC<InputProps> = ({
     return (
         <>
             <IonItem>
-                {/* {label && <IonLabel position="floating">{label}</IonLabel>} */}
                 <Controller
                     // console.log(field);
                     render={({ field }) => (

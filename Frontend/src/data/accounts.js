@@ -39,6 +39,7 @@ const registerUser = async (email, password, first_name, last_name) => {
             password,
             first_name,
             last_name,
+            // TODO: Edit this
             profile: 'Entrepreneur',
         });
 
@@ -73,8 +74,27 @@ const getUserInfo = async (email) => {
     }
 };
 
-const test = async () => {
-    await CapacitorCookies.clearAllCookies();
+const editUser = async (id, email, first_name, last_name, profile) => {
+    try {
+        const res = await client.put(`/${id}`, {
+            email,
+            first_name,
+            last_name,
+            profile,
+        });
+
+        // If there was success
+        if (res.status === 200) {
+            // CapacitorCookies.setCookie({ url: location.protocol, key: 'jwt', value: res.data.token });
+            return [true, ''];
+        }
+
+        // Fallback, in case the code reaches here
+        return [false, 'Something went wrong, try again'];
+    } catch (e) {
+        // If there was a 4xx/5xx response, it throws an error
+        return [false, e.response.data.error];
+    }
 };
 
-export { verifyUser, registerUser, getUserInfo, test };
+export { verifyUser, registerUser, getUserInfo, editUser };

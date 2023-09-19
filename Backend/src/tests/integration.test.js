@@ -58,8 +58,8 @@ describe("User/Login API Tests", () => {
         createdUserId = response.body.id;
     });
 
-    test("GET /api/Users/All should return a list of users", async () => {
-        const response = await request(app).get(`/api/Users/All`);
+    test("GET /api/Users should return a list of users", async () => {
+        const response = await request(app).get(`/api/Users`);
 
         expect(response.statusCode).toBe(200);
         expect(Array.isArray(response.body)).toBe(true);
@@ -131,15 +131,15 @@ describe("Event API Tests", () => {
         MockUserId = response.body.id;
     });
 
-    test("GET /api/Events/All should return list of events", async () => {
-        const response = await request(app).get(`/api/Events/All`);
+    test("GET /api/Events should return list of events", async () => {
+        const response = await request(app).get(`/api/Events`);
 
         expect(response.statusCode).toBe(200);
         expect(Array.isArray(response.body)).toBe(true);
     });
 
-    test("POST /api/Events/Create should create a new event", async () => {
-        const response = await request(app).post(`/api/Events/Create`).send({
+    test("POST /api/Events should create a new event", async () => {
+        const response = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
             sector: "Tech",
@@ -166,8 +166,8 @@ describe("Event API Tests", () => {
         expect(response.statusCode).toBe(201);
     });
 
-    test("POST /api/Events/Create should return a 409 when creating an event with a name that already exists", async () => {
-        const response = await request(app).post(`/api/Events/Create`).send({
+    test("POST /api/Events should return a 409 when creating an event with a name that already exists", async () => {
+        const response = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
             sector: "Tech",
@@ -185,8 +185,8 @@ describe("Event API Tests", () => {
         expect(response.statusCode).toBe(409);
     });
 
-    test("PUT /api/Events/Edit should return 200 if an event is updated successfully", async () => {
-        const response = await request(app).put(`/api/Events/Edit/${createdEventId}`).send({
+    test("PUT /api/Events should return 200 if an event is updated successfully", async () => {
+        const response = await request(app).put(`/api/Events/${createdEventId}`).send({
             name: "Updated Sample Event",
             owner: "John Freezy Doe",
             sector: "Tech",
@@ -246,7 +246,7 @@ describe("Tags API Tests", () => {
         });
         MockUserId = UserResponse.body.id;
         // Create a temporary dummy event to test the tag endpoints
-        const EventResponse = await request(app).post(`/api/Events/Create`).send({
+        const EventResponse = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
             sector: "Tech",
@@ -322,7 +322,7 @@ describe("Enlist API Tests", () => {
         });
         MockUserId = UserResponse.body.id;
         // Create a temporary dummy event to test the enlist endpoints
-        const EventResponse = await request(app).post(`/api/Events/Create`).send({
+        const EventResponse = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
             sector: "Tech",

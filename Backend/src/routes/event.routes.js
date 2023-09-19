@@ -3,7 +3,7 @@ module.exports = (express, app) => {
     const router = express.Router();
 
     // Get all events
-    router.get("/All", controller.listEvents);
+    router.get("/", controller.listEvents);
 
     // Get a event by ID
     router.get("/:id", controller.getEventByID);
@@ -12,10 +12,10 @@ module.exports = (express, app) => {
     router.get("/Attendees/:id", controller.getAttendeeList);
 
     // edit event's list of tags
-    router.put("/Edit/:id", controller.editEvent);
+    router.put("/:id", controller.editEvent);
 
     // create new event
-    router.post("/Create", controller.createEvent);
+    router.post("/", controller.createEvent);
 
     //MIGHT GET RID OF THIS ONE
     router.post("/AddAttendee/:id", controller.addAttendee);

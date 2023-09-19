@@ -3,7 +3,7 @@ module.exports = (express, app) => {
     const router = express.Router();
 
     // Get all users
-    router.get("/All", controller.listUsers);
+    router.get("/", controller.listUsers);
 
     // Get a user by ID
     router.get("/:id", controller.getUserByID);

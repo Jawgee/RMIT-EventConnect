@@ -228,7 +228,6 @@ describe("Event API Tests", () => {
         await request(app).delete(`/api/Users/${MockUserId}`);
     });
 
-
 });
 
 describe("Tags API Tests", () => {

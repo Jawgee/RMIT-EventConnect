@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 const secretKey = 'testing'; // change after finishing testing
+const bcrypt = require("bcrypt");
 
 const connectionPool = mysql.createPool({
   host: 'localhost',
@@ -12,15 +13,21 @@ const connectionPool = mysql.createPool({
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
-  connectionPool.query('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], (err, rows) => {
+  connectionPool.query('SELECT * FROM users WHERE email = ?', [email], async (err, rows) => {
     if (err) {
       console.error('Error executing query:', err.stack);
       return res.status(500).json({ error: 'Error retrieving user' });
     }
-
     if (rows.length === 0) {
       return res.status(404).json({ error: 'User not found' });
     }
+
+    // ---------------
+    const isMatch = await bcrypt.compare(password, rows[0].password);
+    if (isMatch === false) {
+      console.log('Password is incorrect');
+    }
+    // ---------------
 
     // Generate a JWT token with a unique identifier for the user
     const userId = rows[0].id;

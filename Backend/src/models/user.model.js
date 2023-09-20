@@ -1,15 +1,20 @@
 const Joi = require('joi');
 
+// Define a Joi schema for the User model
 const userSchema = Joi.object({
-  first_name: Joi.string().min(3).required(),
-  last_name: Joi.string().min(3).required(),
+  first_name: Joi.string().min(3).max(20).required(),
+  last_name: Joi.string().min(3).max(20).required(),
   photo: Joi.string(),
   email: Joi.string().email().required(),
-  password: Joi.string().pattern(new RegExp('^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$')).required(),
-  role: Joi.string()
+  password: Joi.string().pattern(new RegExp('^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$')).required().max(20),
+  profile: Joi.string().valid(
+    'Entrepreneur', 'Corporate', 'Investor', 'Startup',
+    'Academy', 'Ecosystem Facilitator', 'Acelerator',
+    'Incubator', 'SME', 'Agency', 'NGO'
+  ).required(),
 });
 
-module.exports = userSchema;
 module.exports = {
-    validateUser: (user) => userSchema.validate(user)
-  };
+  userSchema,
+  validateUser: (user) => userSchema.validate(user),
+};

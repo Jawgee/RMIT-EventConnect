@@ -3,8 +3,13 @@ import { CapacitorCookies } from '@capacitor/core';
 
 // Axios stuff, will make sure that things are consistent etc
 // Also handles all of the HTTP requests easily
-const client = axios.create({
+
+const userClient = axios.create({
     baseURL: 'http://localhost:4000/api/users',
+});
+
+const tagsClient = axios.create({
+    baseURL: 'http://localhost:4000/api/tags',
 });
 
 // Verifies the user via login
@@ -12,7 +17,7 @@ const verifyUser = async (email, password) => {
     // Return format: If it was successful, error message to be shown to the user
     // Sends the user to the backend
     try {
-        const res = await client.post('/login', { email, password });
+        const res = await userClient.post('/login', { email, password });
 
         // If there was success
         if (res.status === 200) {
@@ -34,7 +39,7 @@ const registerUser = async (email, password, first_name, last_name) => {
     // Return format: If it was successful, error message to be shown to the user
     // Sends the user to the backend
     try {
-        const res = await client.post('/register', {
+        const res = await userClient.post('/register', {
             email,
             password,
             first_name,
@@ -46,7 +51,7 @@ const registerUser = async (email, password, first_name, last_name) => {
         // If there was success
         if (res.status === 200) {
             await CapacitorCookies.setCookie({ url: 'http://' + location.host, key: 'jwt', value: res.data.token });
-            return [true, ''];
+            return [true, { email: res.data.email, id: res.data.id }];
         }
 
         // Fallback, in case the code reaches here
@@ -59,7 +64,7 @@ const registerUser = async (email, password, first_name, last_name) => {
 
 const getUserInfo = async (email) => {
     try {
-        const res = await client.get(`/Email/${email}`);
+        const res = await userClient.get(`/Email/${email}`);
 
         // If there was success
         if (res.status === 200) {
@@ -76,7 +81,7 @@ const getUserInfo = async (email) => {
 
 const editUser = async (id, email, first_name, last_name, profile) => {
     try {
-        const res = await client.put(`/${id}`, {
+        const res = await userClient.put(`/${id}`, {
             email,
             first_name,
             last_name,
@@ -85,7 +90,7 @@ const editUser = async (id, email, first_name, last_name, profile) => {
 
         // If there was success
         if (res.status === 200) {
-            // CapacitorCookies.setCookie({ url: location.protocol, key: 'jwt', value: res.data.token });
+            await CapacitorCookies.setCookie({ url: 'http://' + location.host, key: 'jwt', value: res.data.token });
             return [true, ''];
         }
 
@@ -97,4 +102,41 @@ const editUser = async (id, email, first_name, last_name, profile) => {
     }
 };
 
-export { verifyUser, registerUser, getUserInfo, editUser };
+const getTags = async (id) => {
+    try {
+        const res = await tagsClient.get(`/UserTagList/${id}`);
+
+        // If there was success
+        if (res.status === 200) {
+            let data = res.data[0];
+            delete data.first_name;
+            delete data.last_name;
+            return data;
+        }
+
+        // Fallback, in case the code reaches here
+        return 'Something went wrong, try again';
+    } catch (e) {
+        // If there was a 4xx/5xx response, it throws an error
+        return e.response.data.error;
+    }
+};
+
+const updateTags = async (id, tags) => {
+    try {
+        const res = await tagsClient.put(`/UserInterests/${id}`, tags);
+
+        // If there was success
+        if (res.status === 200) {
+            return [true, ''];
+        }
+
+        // Fallback, in case the code reaches here
+        return [false, 'Something went wrong, try again'];
+    } catch (e) {
+        // If there was a 4xx/5xx response, it throws an error
+        return [false, e.response.data.error];
+    }
+};
+
+export { verifyUser, registerUser, getUserInfo, editUser, getTags, updateTags };

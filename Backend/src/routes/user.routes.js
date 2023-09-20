@@ -2,23 +2,23 @@ module.exports = (express, app) => {
     const controller = require("../controllers/user.controller.js");
     const router = express.Router();
 
-    /*
-      Old routes:
-      router.get("/listUsers", controller.listUsers);
-      router.get("/getUser/:id", controller.getUserByID);
-      router.post("/createUser", controller.createUser);
-      router.put("/updateUser/:id", controller.updateUser);
-      router.delete("/deleteUser/:id", controller.deleteUser);
-    */
-
     // Get all users
-    router.get("/all", controller.listUsers);
+    router.get("/", controller.listUsers);
 
     // Get a user by ID
     router.get("/:id", controller.getUserByID);
+    
+    // Get a user by email (email in URL)
+    router.get("/Email/:email", controller.getUserByEmail);
+
+    // Get a user's list of events they're attending
+    router.get("/Events/:id", controller.getEventList);
 
     // Create new user/register
-    router.post("/register", controller.createUser);
+    router.post("/Register", controller.createUser);
+
+    // enlist into event
+    router.post("/Enlist/:id", controller.enlistUser);
 
     // Update user
     router.put("/:id", controller.updateUser);
@@ -26,6 +26,6 @@ module.exports = (express, app) => {
     // Delete user
     router.delete("/:id", controller.deleteUser);
 
-    // Add routes to server.
-    app.use("/api/users", router);
+    
+    app.use("/api/Users", router);
 };

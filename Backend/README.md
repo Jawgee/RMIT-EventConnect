@@ -34,16 +34,37 @@ node app.js
 
 Navigate to [localhost on port 4000](http://localhost:4000/), where you should get a message stating "Testing connection to port 4000".
 
-Current routes (all under `/api`):
+Current routes:
 
-- GET: `/users/all`
-- GET: `/users/:id`
-- POST: `/users/register`
-- PUT: `/users/:id`
-- DELETE: `/users/:id`
-- POST: `/users/login`
-- GET: `/tags/UserByTag/:column/:bool`
-- GET: `/tags/UserTagList/:user_id`
-- PUT: `/tags/UserInterests/:id`
+User Routes
+- GET: `/Users`
+- GET: `/Users/:id`
+- GET: `/Users/Email/:email`
+- GET: `/Users/Events/:id`
+- POST `/Users/Register`
+- POST `/Users/Enlist/:id`
+- PUT `/:id`
+- DELETE `/:id`
+Login Routes
+- POST: `/Users/Login`
+Event Routes
+- GET: `/Events`
+- GET: `/Events/:id`
+- GET: `/Events/Attendees/:id`
+- PUT `/Events/:id`
+- POST `/Events`
+- POST `/Events/AddAttendee/:id`
+- DELETE `/Events/:id`
+Tag Routes
+- GET: `/Tags/UserByTag/:column/:bool`
+- GET: `/Tags/UserTagList/:user_id`
+- GET: `/Tags/EventTagList/:event_id`
+- PUT: `/Tags/UserInterests/:user_id`
+- PUT: `/Tags/EventTags/:event_id`
+Enlist Routes
+- GET `/Enlist/Attendees/:event_id`
+- GET `/Enlist/Events/:user_id`
+- POST `/Enlist/`
+- DELETE `/Enlist/`
 
 :sunglasses:

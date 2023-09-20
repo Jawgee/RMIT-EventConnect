@@ -1,20 +1,9 @@
-import {
-    IonButton,
-    IonCol,
-    IonContent,
-    IonGrid,
-    IonHeader,
-    IonPage,
-    IonRow,
-    IonTitle,
-    IonToolbar,
-    useIonRouter,
-} from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
 import './testing.css';
-// import { toPage } from '../App';
+import { pushPage } from '../App';
 
-const Tab1: React.FC = () => {
-    // const router = useIonRouter();
+const Home: React.FC = () => {
+    const router = useIonRouter();
     return (
         <IonPage>
             <IonHeader>
@@ -24,9 +13,10 @@ const Tab1: React.FC = () => {
             </IonHeader>
             <IonContent fullscreen>
                 <p>TODO: Add stuff here</p>
+                <IonButton onClick={() => pushPage('tags', router)}>tags</IonButton>
             </IonContent>
         </IonPage>
     );
 };
 
-export default Tab1;
+export default Home;

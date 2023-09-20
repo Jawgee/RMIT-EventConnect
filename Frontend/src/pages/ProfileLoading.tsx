@@ -1,22 +1,9 @@
-import {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonTitle,
-    IonToolbar,
-    useIonRouter,
-    IonLoading,
-    useIonLoading,
-    IonSpinner,
-} from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter, IonSpinner } from '@ionic/react';
 import { replacePage } from '../App';
 import { getUserInfo } from '../data/accounts';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { UserInfo, defaultInfo, setProfileInfo } from '../data/profileReducer';
-import { useAppDispatch, useAppSelector } from '../hooks';
-// import './Tab2.css';
-
-// import { useLocation } from 'react-router';
+import { useAppDispatch } from '../hooks';
 
 export const getInfo = async (user: string) => {
     const info = await getUserInfo(user);
@@ -24,7 +11,7 @@ export const getInfo = async (user: string) => {
         // Do something to show that something went wrong
         return defaultInfo;
     } else {
-        let newInfo: UserInfo = {
+        const newInfo: UserInfo = {
             first_name: info.first_name,
             last_name: info.last_name,
             email: info.email,
@@ -37,13 +24,15 @@ export const getInfo = async (user: string) => {
 
 const ProfileLoading: React.FC<{
     user: string;
-}> = ({ user }) => {
+    setID: React.Dispatch<React.SetStateAction<number>>;
+}> = ({ user, setID }) => {
     // const { key } = useLocation();
     const dispatch = useAppDispatch();
     const router = useIonRouter();
     useEffect(() => {
         getInfo(user).then((e) => {
             dispatch(setProfileInfo(e));
+            setID(e.id);
             replacePage('profile/info', router);
         });
     }, []);

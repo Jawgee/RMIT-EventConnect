@@ -34,7 +34,6 @@ const verifyUser = async (email, password) => {
 };
 
 // Registers the user
-// TODO: Add tag information here when that has been implemented
 const registerUser = async (email, password, first_name, last_name) => {
     // Return format: If it was successful, error message to be shown to the user
     // Sends the user to the backend

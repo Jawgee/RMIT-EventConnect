@@ -11,18 +11,15 @@ import {
     IonBackButton,
     IonButtons,
 } from '@ionic/react';
-import { pushPage, replacePage } from '../App';
+import { pushPage } from '../App';
 import Input from '../components/Input';
 import { Controller, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { editUser } from '../data/accounts';
 import { useState } from 'react';
 import { setProfileInfo } from '../data/profileReducer';
-// import './Tab2.css';
 
-// TODO: Most likely have the "Profile" page send through the information
 const ProfileEdit = () => {
-    // TODO: Get info from the backend and then make default info to put into the useForm
     const userInfo = useAppSelector((state) => state.value);
     const { control, handleSubmit } = useForm({ defaultValues: userInfo });
     const router = useIonRouter();
@@ -34,7 +31,6 @@ const ProfileEdit = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const onSubmit = (data: any) => {
-        console.log(data);
         editUser(data.id, data.email, data.first_name, data.last_name, data.profile).then((e) => {
             // Get the information from the backend
             const [successful, message] = e;
@@ -58,8 +54,6 @@ const ProfileEdit = () => {
                 setErrorMessage(message);
             }
         });
-        // TODO: do something here
-        replacePage('profile', router);
     };
 
     const profileFields = [
@@ -77,6 +71,9 @@ const ProfileEdit = () => {
             name: 'last_name',
         },
         {
+            // TODO: Get the options from the backend
+            // And change this from raw input
+            // Into a selection with aforementioned options
             label: 'Profile',
             name: 'profile',
         },

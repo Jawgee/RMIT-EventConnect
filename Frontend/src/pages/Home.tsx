@@ -1,8 +1,8 @@
-import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import './testing.css';
 
 const Home: React.FC = () => {
-    const router = useIonRouter();
+    // const router = useIonRouter();
     return (
         <IonPage>
             <IonHeader>

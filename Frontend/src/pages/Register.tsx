@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';
 import { registerUser } from '../data/accounts.js';
-import { replacePage } from '../App';
+import { PasswordRegex, replacePage } from '../App';
 
 const Register: React.FC<{
     setUser: React.Dispatch<React.SetStateAction<string | null>>;
@@ -41,8 +41,7 @@ const Register: React.FC<{
             type: 'password',
             clearOnEdit: false,
             min: 7,
-            // TODO: get this regex from elsewhere so it isnt duplicated elsewhere
-            pattern: '^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$',
+            pattern: PasswordRegex,
             helperText: 'Password should have at least 1 uppercase letter, 1 digit and 1 special character.',
         },
     ];
@@ -55,8 +54,6 @@ const Register: React.FC<{
 
             // If there were no issues
             if (successful) {
-                // TODO: Add the proper information here
-                // TODO: use data.email probably
                 // Set the user to be used elsewhere
                 setUser(message.email);
                 setID(message.id);

@@ -24,7 +24,7 @@ const Input: FC<InputProps> = ({
     type,
     clearOnEdit,
     min = 3,
-    max = 45,
+    max = 20,
     pattern,
     required = true,
     helperText,

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';
 import { verifyUser } from '../data/accounts.js';
-import { replacePage } from '../App';
+import { PasswordRegex, replacePage } from '../App';
 
 const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | null>> }> = ({ setUser }) => {
     // Controller for the forms
@@ -30,7 +30,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
             type: 'password',
             clearOnEdit: false,
             min: 7,
-            pattern: '^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$',
+            pattern: PasswordRegex,
             helperText: 'Password should have at least 1 uppercase letter, 1 digit and 1 special character.',
         },
     ];
@@ -43,8 +43,6 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
 
             // If there were no issues
             if (successful) {
-                // TODO: Add the proper information here
-                // TODO: use data.email probably
                 // Set the user to be used elsewhere
                 setUser(data.email);
                 // Send the user to the home page

@@ -3,6 +3,7 @@ const cors = require('cors');
 const serverConfig = require("./src/serverConfig.js");
 const mysql = require('mysql');
 const fs = require('fs');
+const connectionPool = require('./src/connectionPool.js');
 
 const app = express();
 
@@ -19,15 +20,6 @@ function logError(message, error) {
     }
   });
 }
-
-// Create a MySQL connection pool
-const connectionPool = mysql.createPool({
-  host: 'eventconnect.c9p90bi9jzjz.us-east-1.rds.amazonaws.com',
-  user: 'admin',
-  password: 'SuperPassword12$',
-  // Eventually change the database (please)
-  database: 'Event_Connect'
-});
 
 // Acquire a connection from the pool and execute a query to create a table
 connectionPool.getConnection((err, connection) => {

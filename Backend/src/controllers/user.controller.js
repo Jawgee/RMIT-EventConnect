@@ -5,14 +5,7 @@ const { validateUser } = require("../models/user.model.js"); // Adjust the path 
 const jwt = require("jsonwebtoken");
 const secretKey = "testing"; // change after finishing testing
 const bcrypt = require("bcrypt");
-
-const connectionPool = mysql.createPool({
-  host: 'eventconnect.c9p90bi9jzjz.us-east-1.rds.amazonaws.com',
-  user: 'admin',
-  password: 'SuperPassword12$',
-  // Eventually change the database (please)
-  database: 'Event_Connect'
-});
+const connectionPool = require('../connectionPool.js');
 
 exports.listUsers = async (req, res) => {
   connectionPool.query("SELECT * FROM users", (err, rows) => {

@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 const { validateEvent } = require("../models/event.model.js"); // Adjust the path as needed
-
+const connectionPool = require('../connectionPool.js');
 
 const columns = [
   "name",
@@ -17,14 +17,6 @@ const columns = [
   "accessibility",
   "motivation",
 ];
-
-const connectionPool = mysql.createPool({
-  host: 'eventconnect.c9p90bi9jzjz.us-east-1.rds.amazonaws.com',
-  user: 'admin',
-  password: 'SuperPassword12$',
-  // Eventually change the database (please)
-  database: 'Event_Connect'
-});
 
 
 exports.listEvents = async (req, res) => {

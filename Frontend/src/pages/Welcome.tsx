@@ -1,7 +1,7 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, useIonRouter, IonImg } from '@ionic/react';
 // import './Register.css';
 import { toPage } from '../App';
-import "../components/Welcome.css";
+import "../styles/Welcome.css";
 
 const Register = () => {
     // Routing to allow to manually redirect the user

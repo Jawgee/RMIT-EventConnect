@@ -1,16 +1,17 @@
 const mysql = require("mysql");
 
 const connectionPool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "test", // Change this to your local database
+  host: 'eventconnect.c9p90bi9jzjz.us-east-1.rds.amazonaws.com',
+  user: 'admin',
+  password: 'SuperPassword12$',
+  // Eventually change the database (please)
+  database: 'Event_Connect'
 });
 
 const allowedColumns = [
   "pitch",
   "metaverse",
-  "virtual",
+  "online",
   "stand",
   "round_table",
   "tourism",
@@ -261,7 +262,7 @@ const validateColumns = (updateData) => {
 {
   "pitch": 1,
   "metaverse": 0,
-  "virtual": 1,
+  "online": 1,
   "stand": 0,
   "round_table": 1,
   "tourism": 0,

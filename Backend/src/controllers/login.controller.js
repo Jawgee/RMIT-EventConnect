@@ -4,12 +4,12 @@ const secretKey = 'testing'; // change after finishing testing
 const bcrypt = require("bcrypt");
 
 const connectionPool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'test' // change this to your local database
+  host: 'eventconnect.c9p90bi9jzjz.us-east-1.rds.amazonaws.com',
+  user: 'admin',
+  password: 'SuperPassword12$',
+  // Eventually change the database (please)
+  database: 'Event_Connect'
 });
-
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;

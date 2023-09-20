@@ -7,14 +7,15 @@ const secretKey = "testing"; // change after finishing testing
 const bcrypt = require("bcrypt");
 
 const connectionPool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "test", // change this to your local database
+  host: 'eventconnect.c9p90bi9jzjz.us-east-1.rds.amazonaws.com',
+  user: 'admin',
+  password: 'SuperPassword12$',
+  // Eventually change the database (please)
+  database: 'Event_Connect'
 });
 
 exports.listUsers = async (req, res) => {
-  connectionPool.query("SELECT * FROM test.users", (err, rows) => {
+  connectionPool.query("SELECT * FROM users", (err, rows) => {
     if (err) {
       console.error("Error executing query:", err.stack);
       return res.status(500).json({ error: "Error retrieving users" });
@@ -124,7 +125,7 @@ exports.createUser = async (req, res) => {
           });
 
           // Insert the user_id into the Tags table with 'user' as the tag_type
-          connectionPool.query("INSERT INTO Tags (user_id, tag_type) VALUES (?, 'user')", [insertedUserId], (tagErr, _) => {
+          connectionPool.query("INSERT INTO tags (user_id, tag_type) VALUES (?, 'user')", [insertedUserId], (tagErr, _) => {
             if (tagErr) {
               console.error("Error inserting tag:", tagErr.stack);
               return res.status(500).json({ error: "Error inserting tag for user" });

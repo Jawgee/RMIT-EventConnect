@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require('cors');
 const serverConfig = require("./src/serverConfig.js");
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const fs = require('fs');
 
 const app = express();
@@ -22,11 +22,11 @@ function logError(message, error) {
 
 // Create a MySQL connection pool
 const connectionPool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
+  host: 'eventconnect.c9p90bi9jzjz.us-east-1.rds.amazonaws.com',
+  user: 'admin',
+  password: 'SuperPassword12$',
   // Eventually change the database (please)
-  database: 'test'
+  database: 'Event_Connect'
 });
 
 // Acquire a connection from the pool and execute a query to create a table
@@ -72,7 +72,7 @@ connectionPool.getConnection((err, connection) => {
       pitch TINYINT(1) NOT NULL,
       round_table TINYINT(1) NOT NULL,
       stand TINYINT(1) NOT NULL,
-      virtual TINYINT(1) NOT NULL,
+      online TINYINT(1) NOT NULL,
       tourism TINYINT(1) NOT NULL,
       tech TINYINT(1) NOT NULL,
       bio TINYINT(1) NOT NULL,

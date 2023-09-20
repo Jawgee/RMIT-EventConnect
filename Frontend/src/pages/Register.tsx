@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';
 import { registerUser } from '../data/accounts.js';
-import { PasswordRegex, pushPage, replacePage } from '../App';
+import { PasswordRegex, replacePage } from '../App';
 
 const Register: React.FC<{
     setUser: React.Dispatch<React.SetStateAction<string | null>>;

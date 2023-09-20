@@ -11,7 +11,7 @@ import {
     IonBackButton,
     IonButtons,
 } from '@ionic/react';
-import { replacePage } from '../App';
+import { pushPage, replacePage } from '../App';
 import Input from '../components/Input';
 import { Controller, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../hooks';
@@ -109,7 +109,7 @@ const ProfileEdit = () => {
                             <Input {...field} control={control} key={index} />
                         ))}
                         <IonItem>
-                            <IonButton>Click to edit tags</IonButton>
+                            <IonButton onClick={() => pushPage('profile/tags', router)}>Click to edit tags</IonButton>
                         </IonItem>
                         <IonItem>
                             <IonButton type="submit">Submit</IonButton>

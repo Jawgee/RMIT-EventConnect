@@ -37,13 +37,15 @@ export const getInfo = async (user: string) => {
 
 const ProfileLoading: React.FC<{
     user: string;
-}> = ({ user }) => {
+    setID: React.Dispatch<React.SetStateAction<number>>;
+}> = ({ user, setID }) => {
     // const { key } = useLocation();
     const dispatch = useAppDispatch();
     const router = useIonRouter();
     useEffect(() => {
         getInfo(user).then((e) => {
             dispatch(setProfileInfo(e));
+            setID(e.id);
             replacePage('profile/info', router);
         });
     }, []);

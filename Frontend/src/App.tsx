@@ -43,6 +43,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import { getUserInfo } from './data/accounts';
 import ProfileLoading from './pages/ProfileLoading';
+import SelectTags from './pages/SelectTags';
 
 setupIonicReact();
 
@@ -61,6 +62,7 @@ export const pushPage = (page: string, router: UseIonRouterResult) => {
 const App: React.FC = () => {
     // const [user, setUser] = useState<string | null>(null);
     const [user, setUser] = useState<string | null>('test@ing.com');
+    const [id, setID] = useState<number>(1);
 
     const logout = () => {
         setUser(null);
@@ -76,14 +78,18 @@ const App: React.FC = () => {
                                 <Route path="/:tab(home)">
                                     <Home />
                                 </Route>
+                                {/* TODO: Fix */}
                                 <Route path="/:tab(profile)/info">
                                     <Profile logout={logout} />
                                 </Route>
                                 <Route path="/:tab(profile)/edit">
                                     <ProfileEdit />
                                 </Route>
+                                <Route path="/:tab(profile)/tags">
+                                    <SelectTags id={id} showBack={true} />
+                                </Route>
                                 <Route exact path="/:tab(profile)">
-                                    <ProfileLoading user={user} />
+                                    <ProfileLoading user={user} setID={setID} />
                                 </Route>
                                 <Route path="/:tab(explore)">
                                     <Explore />
@@ -94,6 +100,7 @@ const App: React.FC = () => {
                                 <Route path="/:tab(eventadd)">
                                     <EventAdd />
                                 </Route>
+
                                 <Route exact path="/">
                                     <Redirect to="/home" />
                                 </Route>
@@ -136,8 +143,11 @@ const App: React.FC = () => {
                                 <Login setUser={setUser} />
                             </Route>
                             <Route path="/register">
-                                <Register setUser={setUser} />
+                                <Register setUser={setUser} setID={setID} />
                                 {/* <RegisterTest /> */}
+                            </Route>
+                            <Route path="/tags">
+                                <SelectTags id={id} showBack={false} />
                             </Route>
                             <Route exact path="/">
                                 <Redirect to="/register" />

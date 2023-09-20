@@ -6,7 +6,10 @@ import Input, { type InputProps } from '../components/Input';
 import { registerUser } from '../data/accounts.js';
 import { replacePage } from '../App';
 
-const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | null>> }> = ({ setUser }) => {
+const Register: React.FC<{
+    setUser: React.Dispatch<React.SetStateAction<string | null>>;
+    setID: React.Dispatch<React.SetStateAction<number>>;
+}> = ({ setUser, setID }) => {
     // Controller for the forms
     const { control, handleSubmit } = useForm();
 
@@ -55,7 +58,8 @@ const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string |
                 // TODO: Add the proper information here
                 // TODO: use data.email probably
                 // Set the user to be used elsewhere
-                setUser('test');
+                setUser(message.email);
+                setID(message.id);
                 // Send the user to the home page
                 replacePage('home', router);
             } else {

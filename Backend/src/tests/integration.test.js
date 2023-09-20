@@ -79,6 +79,15 @@ describe("User/Login API Tests", () => {
         expect(response.statusCode).toBe(200);
     });
 
+        test("POST /api/Users/Login should return a 404 for insuccessful login where username is correct", async () => {
+        const response = await request(app).post(`/api/Users/Login`).send({
+            email: "test@email.com",
+            password: "JohnDoesPassword"
+        });
+        expect(response.statusCode).toBe(404);
+        expect(response.body.error).toBe("Password is incorrect");
+    });
+
     test("POST /api/Users/Login should return a 404 for insuccessful login", async () => {
         const response = await request(app).post(`/api/Users/Login`).send({
             email: "notarealuser@email.com",
@@ -227,7 +236,6 @@ describe("Event API Tests", () => {
     afterAll(async () => {
         await request(app).delete(`/api/Users/${MockUserId}`);
     });
-
 
 });
 

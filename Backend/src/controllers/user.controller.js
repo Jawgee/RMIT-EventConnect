@@ -4,6 +4,7 @@ const mysql = require("mysql");
 const { validateUser } = require("../models/user.model.js"); // Adjust the path as needed
 const jwt = require("jsonwebtoken");
 const secretKey = "testing"; // change after finishing testing
+const bcrypt = require("bcrypt");
 
 const connectionPool = mysql.createPool({
   host: "localhost",
@@ -90,8 +91,9 @@ exports.createUser = async (req, res) => {
   const result = validateUser(req.body);
   if (result.error) return res.status(422).json({error: result.error.details[0].message});
 
-  const { first_name, last_name, photo, email, password, profile } = req.body;
-
+  const { first_name, last_name, photo, email, profile } = req.body;
+  const password = await bcrypt.hash(req.body.password, 10);
+  
   try {
     // Check if the email already exists in the database
     connectionPool.query("SELECT * FROM users WHERE email = ?", [email], (checkErr, checkResults) => {

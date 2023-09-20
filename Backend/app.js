@@ -39,19 +39,19 @@ connectionPool.getConnection((err, connection) => {
   const createUserTableQuery = `
     CREATE TABLE IF NOT EXISTS users (
       id INT AUTO_INCREMENT PRIMARY KEY,
-      first_name VARCHAR(100) NOT NULL,
-      last_name VARCHAR(100) NOT NULL,
+      first_name VARCHAR(30) NOT NULL,
+      last_name VARCHAR(300) NOT NULL,
       photo VARCHAR(300),
-      email VARCHAR(300) NOT NULL UNIQUE,
-      password VARCHAR(20) NOT NULL,
+      email VARCHAR(320) NOT NULL UNIQUE,
+      password VARCHAR(30) NOT NULL,
       profile ENUM('Entrepreneur','Corporate','Investor','Startup','Academy','Ecosystem Facilitator','Accelerator','Incubator','SME','Agency','NGO') NOT NULL
     )`;
   
   const createEventTableQuery = `
     CREATE TABLE IF NOT EXISTS events (
       id INT AUTO_INCREMENT PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
-      owner VARCHAR(255) NOT NULL,
+      name VARCHAR(100) NOT NULL,
+      owner VARCHAR(100) NOT NULL,
       sector ENUM('Tourism','Tech','Bio','Health','Sustainability','Agro','Fintech','GreenTech','Mobility','Logistic','Food','Smart Cities','Blue Economy','Space') NOT NULL,
       profile ENUM('Entrepreneur','Corporate','Investor','Startup','Academy','Ecosystem Facilitator','Accelerator','Incubator','SME','Agency','NGO') NOT NULL,
       category ENUM('State of the art','Round Table','Living Test','Stand','Pitch','ShowRoom') NOT NULL,

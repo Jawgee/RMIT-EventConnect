@@ -1,19 +1,9 @@
-import {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonTitle,
-    IonToolbar,
-    useIonRouter,
-    IonLoading,
-    useIonLoading,
-    IonSpinner,
-} from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter, IonSpinner } from '@ionic/react';
 import { replacePage } from '../App';
 import { getUserInfo } from '../data/accounts';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { UserInfo, defaultInfo, setProfileInfo } from '../data/profileReducer';
-import { useAppDispatch, useAppSelector } from '../hooks';
+import { useAppDispatch } from '../hooks';
 // import './Tab2.css';
 
 // import { useLocation } from 'react-router';
@@ -24,7 +14,7 @@ export const getInfo = async (user: string) => {
         // Do something to show that something went wrong
         return defaultInfo;
     } else {
-        let newInfo: UserInfo = {
+        const newInfo: UserInfo = {
             first_name: info.first_name,
             last_name: info.last_name,
             email: info.email,

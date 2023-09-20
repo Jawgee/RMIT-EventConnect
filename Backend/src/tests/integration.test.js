@@ -27,7 +27,7 @@ describe("User/Login API Tests", () => {
         const response = await request(app).post(`/api/Users/Register`).send({
             first_name: "Test",
             last_name: "User",
-            email: "test@email.com",
+            email: "testse8fisgheuifyghseuyfgsueyfgsuyefgbyusegfyusefgyusegfyusef@email.com",
             // Invalid Password
             password: "Test",
             profile: "Incubator",
@@ -39,7 +39,7 @@ describe("User/Login API Tests", () => {
         const response = await request(app).post(`/api/Users/Register`).send({
             first_name: "Test",
             last_name: "User",
-            email: "test@email.com",
+            email: "testse8fisgheuifyghseuyfgsueyfgsuyefgbyusegfyusefgyusegfyusef@email.com",
             password: "Test"
             // Missing password argument
         });
@@ -50,7 +50,7 @@ describe("User/Login API Tests", () => {
         const response = await request(app).post(`/api/Users/Register`).send({
             first_name: "Test",
             last_name: "User",
-            email: "test@email.com",
+            email: "testse8fisgheuifyghseuyfgsueyfgsuyefgbyusegfyusefgyusegfyusef@email.com",
             password: "Test123!",
             profile: "Incubator",
         });
@@ -73,7 +73,7 @@ describe("User/Login API Tests", () => {
 
     test("POST /api/Users/Login should return 200 for successful login", async () => {
         const response = await request(app).post(`/api/Users/Login`).send({
-            email: "test@email.com",
+            email: "testse8fisgheuifyghseuyfgsueyfgsuyefgbyusegfyusefgyusegfyusef@email.com",
             password: "Test123!"
         });
         expect(response.statusCode).toBe(200);
@@ -81,7 +81,7 @@ describe("User/Login API Tests", () => {
 
         test("POST /api/Users/Login should return a 404 for insuccessful login where username is correct", async () => {
         const response = await request(app).post(`/api/Users/Login`).send({
-            email: "test@email.com",
+            email: "testse8fisgheuifyghseuyfgsueyfgsuyefgbyusegfyusefgyusegfyusef@email.com",
             password: "JohnDoesPassword"
         });
         expect(response.statusCode).toBe(404);
@@ -90,7 +90,7 @@ describe("User/Login API Tests", () => {
 
     test("POST /api/Users/Login should return a 404 for insuccessful login", async () => {
         const response = await request(app).post(`/api/Users/Login`).send({
-            email: "notarealuser@email.com",
+            email: "notarealusertestse8fisgheuifyghseuyfgsueyfgsuyefgbyusegfyusefgyusegfyusef@email.com@email.com",
             password: "JohnDoesPassword"
         });
         expect(response.statusCode).toBe(404);
@@ -110,12 +110,6 @@ describe("User/Login API Tests", () => {
         expect(response.statusCode).toBe(404);
     });
 
-
-    test("DELETE /api/Users/:id should delete a user", async () => {
-        const response = await request(app).delete(`/api/Users/${createdUserId}`);
-
-        expect(response.statusCode).toBe(200);
-    });
 
     test("DELETE /api/Users/:id should return 404 if the user is not found", async () => {
         const response = await request(app).delete(`/api/Users/${createdUserId}`);

@@ -4,9 +4,6 @@ import { getUserInfo } from '../data/accounts';
 import { useEffect } from 'react';
 import { UserInfo, defaultInfo, setProfileInfo } from '../data/profileReducer';
 import { useAppDispatch } from '../hooks';
-// import './Tab2.css';
-
-// import { useLocation } from 'react-router';
 
 export const getInfo = async (user: string) => {
     const info = await getUserInfo(user);

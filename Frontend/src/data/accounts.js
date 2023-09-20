@@ -3,6 +3,7 @@ import { CapacitorCookies } from '@capacitor/core';
 
 // Axios stuff, will make sure that things are consistent etc
 // Also handles all of the HTTP requests easily
+
 const userClient = axios.create({
     baseURL: 'http://localhost:4000/api/users',
 });
@@ -89,6 +90,7 @@ const editUser = async (id, email, first_name, last_name, profile) => {
 
         // If there was success
         if (res.status === 200) {
+            await CapacitorCookies.setCookie({ url: 'http://' + location.host, key: 'jwt', value: res.data.token });
             return [true, ''];
         }
 

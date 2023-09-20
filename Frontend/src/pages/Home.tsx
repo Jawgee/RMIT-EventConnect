@@ -2,7 +2,7 @@ import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIon
 import './testing.css';
 import { pushPage } from '../App';
 
-const Tab1: React.FC = () => {
+const Home: React.FC = () => {
     const router = useIonRouter();
     return (
         <IonPage>
@@ -19,4 +19,4 @@ const Tab1: React.FC = () => {
     );
 };
 
-export default Tab1;
+export default Home;

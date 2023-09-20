@@ -41,6 +41,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+
 // import { getUserInfo } from './data/accounts';
 import ProfileLoading from './pages/ProfileLoading';
 import SelectTags from './pages/SelectTags';

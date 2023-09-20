@@ -43,7 +43,7 @@ connectionPool.getConnection((err, connection) => {
       last_name VARCHAR(300) NOT NULL,
       photo VARCHAR(300),
       email VARCHAR(320) NOT NULL UNIQUE,
-      password VARCHAR(30) NOT NULL,
+      password VARCHAR(255) NOT NULL,
       profile ENUM('Entrepreneur','Corporate','Investor','Startup','Academy','Ecosystem Facilitator','Accelerator','Incubator','SME','Agency','NGO') NOT NULL
     )`;
   

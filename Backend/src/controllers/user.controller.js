@@ -124,7 +124,7 @@ exports.createUser = async (req, res) => {
             maxAge: 3600000,
           });
 
-          // Insert the user_id into the Tags table with 'user' as the tag_type
+          // Insert the user_id into the tags table with 'user' as the tag_type
           connectionPool.query("INSERT INTO tags (user_id, tag_type) VALUES (?, 'user')", [insertedUserId], (tagErr, _) => {
             if (tagErr) {
               console.error("Error inserting tag:", tagErr.stack);

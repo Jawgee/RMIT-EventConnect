@@ -2,8 +2,8 @@ const Joi = require('joi');
 
 // Define a Joi schema for the Event model
 const eventSchema = Joi.object({
-  name: Joi.string().required(),
-  owner: Joi.string().required(),
+  name: Joi.string().max(50).required(),
+  owner: Joi.string().max(50).required(),
   sector: Joi.string().valid('Tourism', 'Tech', 'Bio', 'Health', 'Sustainability', 'Agro', 'Fintech', 'GreenTech', 'Mobility', 'Logistic', 'Food', 'Smart Cities', 'Blue Economy', 'Space').required(),
   profile: Joi.string().valid('Entrepreneur', 'Corporate', 'Investor', 'Startup', 'Academy', 'Ecosystem Facilitator', 'Acelerator', 'Incubator', 'SME', 'Agency', 'NGO').required(),
   category: Joi.string().valid('State of the art', 'Round Table', 'Living Test', 'Stand', 'Pitch', 'ShowRoom').required(),

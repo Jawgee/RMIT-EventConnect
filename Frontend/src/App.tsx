@@ -22,6 +22,7 @@ import EventAdd from './pages/EventAdd';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ProfileEdit from './pages/ProfileEdit';
+import SelectTags from './pages/SelectTags';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -41,10 +42,6 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-
-// import { getUserInfo } from './data/accounts';
-import ProfileLoading from './pages/ProfileLoading';
-import SelectTags from './pages/SelectTags';
 
 setupIonicReact();
 
@@ -79,10 +76,6 @@ const App: React.FC = () => {
                                 <Route path="/:tab(home)">
                                     <Home />
                                 </Route>
-                                {/* TODO: Fix */}
-                                <Route path="/:tab(profile)/info">
-                                    <Profile logout={logout} />
-                                </Route>
                                 <Route path="/:tab(profile)/edit">
                                     <ProfileEdit />
                                 </Route>
@@ -90,7 +83,7 @@ const App: React.FC = () => {
                                     <SelectTags id={id} showBack={true} />
                                 </Route>
                                 <Route exact path="/:tab(profile)">
-                                    <ProfileLoading user={user} setID={setID} />
+                                    <Profile logout={logout} user={user} setID={setID} />
                                 </Route>
                                 <Route path="/:tab(explore)">
                                     <Explore />

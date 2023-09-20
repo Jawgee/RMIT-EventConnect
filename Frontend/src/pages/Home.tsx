@@ -1,6 +1,5 @@
 import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
 import './testing.css';
-import { pushPage } from '../App';
 
 const Home: React.FC = () => {
     const router = useIonRouter();
@@ -13,7 +12,6 @@ const Home: React.FC = () => {
             </IonHeader>
             <IonContent fullscreen>
                 <p>TODO: Add stuff here</p>
-                <IonButton onClick={() => pushPage('tags', router)}>tags</IonButton>
             </IonContent>
         </IonPage>
     );

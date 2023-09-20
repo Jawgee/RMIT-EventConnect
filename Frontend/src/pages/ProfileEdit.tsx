@@ -80,8 +80,6 @@ const ProfileEdit = () => {
             label: 'Profile',
             name: 'profile',
         },
-        // TODO: Create link to tag edit page
-        // TODO: make aforementioned page
     ];
 
     return (

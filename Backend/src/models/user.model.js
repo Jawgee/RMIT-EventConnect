@@ -6,7 +6,7 @@ const userSchema = Joi.object({
   last_name: Joi.string().min(3).required(),
   photo: Joi.string(),
   email: Joi.string().email().required(),
-  password: Joi.string().pattern(new RegExp('^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$')).required(),
+  password: Joi.string().pattern(new RegExp('^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$')).required().max(20),
   profile: Joi.string().valid(
     'Entrepreneur', 'Corporate', 'Investor', 'Startup',
     'Academy', 'Ecosystem Facilitator', 'Acelerator',

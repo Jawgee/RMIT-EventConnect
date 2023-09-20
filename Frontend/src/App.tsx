@@ -97,7 +97,9 @@ const App: React.FC = () => {
                                 <Route path="/:tab(eventadd)">
                                     <EventAdd />
                                 </Route>
-
+                                <Route path="/tags">
+                                    <SelectTags id={id} showBack={false} />
+                                </Route>
                                 <Route exact path="/">
                                     <Redirect to="/home" />
                                 </Route>
@@ -142,9 +144,6 @@ const App: React.FC = () => {
                             <Route path="/register">
                                 <Register setUser={setUser} setID={setID} />
                                 {/* <RegisterTest /> */}
-                            </Route>
-                            <Route path="/tags">
-                                <SelectTags id={id} showBack={false} />
                             </Route>
                             <Route exact path="/">
                                 <Redirect to="/register" />

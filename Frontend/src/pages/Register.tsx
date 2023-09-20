@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';
 import { registerUser } from '../data/accounts.js';
-import { PasswordRegex, replacePage } from '../App';
+import { PasswordRegex, pushPage, replacePage } from '../App';
 
 const Register: React.FC<{
     setUser: React.Dispatch<React.SetStateAction<string | null>>;
@@ -34,6 +34,7 @@ const Register: React.FC<{
             name: 'email',
             type: 'email',
             label: 'Email',
+            max: 45,
         },
         {
             name: 'password',
@@ -41,6 +42,7 @@ const Register: React.FC<{
             type: 'password',
             clearOnEdit: false,
             min: 7,
+            max: 45,
             pattern: PasswordRegex,
             helperText: 'Password should have at least 1 uppercase letter, 1 digit and 1 special character.',
         },
@@ -58,7 +60,7 @@ const Register: React.FC<{
                 setUser(message.email);
                 setID(message.id);
                 // Send the user to the home page
-                replacePage('home', router);
+                replacePage('tags', router);
             } else {
                 // Set an error to show on the page
                 setErrorMessage(message);

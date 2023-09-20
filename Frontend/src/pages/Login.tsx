@@ -23,6 +23,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
             name: 'email',
             type: 'email',
             label: 'Email',
+            max: 45,
         },
         {
             name: 'password',
@@ -30,6 +31,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
             type: 'password',
             clearOnEdit: false,
             min: 7,
+            max: 45,
             pattern: PasswordRegex,
             helperText: 'Password should have at least 1 uppercase letter, 1 digit and 1 special character.',
         },

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getTags, updateTags } from '../data/accounts';
 import { IonButton, IonCheckbox, useIonRouter } from '@ionic/react';
 import './Tags.css';
+import { replacePage } from '../App';
 
 const getInfo = async (id: number) => {
     const info = await getTags(id);
@@ -40,7 +41,11 @@ const Tags: React.FC<{
         updateTags(id, tags).then((e) => {
             const [successful, message] = e;
             if (successful) {
-                router.goBack();
+                if (router.canGoBack()) {
+                    router.goBack();
+                } else {
+                    replacePage('home', router);
+                }
             } else {
                 // Set an error to show on the page
                 setErrorMessage(message);

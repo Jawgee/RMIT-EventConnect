@@ -61,6 +61,7 @@ const ProfileEdit = () => {
             label: 'Email',
             name: 'email',
             type: 'email',
+            max: 45,
         },
         {
             label: 'First Name',

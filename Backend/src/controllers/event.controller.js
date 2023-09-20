@@ -135,9 +135,9 @@ exports.createEvent = async (req, res) => {
 
             const insertedEventId = insertResult.insertId;
 
-            // Insert the event_id into the Tags table with 'event' as the tag_type
+            // Insert the event_id into the tags table with 'event' as the tag_type
             connectionPool.query(
-              "INSERT INTO Tags (event_id, tag_type) VALUES (?, 'event')",
+              "INSERT INTO tags (event_id, tag_type) VALUES (?, 'event')",
               [insertedEventId],
               (tagErr, _) => {
                 if (tagErr) {

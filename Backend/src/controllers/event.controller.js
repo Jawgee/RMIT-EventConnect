@@ -1,4 +1,3 @@
-const mysql = require("mysql");
 const { validateEvent } = require("../models/event.model.js"); // Adjust the path as needed
 const connectionPool = require('../connectionPool.js');
 

@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require('cors');
 const serverConfig = require("./src/serverConfig.js");
-const mysql = require('mysql');
 const fs = require('fs');
 const connectionPool = require('./src/connectionPool.js');
 

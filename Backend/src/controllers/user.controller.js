@@ -1,13 +1,10 @@
-// SHOULD NOT BE HERE NEED TO FIGURE OUT HOW TO DECLARE THIS AND EXPORT FROM APP FILE
-
-const mysql = require("mysql");
 const { validateUser } = require("../models/user.model.js"); // Adjust the path as needed
 const jwt = require("jsonwebtoken");
 const secretKey = "testing"; // change after finishing testing
 const bcrypt = require("bcrypt");
 const connectionPool = require('../connectionPool.js');
 
-exports.listUsers = async (req, res) => {
+exports.listUsers = async (_, res) => {
   connectionPool.query("SELECT * FROM users", (err, rows) => {
     if (err) {
       console.error("Error executing query:", err.stack);

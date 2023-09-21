@@ -1,7 +1,7 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, useIonRouter } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, useIonRouter, IonImg } from '@ionic/react';
 // import './Register.css';
 import { toPage } from '../App';
-import "../components/welcome.css";
+import "../styles/Welcome.css";
 
 const Register = () => {
     // Routing to allow to manually redirect the user
@@ -10,21 +10,28 @@ const Register = () => {
     // TODO: Create proper design
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar>
-                    <IonTitle>Welcome</IonTitle>
-                </IonToolbar>
-            </IonHeader>
-            <IonContent fullscreen>
-                <IonHeader collapse="condense">
-                    <IonToolbar color="primary">
-                        <IonTitle size="large">Welcome</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
+            <IonContent className="whole-background" fullscreen>
 
-                {/* Link to login page */}
-                <IonButton className="new-button" onClick={() => toPage('login', router)}>Login</IonButton>
-                <IonButton onClick={() => toPage('register', router)}>Register</IonButton>
+                <div className="container">
+                    <div className="top-image">
+                        <div>
+                            <IonImg
+                                src="../src/images/innovent.png"
+                                alt="Innovent Logo"
+                            ></IonImg>
+                        </div>
+                    </div>
+                    {/* Link to login page */}
+                    <div className='middle-buttons1'><IonButton className="login-button" onClick={() => toPage('login', router)}>Log In</IonButton></div>
+                    <div className='middle-buttons2'><IonButton className="signup-button" onClick={() => toPage('register', router)}>Sign Up</IonButton></div>
+                    <div className='bottom-image'>
+                        <IonImg
+                            src="../src/images/innobound.png"
+                            alt="Innobound Logo"
+                        ></IonImg>
+                    </div>
+                </div>
+                
             </IonContent>
         </IonPage>
     );

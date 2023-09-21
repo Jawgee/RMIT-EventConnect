@@ -6,9 +6,9 @@ const Profile: React.FC<{ logout: Function }> = ({ logout }) => {
     const router = useIonRouter();
 
     const onLogoutClick = () => {
-        // redirect to /login after logging out
+        // redirect to /welcome after logging out
         logout();
-        toPage('/login', router);
+        toPage('welcome', router);
     };
 
     return (

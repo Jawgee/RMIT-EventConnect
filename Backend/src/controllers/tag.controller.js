@@ -1,4 +1,3 @@
-const mysql = require("mysql");
 const connectionPool = require('../connectionPool.js');
 
 const allowedColumns = [

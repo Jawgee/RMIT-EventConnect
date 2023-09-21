@@ -190,20 +190,6 @@ async function queryDatabase(sqlQuery, values) {
   });
 }
 
-
-// Define a helper function to perform database queries with async/await
-async function queryDatabase(sqlQuery, values) {
-  return new Promise((resolve, reject) => {
-    connectionPool.query(sqlQuery, values, (err, result) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result);
-      }
-    });
-  });
-}
-
 exports.enlistUser = async (req, res) => {
   const user_id = req.params.id;
   const { event_id } = req.body;

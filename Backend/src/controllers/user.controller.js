@@ -141,7 +141,6 @@ exports.createUser = async (req, res) => {
   }
 };
 
-
 exports.updateUser = async (req, res) => {
   const userId = req.params.id;
   const updatedFields = req.body;
@@ -151,53 +150,59 @@ exports.updateUser = async (req, res) => {
     return res.status(400).json({ error: "No fields to update provided" });
   }
 
-  // First, retrieve the current user data from the database
-  const selectQuery = "SELECT * FROM users WHERE id = ?";
+  const setStatements = [];
+  const values = [];
 
-  connectionPool.query(selectQuery, [userId], (selectErr, selectResult) => {
-    if (selectErr) {
-      console.error("Error executing SELECT query:", selectErr.stack);
-      return res.status(500).json({ error: "Error retrieving user data" });
-    }
+  // Build the SET part of the SQL query dynamically
+  for (const [key, value] of Object.entries(updatedFields)) {
+    setStatements.push(`${key} = ?`);
+    values.push(value);
+  }
 
-    if (selectResult.length === 0) {
+  values.push(userId); // Add the userId for the WHERE clause
+
+  const updateQuery = `UPDATE users SET ${setStatements.join(', ')} WHERE id = ?`;
+
+  try {
+    const result = await queryDatabase(updateQuery, values);
+
+    if (result.affectedRows === 0) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Merge the current user data with the updatedFields
-    const currentUserData = selectResult[0];
-    const mergedUserData = { ...currentUserData, ...updatedFields };
+    res.json({ id: userId, ...updatedFields });
+  } catch (err) {
+    console.error("Error executing query:", err.stack);
+    return res.status(500).json({ error: "Error updating user" });
+  }
+};
 
-    // Validate the merged user data
-    const { error } = validateUser(mergedUserData);
-    if (error) {
-      return res.status(400).json({ error: error.details[0].message });
-    }
-
-    // Build the SET part of the SQL query dynamically
-    const setStatements = [];
-    const values = [];
-
-    for (const [key, value] of Object.entries(mergedUserData)) {
-      setStatements.push(`${key} = ?`);
-      values.push(value);
-    }
-
-    values.push(userId); // Add the userId for the WHERE clause
-
-    // Now, update the user data in the database
-    const updateQuery = `UPDATE users SET ${setStatements.join(', ')} WHERE id = ?`;
-
-    connectionPool.query(updateQuery, values, (updateErr, _) => {
-      if (updateErr) {
-        console.error("Error executing UPDATE query:", updateErr.stack);
-        return res.status(500).json({ error: "Error updating user" });
+// Define a helper function to perform database queries with async/await
+async function queryDatabase(sqlQuery, values) {
+  return new Promise((resolve, reject) => {
+    connectionPool.query(sqlQuery, values, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
       }
-
-      res.json({ id: userId, ...mergedUserData });
     });
   });
-};
+}
+
+
+// Define a helper function to perform database queries with async/await
+async function queryDatabase(sqlQuery, values) {
+  return new Promise((resolve, reject) => {
+    connectionPool.query(sqlQuery, values, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+}
 
 exports.enlistUser = async (req, res) => {
   const user_id = req.params.id;
@@ -226,7 +231,6 @@ exports.enlistUser = async (req, res) => {
     }
   );
 };
-
 
 exports.deleteUser = async (req, res) => {
   const userId = req.params.id;

@@ -101,7 +101,7 @@ describe("User/Login API Tests", () => {
         const response = await request(app).put(`/api/Users/${createdUserId}`).send({
             email: "JohnDoesFirstName",
         });
-        expect(response.statusCode).toBe(200);
+        expect(response.statusCode).toBe(400);
     });
 
     test("GET /api/Users/Events/:id should return 404 if there are no events associated with user", async () => {

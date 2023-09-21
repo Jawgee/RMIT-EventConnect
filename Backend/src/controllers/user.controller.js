@@ -188,7 +188,7 @@ exports.updateUser = async (req, res) => {
     // Now, update the user data in the database
     const updateQuery = `UPDATE users SET ${setStatements.join(', ')} WHERE id = ?`;
 
-    connectionPool.query(updateQuery, values, (updateErr, updateResult) => {
+    connectionPool.query(updateQuery, values, (updateErr, _) => {
       if (updateErr) {
         console.error("Error executing UPDATE query:", updateErr.stack);
         return res.status(500).json({ error: "Error updating user" });

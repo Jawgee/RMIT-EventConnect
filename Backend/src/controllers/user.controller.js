@@ -1,20 +1,11 @@
-// SHOULD NOT BE HERE NEED TO FIGURE OUT HOW TO DECLARE THIS AND EXPORT FROM APP FILE
-
-const mysql = require("mysql");
 const { validateUser } = require("../models/user.model.js"); // Adjust the path as needed
 const jwt = require("jsonwebtoken");
 const secretKey = "testing"; // change after finishing testing
 const bcrypt = require("bcrypt");
+const connectionPool = require('../connectionPool.js');
 
-const connectionPool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "test", // change this to your local database
-});
-
-exports.listUsers = async (req, res) => {
-  connectionPool.query("SELECT * FROM test.users", (err, rows) => {
+exports.listUsers = async (_, res) => {
+  connectionPool.query("SELECT * FROM users", (err, rows) => {
     if (err) {
       console.error("Error executing query:", err.stack);
       return res.status(500).json({ error: "Error retrieving users" });
@@ -123,8 +114,8 @@ exports.createUser = async (req, res) => {
             maxAge: 3600000,
           });
 
-          // Insert the user_id into the Tags table with 'user' as the tag_type
-          connectionPool.query("INSERT INTO Tags (user_id, tag_type) VALUES (?, 'user')", [insertedUserId], (tagErr, _) => {
+          // Insert the user_id into the tags table with 'user' as the tag_type
+          connectionPool.query("INSERT INTO tags (user_id, tag_type) VALUES (?, 'user')", [insertedUserId], (tagErr, _) => {
             if (tagErr) {
               console.error("Error inserting tag:", tagErr.stack);
               return res.status(500).json({ error: "Error inserting tag for user" });

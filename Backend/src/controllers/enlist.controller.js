@@ -1,11 +1,4 @@
-const mysql = require("mysql");
-
-const connectionPool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "test", // change this to your local database
-});
+const connectionPool = require('../connectionPool.js');
 
 exports.usersAttendingEvent = async (req, res) => {
     const event_id = req.params.event_id;

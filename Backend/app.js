@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require('cors');
 const serverConfig = require("./src/serverConfig.js");
-const mysql = require('mysql');
 const fs = require('fs');
+const connectionPool = require('./src/connectionPool.js');
 
 const app = express();
 
@@ -19,15 +19,6 @@ function logError(message, error) {
     }
   });
 }
-
-// Create a MySQL connection pool
-const connectionPool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  // Eventually change the database (please)
-  database: 'test'
-});
 
 // Acquire a connection from the pool and execute a query to create a table
 connectionPool.getConnection((err, connection) => {
@@ -72,7 +63,7 @@ connectionPool.getConnection((err, connection) => {
       pitch TINYINT(1) NOT NULL,
       round_table TINYINT(1) NOT NULL,
       stand TINYINT(1) NOT NULL,
-      virtual TINYINT(1) NOT NULL,
+      online TINYINT(1) NOT NULL,
       tourism TINYINT(1) NOT NULL,
       tech TINYINT(1) NOT NULL,
       bio TINYINT(1) NOT NULL,

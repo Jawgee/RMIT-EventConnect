@@ -1,16 +1,9 @@
-const mysql = require("mysql");
-
-const connectionPool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "test", // Change this to your local database
-});
+const connectionPool = require('../connectionPool.js');
 
 const allowedColumns = [
   "pitch",
   "metaverse",
-  "virtual",
+  "online",
   "stand",
   "round_table",
   "tourism",
@@ -103,58 +96,6 @@ exports.getEventTagList = async (req, res) => {
     res.json(rows);
   });
 };
-
-// exports.updateUserInterests = async (req, res) => {
-//   const userId = req.params.user_id; // User ID
-//   const updateData = req.body; // JSON object with interests to update
-
-//   // Validate the columns using the validation function
-//   const validationError = validateColumns(updateData);
-
-//   if (validationError) {
-//     return res.status(validationError.errorCode).json({ error: validationError.errorMessage });
-//   }
-
-//   // Construct the SET part of the update query
-// // Construct the SET part of the update query
-// const setPart = allowedColumns
-//   .filter((col) => updateData[col] !== undefined)
-//   .map((col) => `${col} = ?`)
-//   .join(", ");
-
-// // Prepare the values array for the query
-// const values = [...allowedColumns.map((col) => updateData[col]), userId];
-
-
-//   // Check if there are any columns to update
-//   if (setPart === "") {
-//     return res.status(400).json({ error: "No valid columns provided for update" });
-//   }
-
-//   // Build the SQL query
-//   const query = `UPDATE tags SET ${setPart} WHERE user_id = ?`;
-
-//   // Execute the query
-//   connectionPool.query(query, values, (err, result) => {
-//     if (err) {
-//       console.error("Error executing query:", err.stack);
-//       return res.status(500).json({ error: "Error updating user interests" });
-//     }
-
-
-//     console.log("User ID:", userId);
-//     console.log("Update Data:", updateData);
-//     console.log("Generated Query:", query);
-//     console.log("Query Values:", values);
-
-
-//     if (result.affectedRows === 0) {
-//       return res.status(404).json({ error: "User not found or no changes made" });
-//     }
-
-//     res.json({ message: "User interests updated successfully", OriginalJSON: updateData });
-//   });
-// };
 
 exports.updateUserInterests = async (req, res) => {
   const userId = req.params.user_id;
@@ -261,7 +202,7 @@ const validateColumns = (updateData) => {
 {
   "pitch": 1,
   "metaverse": 0,
-  "virtual": 1,
+  "online": 1,
   "stand": 0,
   "round_table": 1,
   "tourism": 0,

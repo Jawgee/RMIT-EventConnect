@@ -1,15 +1,7 @@
-const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 const secretKey = 'testing'; // change after finishing testing
 const bcrypt = require("bcrypt");
-
-const connectionPool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'test' // change this to your local database
-});
-
+const connectionPool = require('../connectionPool.js');
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
@@ -27,10 +19,8 @@ exports.login = async (req, res) => {
 
     const hashedPasswordFromDB = rows[0].password;
 
-
     // Compare the provided plaintext password with the hashed password from the database
     const isMatch = await bcrypt.compare(password, hashedPasswordFromDB);
-
 
     if (isMatch === false) {
       return res.status(404).json({ error: 'Password is incorrect' });

@@ -1,16 +1,13 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
-import { toPage } from '../App';
-// import './Tab2.css';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { Suspense, lazy } from 'react';
+import LoadingSpinner from './LoadingSpinner';
+const Profile = lazy(() => import('../components/Profile'));
 
-const Profile: React.FC<{ logout: Function }> = ({ logout }) => {
-    const router = useIonRouter();
-
-    const onLogoutClick = () => {
-        // redirect to /welcome after logging out
-        logout();
-        toPage('welcome', router);
-    };
-
+const ProfilePage: React.FC<{
+    logout: () => void;
+    user: string;
+    setID: React.Dispatch<React.SetStateAction<number>>;
+}> = ({ logout, user, setID }) => {
     return (
         <IonPage>
             <IonHeader>
@@ -19,16 +16,12 @@ const Profile: React.FC<{ logout: Function }> = ({ logout }) => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonHeader collapse="condense">
-                    <IonToolbar>
-                        <IonTitle size="large">Profile</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
-                <p>TODO: Add stuff here</p>
-                <button onClick={onLogoutClick}>Log out</button>
+                <Suspense fallback={<LoadingSpinner />}>
+                    <Profile logout={logout} user={user} setID={setID} />
+                </Suspense>
             </IonContent>
         </IonPage>
     );
 };
 
-export default Profile;
+export default ProfilePage;

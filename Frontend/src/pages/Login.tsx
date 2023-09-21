@@ -2,9 +2,9 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, useIon
 // import './Login.css';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Input, { InputProps } from '../components/Input';
+import Input, { type InputProps } from '../components/Input';
 import { verifyUser } from '../data/accounts.js';
-import { toPage } from '../App';
+import { PasswordRegex, replacePage } from '../App';
 
 const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | null>> }> = ({ setUser }) => {
     // Controller for the forms
@@ -23,6 +23,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
             name: 'email',
             type: 'email',
             label: 'Email',
+            max: 45,
         },
         {
             name: 'password',
@@ -30,7 +31,8 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
             type: 'password',
             clearOnEdit: false,
             min: 7,
-            pattern: '^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$',
+            max: 45,
+            pattern: PasswordRegex,
             helperText: 'Password should have at least 1 uppercase letter, 1 digit and 1 special character.',
         },
     ];
@@ -39,16 +41,14 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
     const loginUserOnSubmit = (data: any) => {
         verifyUser(data.email, data.password).then((e) => {
             // Get the information from the backend
-            let [successful, message] = e;
+            const [successful, message] = e;
 
             // If there were no issues
             if (successful) {
-                // TODO: Add the proper information here
-                // TODO: use data.email probably
                 // Set the user to be used elsewhere
-                setUser('test');
+                setUser(data.email);
                 // Send the user to the home page
-                toPage('home', router);
+                replacePage('home', router);
             } else {
                 // Set an error to show on the page
                 setErrorMessage(message);
@@ -65,9 +65,9 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonHeader collapse="condense">
+                <IonHeader>
                     <IonToolbar>
-                        <IonTitle size="large">Log In</IonTitle>
+                        <IonTitle>Log In</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <form onSubmit={handleSubmit(loginUserOnSubmit)}>
@@ -88,7 +88,14 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                     {errorMessage && <p>{errorMessage}</p>}
                 </form>
                 {/* Link to register page */}
-                <button onClick={() => toPage('register', router)}>Don't have an account? Sign up now</button>
+                <IonButton
+                    color="secondary"
+                    onClick={() => {
+                        replacePage('register', router);
+                    }}
+                >
+                    Don't have an account? Register now
+                </IonButton>
             </IonContent>
         </IonPage>
     );

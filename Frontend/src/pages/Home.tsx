@@ -15,9 +15,11 @@ import {
     IonChip,
     IonList,
 } from '@ionic/react';
+import './testing.css';
 // import './Home.css';
 
 const Home: React.FC = () => {
+    // const router = useIonRouter();
     return (
         <IonPage>
             <IonHeader>
@@ -62,8 +64,6 @@ const Home: React.FC = () => {
                         Here's a small text description for the card content. Nothing more, nothing less.
                     </IonCardContent>
                 </IonCard>
-
-                <p>TODO: Add stuff here</p>
             </IonContent>
         </IonPage>
     );

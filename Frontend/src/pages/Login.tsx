@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';
 import { verifyUser } from '../data/accounts.js';
 import { PasswordRegex, replacePage } from '../App';
+import { lockClosed, mail } from 'ionicons/icons';
 
 const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | null>> }> = ({ setUser }) => {
     // Controller for the forms
@@ -24,6 +25,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
             type: 'email',
             label: 'Email',
             max: 45,
+            icon: mail,
         },
         {
             name: 'password',
@@ -34,6 +36,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
             max: 45,
             pattern: PasswordRegex,
             helperText: 'Password should have at least 1 uppercase letter, 1 digit and 1 special character.',
+            icon: lockClosed,
         },
     ];
 
@@ -65,11 +68,6 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonHeader>
-                    <IonToolbar>
-                        <IonTitle>Log In</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
                 <form onSubmit={handleSubmit(loginUserOnSubmit)}>
                     {/* TODO: Decide if should make it into a list or not (aesthetic choice) */}
                     {/* <IonList> */}

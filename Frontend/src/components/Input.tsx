@@ -1,7 +1,6 @@
 import React from 'react';
 import { IonItem, IonInput, IonChip, IonIcon } from '@ionic/react';
 import { Controller, Control } from 'react-hook-form';
-import { mail } from 'ionicons/icons';
 
 export interface InputProps {
     name: string;
@@ -14,6 +13,7 @@ export interface InputProps {
     pattern?: string;
     required?: boolean;
     helperText?: string;
+    icon?: string;
 }
 
 // Default values are used here to simplify code
@@ -29,6 +29,7 @@ const Input: React.FC<InputProps> = ({
     pattern,
     required = true,
     helperText,
+    icon,
 }) => {
     return (
         <>
@@ -38,7 +39,7 @@ const Input: React.FC<InputProps> = ({
                     render={({ field }) => (
                         <IonChip outline={true}>
                             {/* style={{padding: "10px"}} */}
-                            <IonIcon icon={mail}></IonIcon>
+                            {icon && <IonIcon icon={icon}></IonIcon>}
                             <IonInput
                                 onIonChange={field.onChange}
                                 value={field.value}

@@ -15,9 +15,11 @@ import {
     IonChip,
     IonList,
 } from '@ionic/react';
-// import './Home.css';
+//import './Home.css';
 
-const Tab1: React.FC = () => {
+const Home: React.FC = () => {
+
+
     return (
         <IonPage>
             <IonHeader>
@@ -69,4 +71,4 @@ const Tab1: React.FC = () => {
     );
 };
 
-export default Tab1;
+export default Home;

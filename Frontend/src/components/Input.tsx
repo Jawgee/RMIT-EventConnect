@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { IonItem, IonLabel, IonInput } from '@ionic/react';
+import { IonItem, IonLabel, IonInput, IonChip, IonIcon } from '@ionic/react';
 import { Controller, Control } from 'react-hook-form';
+import { mail } from 'ionicons/icons';
 
 export interface InputProps {
     name: string;
@@ -36,6 +37,9 @@ const Input: FC<InputProps> = ({
                 <Controller
                     // console.log(field);
                     render={({ field }) => (
+                        <IonChip outline={true}>
+                            {/* style={{padding: "10px"}} */}
+                            <IonIcon icon={mail}></IonIcon>
                         <IonInput
                             onIonChange={field.onChange}
                             value={field.value}
@@ -49,6 +53,8 @@ const Input: FC<InputProps> = ({
                             label={label}
                             labelPlacement="floating"
                         />
+
+                        </IonChip>
                     )}
                     name={name}
                     control={control}

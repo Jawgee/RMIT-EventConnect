@@ -1,6 +1,6 @@
 import { IonContent, IonPage, IonButton, useIonRouter, IonImg } from '@ionic/react';
 // import './Register.css';
-import { replacePage } from '../App';
+import { pushPage } from '../App';
 import '../styles/Welcome.css';
 
 const Register = () => {
@@ -18,12 +18,12 @@ const Register = () => {
                     </div>
                     {/* Link to login page */}
                     <div className="middle-buttons1">
-                        <IonButton className="login-button" onClick={() => replacePage('login', router)}>
+                        <IonButton className="login-button" onClick={() => pushPage('login', router)}>
                             Log In
                         </IonButton>
                     </div>
                     <div className="middle-buttons2">
-                        <IonButton className="signup-button" onClick={() => replacePage('register', router)}>
+                        <IonButton className="signup-button" onClick={() => pushPage('register', router)}>
                             Sign Up
                         </IonButton>
                     </div>

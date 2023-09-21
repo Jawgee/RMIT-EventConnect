@@ -1,4 +1,14 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, useIonRouter } from '@ionic/react';
+import {
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    IonButton,
+    useIonRouter,
+    IonBackButton,
+    IonButtons,
+} from '@ionic/react';
 import './Login.css';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -64,6 +74,9 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
         <IonPage>
             <IonHeader>
                 <IonToolbar>
+                    <IonButtons slot="start">
+                        <IonBackButton></IonBackButton>
+                    </IonButtons>
                     <IonTitle>Log In</IonTitle>
                 </IonToolbar>
             </IonHeader>

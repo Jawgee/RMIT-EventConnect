@@ -1,4 +1,14 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, useIonRouter } from '@ionic/react';
+import {
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    IonButton,
+    useIonRouter,
+    IonButtons,
+    IonBackButton,
+} from '@ionic/react';
 // import './Register.css';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -78,6 +88,9 @@ const Register: React.FC<{
         <IonPage>
             <IonHeader>
                 <IonToolbar>
+                    <IonButtons slot="start">
+                        <IonBackButton></IonBackButton>
+                    </IonButtons>
                     <IonTitle>Sign Up</IonTitle>
                 </IonToolbar>
             </IonHeader>

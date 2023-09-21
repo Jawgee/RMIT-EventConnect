@@ -12,7 +12,7 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { home, personCircle, search, mail, addCircle } from 'ionicons/icons';
-import Home from './pages/Home';
+import Home from './pages/HomePractice';
 import Profile from './pages/Profile';
 import Explore from './pages/Explore';
 import Inbox from './pages/Inbox';
@@ -54,7 +54,7 @@ export const toPage = (page: string, router: UseIonRouterResult, shouldReplace: 
 // Or will be used later, with added functionality
 // To get info from storage somewhere and add it into the app
 const App: React.FC = () => {
-    const [user, setUser] = useState<string | null>('null');
+    const [user, setUser] = useState<string | null>("null");
 
     const logout = () => {
         setUser(null);

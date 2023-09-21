@@ -1,7 +1,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import './Tab1.css';
+import './testing.css';
 
-const Tab1: React.FC = () => {
+const Home: React.FC = () => {
+    // const router = useIonRouter();
     return (
         <IonPage>
             <IonHeader>
@@ -10,15 +11,10 @@ const Tab1: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonHeader collapse="condense">
-                    <IonToolbar>
-                        <IonTitle size="large">Home here</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
                 <p>TODO: Add stuff here</p>
             </IonContent>
         </IonPage>
     );
 };
 
-export default Tab1;
+export default Home;

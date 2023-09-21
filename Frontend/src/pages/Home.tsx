@@ -13,7 +13,6 @@ import {
     IonImg,
     IonText,
     IonChip,
-    IonList,
 } from '@ionic/react';
 import './testing.css';
 // import './Home.css';

@@ -11,10 +11,17 @@ app.use(cors());
 
 // Custom error logging function
 function logError(message, error) {
+  const logDir = 'logs';
+  const logFile = 'error.log';
+  const logFilePath = `${logDir}/${logFile}`;
   const logMessage = `${new Date().toISOString()} - ${message}\n${error.stack}\n\n`;
   
-  fs.appendFile('logs/error.log', logMessage, (err) => {
-    if (err) {
+  if(!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir);
+  }
+
+  fs.appendFile(logFilePath, logMessage, (err) => {
+    if(err){
       console.error('Error writing to the log file:', err);
     }
   });

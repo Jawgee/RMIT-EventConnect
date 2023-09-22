@@ -144,14 +144,12 @@ exports.createUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   const userId = req.params.id;
-  // const updatedFields = req.body;
 
   // Validate the updated fields
   const updatedFields = validateUpdateUser(req.body);
 
-  const { error } = validateUpdateUser(updatedFields);
-  if (error) {
-    return res.status(400).json({ error: error.details[0].message });
+  if (updatedFields.error) {
+    return res.status(400).json({ error: updatedFields.error.details[0].message });
   }
 
   // Check if there are any fields to update
@@ -162,17 +160,26 @@ exports.updateUser = async (req, res) => {
   const setStatements = [];
   const values = [];
 
-  // Build the SET part of the SQL query dynamically
-  for (const [key, value] of Object.entries(updatedFields)) {
-    setStatements.push(`${key} = ?`);
-    values.push(value);
+  // Flatten the nested object into key-value pairs
+  for (const [outerKey, outerValue] of Object.entries(updatedFields)) {
+    if (typeof outerValue === 'object') {
+      for (const [innerKey, innerValue] of Object.entries(outerValue)) {
+        setStatements.push(`${innerKey} = ?`);
+        values.push(innerValue);
+      }
+    } else {
+      setStatements.push(`${outerKey} = ?`);
+      values.push(outerValue);
+    }
   }
+
 
   values.push(userId); // Add the userId for the WHERE clause
 
   const updateQuery = `UPDATE users SET ${setStatements.join(', ')} WHERE id = ?`;
 
   try {
+
     const result = await queryDatabase(updateQuery, values);
 
     if (result.affectedRows === 0) {

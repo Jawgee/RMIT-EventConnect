@@ -1,4 +1,5 @@
-const { validateUser } = require("../models/user.model.js"); // Adjust the path as needed
+const { validateUser } = require("../models/user.model.js");
+const { validateUpdateUser } = require("../models/user.model.js"); 
 const jwt = require("jsonwebtoken");
 const secretKey = "testing"; // change after finishing testing
 const bcrypt = require("bcrypt");
@@ -144,7 +145,15 @@ exports.createUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   const userId = req.params.id;
-  const updatedFields = req.body;
+  // const updatedFields = req.body;
+
+  // Validate the updated fields
+  const updatedFields = validateUpdateUser(req.body);
+
+  const { error } = validateUpdateUser(updatedFields);
+  if (error) {
+    return res.status(400).json({ error: error.details[0].message });
+  }
 
   // Check if there are any fields to update
   if (Object.keys(updatedFields).length === 0) {

@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
-import { IonItem, IonLabel, IonInput } from '@ionic/react';
-import { Controller, Control } from 'react-hook-form';
+import { type FC } from 'react';
+import { IonItem, IonInput } from '@ionic/react';
+import { Controller, type Control } from 'react-hook-form';
 
 export interface InputProps {
     name: string;
-    control?: Control;
+    control?: Control<any>;
     label?: string;
     type?: any;
     clearOnEdit?: boolean;
@@ -24,7 +24,7 @@ const Input: FC<InputProps> = ({
     type,
     clearOnEdit,
     min = 3,
-    max = 45,
+    max = 20,
     pattern,
     required = true,
     helperText,
@@ -32,7 +32,6 @@ const Input: FC<InputProps> = ({
     return (
         <>
             <IonItem>
-                {/* {label && <IonLabel position="floating">{label}</IonLabel>} */}
                 <Controller
                     // console.log(field);
                     render={({ field }) => (

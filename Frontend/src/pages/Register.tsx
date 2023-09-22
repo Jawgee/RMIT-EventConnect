@@ -2,11 +2,14 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, useIon
 // import './Register.css';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Input, { InputProps } from '../components/Input';
+import Input, { type InputProps } from '../components/Input';
 import { registerUser } from '../data/accounts.js';
-import { toPage } from '../App';
+import { PasswordRegex, replacePage } from '../App';
 
-const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | null>> }> = ({ setUser }) => {
+const Register: React.FC<{
+    setUser: React.Dispatch<React.SetStateAction<string | null>>;
+    setID: React.Dispatch<React.SetStateAction<number>>;
+}> = ({ setUser, setID }) => {
     // Controller for the forms
     const { control, handleSubmit } = useForm();
 
@@ -31,6 +34,7 @@ const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string |
             name: 'email',
             type: 'email',
             label: 'Email',
+            max: 45,
         },
         {
             name: 'password',
@@ -38,8 +42,8 @@ const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string |
             type: 'password',
             clearOnEdit: false,
             min: 7,
-            // TODO: get this regex from elsewhere so it isnt duplicated elsewhere
-            pattern: '^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$',
+            max: 45,
+            pattern: PasswordRegex,
             helperText: 'Password should have at least 1 uppercase letter, 1 digit and 1 special character.',
         },
     ];
@@ -48,16 +52,15 @@ const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string |
     const registerUserOnSubmit = (data: any) => {
         registerUser(data.email, data.password, data.first_name, data.last_name).then((e) => {
             // Get the information from the backend
-            let [successful, message] = e;
+            const [successful, message] = e;
 
             // If there were no issues
             if (successful) {
-                // TODO: Add the proper information here
-                // TODO: use data.email probably
                 // Set the user to be used elsewhere
-                setUser('test');
+                setUser(message.email);
+                setID(message.id);
                 // Send the user to the home page
-                toPage('home', router);
+                replacePage('tags', router);
             } else {
                 // Set an error to show on the page
                 setErrorMessage(message);
@@ -74,9 +77,9 @@ const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string |
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonHeader collapse="condense">
+                <IonHeader>
                     <IonToolbar>
-                        <IonTitle size="large">Register</IonTitle>
+                        <IonTitle>Register</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <form onSubmit={handleSubmit(registerUserOnSubmit)}>
@@ -98,7 +101,13 @@ const Register: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string |
                     <br />
                 </form>
                 {/* Link to login page */}
-                <button onClick={() => toPage('login', router)}>Have an account? Login here</button>
+                <button
+                    onClick={() => {
+                        replacePage('login', router);
+                    }}
+                >
+                    Have an account? Login here
+                </button>
             </IonContent>
         </IonPage>
     );

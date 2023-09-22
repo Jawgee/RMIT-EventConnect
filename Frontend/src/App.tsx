@@ -7,18 +7,22 @@ import {
     IonTabBar,
     IonTabButton,
     IonTabs,
-    UseIonRouterResult,
+    type UseIonRouterResult,
     setupIonicReact,
 } from '@ionic/react';
+import { useState } from 'react';
 import { IonReactRouter } from '@ionic/react-router';
 import { home, personCircle, search, mail, addCircle } from 'ionicons/icons';
+
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Explore from './pages/Explore';
 import Inbox from './pages/Inbox';
 import EventAdd from './pages/EventAdd';
 import Login from './pages/Login';
-import { useIonRouter } from '@ionic/react';
+import Register from './pages/Register';
+import ProfileEdit from './pages/ProfileEdit';
+import SelectTags from './pages/SelectTags';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -38,25 +42,33 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import Register from './pages/Register';
-import RegisterTest from './pages/RegisterTest';
-import { useState } from 'react';
 
 setupIonicReact();
 
-export const toPage = (page: string, router: UseIonRouterResult, shouldReplace: Boolean = true) => {
-    router.push(`/${page}`, 'root', shouldReplace ? 'replace' : 'push');
+export const replacePage = (page: string, router: UseIonRouterResult) => {
+    router.push(`/${page}`, 'root', 'replace');
+    console.log(router.routeInfo);
 };
+
+export const pushPage = (page: string, router: UseIonRouterResult) => {
+    router.push(`/${page}`, 'forward');
+};
+
+export const PasswordRegex = '^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$';
 
 // the useState is most likely temporary
 // Or will be used later, with added functionality
 // To get info from storage somewhere and add it into the app
 const App: React.FC = () => {
-    const [user, setUser] = useState<string | null>(null);
+    const [user, setUser] = useState<string | null>(null); // used for profile
+    const [id, setID] = useState<number>(0); // used for tags
+    // const [user, setUser] = useState<string | null>('test@ing.com'); // for testing purposes, enable to bypass login area
+    // const [id, setID] = useState<number>(1); // for testing purposes, enable to test tags when bypassing login area
 
     const logout = () => {
         setUser(null);
     };
+
     if (user) {
         return (
             <>
@@ -64,20 +76,29 @@ const App: React.FC = () => {
                     <IonReactRouter>
                         <IonTabs>
                             <IonRouterOutlet>
-                                <Route path="/home">
+                                <Route path="/:tab(home)">
                                     <Home />
                                 </Route>
-                                <Route path="/profile">
-                                    <Profile logout={logout} />
+                                <Route path="/:tab(profile)/edit">
+                                    <ProfileEdit />
                                 </Route>
-                                <Route path="/explore">
+                                <Route path="/:tab(profile)/tags">
+                                    <SelectTags id={id} showBack={true} />
+                                </Route>
+                                <Route exact path="/:tab(profile)">
+                                    <Profile logout={logout} user={user} setID={setID} />
+                                </Route>
+                                <Route path="/:tab(explore)">
                                     <Explore />
                                 </Route>
-                                <Route path="/inbox">
+                                <Route path="/:tab(inbox)">
                                     <Inbox />
                                 </Route>
-                                <Route path="/eventadd">
+                                <Route path="/:tab(eventadd)">
                                     <EventAdd />
+                                </Route>
+                                <Route path="/tags">
+                                    <SelectTags id={id} showBack={false} />
                                 </Route>
                                 <Route exact path="/">
                                     <Redirect to="/home" />
@@ -121,7 +142,7 @@ const App: React.FC = () => {
                                 <Login setUser={setUser} />
                             </Route>
                             <Route path="/register">
-                                <Register setUser={setUser} />
+                                <Register setUser={setUser} setID={setID} />
                                 {/* <RegisterTest /> */}
                             </Route>
                             <Route exact path="/">

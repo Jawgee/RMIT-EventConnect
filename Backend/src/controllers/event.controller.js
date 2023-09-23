@@ -1,5 +1,6 @@
 const { validateEvent } = require("../models/event.model.js"); // Adjust the path as needed
 const connectionPool = require('../connectionPool.js');
+const subCategories = require('../eventTags.js');
 
 const columns = [
   "name",
@@ -83,13 +84,20 @@ exports.getAttendeeList = async (req, res) => {
   }
 };
 
-
+exports.getCategories = async (req, res) => {
+  try {
+    res.status(200).json(subCategories);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 exports.createEvent = async (req, res) => {
   const result = validateEvent(req.body);
 
   if (result.error) {
-    return res.status(422).json({error: result.error.details[0].message});
+    return res.status(422).json({ error: result.error.details[0].message });
   }
 
   const eventData = columns.reduce((data, column) => {

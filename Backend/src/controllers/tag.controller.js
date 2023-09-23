@@ -1,26 +1,7 @@
 const connectionPool = require('../connectionPool.js');
+const subCategories = require('../eventTags.js');
 
-const allowedColumns = [
-  "pitch",
-  "metaverse",
-  "online",
-  "stand",
-  "round_table",
-  "tourism",
-  "tech",
-  "bio",
-  "health",
-  "sustainability",
-  "agro",
-  "fintech",
-  "greenTech",
-  "mobility",
-  "logistic",
-  "food",
-  "smart_cities",
-  "blue_economy",
-  "space",
-];
+const allowedColumns = subCategories.sector;
 
 exports.getUserByTag = async (req, res) => {
   const bool = req.params.bool;

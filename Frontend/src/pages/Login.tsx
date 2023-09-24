@@ -84,13 +84,11 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                 <form onSubmit={handleSubmit(loginUserOnSubmit)}>
                     {/* TODO: Decide if should make it into a list or not (aesthetic choice) */}
                     {/* <IonList> */}
-                    {formFields.map(
-                        (field, index) => (
-                            /* <IonItem> */
-                            <Input {...field} control={control} key={index} />
-                        )
+                    {formFields.map((field, index) => (
+                        /* <IonItem> */
+                        <Input {...field} control={control} key={index} />
                         /* </IonItem> */
-                    )}
+                    ))}
                     <IonButton expand="block" type="submit" className="ion-margin-top">
                         Log In
                     </IonButton>

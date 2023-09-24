@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonItem, IonInput, IonChip, IonIcon } from '@ionic/react';
+import { IonItem, IonInput, IonChip, IonIcon, IonList, IonItemGroup } from '@ionic/react';
 import { Controller, Control } from 'react-hook-form';
 
 export interface InputProps {
@@ -33,10 +33,10 @@ const Input: React.FC<InputProps> = ({
 }) => {
     return (
         <>
-            <IonItem>
-                <Controller
-                    // console.log(field);
-                    render={({ field }) => (
+            <Controller
+                // console.log(field);
+                render={({ field }) => (
+                    <IonItemGroup>
                         <IonChip outline={true}>
                             {/* style={{padding: "10px"}} */}
                             {icon && <IonIcon icon={icon}></IonIcon>}
@@ -49,16 +49,16 @@ const Input: React.FC<InputProps> = ({
                                 minlength={min}
                                 maxlength={max}
                                 pattern={pattern}
-                                helperText={helperText}
                                 label={label}
                                 labelPlacement="floating"
                             />
                         </IonChip>
-                    )}
-                    name={name}
-                    control={control}
-                />
-            </IonItem>
+                        {helperText && <p style={{ marginTop: '4px', fontSize: '12px' }}>{helperText}</p>}
+                    </IonItemGroup>
+                )}
+                name={name}
+                control={control}
+            />
         </>
     );
 };

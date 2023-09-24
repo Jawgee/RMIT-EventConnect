@@ -2,12 +2,13 @@ import {
     IonContent,
     IonHeader,
     IonPage,
-    IonTitle,
     IonToolbar,
     IonButton,
     useIonRouter,
     IonBackButton,
     IonButtons,
+    IonRippleEffect,
+    IonTitle,
 } from '@ionic/react';
 import './Login.css';
 import React, { useState } from 'react';
@@ -77,7 +78,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                     <IonButtons slot="start">
                         <IonBackButton></IonBackButton>
                     </IonButtons>
-                    {/* <IonTitle>Log In</IonTitle> */}
+                    <IonTitle>Log In</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
@@ -89,22 +90,20 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                         <Input {...field} control={control} key={index} />
                         /* </IonItem> */
                     ))}
-                    <IonButton expand="block" type="submit" className="ion-margin-top">
+                    <IonButton shape="round" expand="block" color="primary" fill="solid">
                         Log In
+                        <IonRippleEffect type="unbounded"></IonRippleEffect>
                     </IonButton>
                     {/* </IonList> */}
                     {/* TODO: make this look better */}
                     {errorMessage && <p>{errorMessage}</p>}
                 </form>
                 {/* Link to register page */}
-                <IonButton
-                    color="secondary"
-                    onClick={() => {
-                        replacePage('register', router);
-                    }}
-                >
-                    Don't have an account? Register now
-                </IonButton>
+                <p>Don't have an account yet?</p>
+                <button className="RegisterNowButton"  
+                onClick={() => {replacePage('register', router);}}>
+                     Create an account!
+                </button>
             </IonContent>
         </IonPage>
     );

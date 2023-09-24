@@ -90,7 +90,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                         <Input {...field} control={control} key={index} />
                         /* </IonItem> */
                     ))}
-                    <IonButton shape="round" expand="block" color="primary" fill="solid">
+                    <IonButton className="theLogInButton" shape="round" expand="block" color="primary" fill="solid">
                         Log In
                         <IonRippleEffect type="unbounded"></IonRippleEffect>
                     </IonButton>

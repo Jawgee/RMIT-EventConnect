@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+ion-title {
+    color: #3880ff;
+    place-self: end center;
+    font-size: 400%;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    
+}
+
+ion-icon {
+    font-size: 40px;
+    color:#3880ff;
+    --background: # ;
+}
+
+.theLogInButton {
+    width: 50%;
+}
+
+
+/* ion-chip {
+    width: 70%;
+    height: 45px;
+} */
+
+ion-header {
+    --background: #EE34A3;
+}
+
+ion-item {
+    padding-bottom: var(--ion-safe-area-top, 10);
+    
+}
+
+.RegisterNowButton {
+    font-size: 110%;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    color: #3880ff;
+}  
+
+/* ion-content {
+    padding-bottom: var(--ion-safe-area-top, 10);
+    color: ;
+} */
+
+/* .top-image {
+    grid-area: sect1;
+    max-width: 250px;
+    min-width: 175px;
+    width: 40%;
+    place-self: end center;
+    animation: color-change 4s ease-in-out;
+} */

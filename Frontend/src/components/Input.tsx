@@ -39,7 +39,12 @@ const Input: React.FC<InputProps> = ({
                     <IonItemGroup>
                         <IonChip outline={true}>
                             {/* style={{padding: "10px"}} */}
-                            {icon && <IonIcon icon={icon}></IonIcon>}
+                            {icon && (
+                                <IonIcon
+                                    icon={icon}
+                                    // style={{ backgroundColor: 'blue' }}
+                                ></IonIcon>
+                            )}
                             <IonInput
                                 onIonChange={field.onChange}
                                 value={field.value}

@@ -72,12 +72,12 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
     // TODO: Create proper design
     return (
         <IonPage>
-            <IonHeader>
+            <IonHeader className="ion-no-border">
                 <IonToolbar>
                     <IonButtons slot="start">
                         <IonBackButton></IonBackButton>
                     </IonButtons>
-                    <IonTitle>Log In</IonTitle>
+                    {/* <IonTitle>Log In</IonTitle> */}
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>

@@ -31,7 +31,7 @@ const ProfileEdit = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const onSubmit = (data: any) => {
-        editUser(data.id, data.email, data.first_name, data.last_name, data.profile).then((e) => {
+        editUser(data.id, data).then((e) => {
             // Get the information from the backend
             const [successful, message] = e;
 

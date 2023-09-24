@@ -39,7 +39,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
 
     // Handles submit
     const loginUserOnSubmit = (data: any) => {
-        verifyUser(data.email, data.password).then((e) => {
+        verifyUser(data).then((e) => {
             // Get the information from the backend
             const [successful, message] = e;
 
@@ -65,21 +65,14 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonHeader>
-                    <IonToolbar>
-                        <IonTitle>Login</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
                 <form onSubmit={handleSubmit(loginUserOnSubmit)}>
                     {/* TODO: Decide if should make it into a list or not (aesthetic choice) */}
                     {/* <IonList> */}
-                    {formFields.map(
-                        (field, index) => (
-                            /* <IonItem> */
-                            <Input {...field} control={control} key={index} />
-                        )
+                    {formFields.map((field, index) => (
+                        /* <IonItem> */
+                        <Input {...field} control={control} key={index} />
                         /* </IonItem> */
-                    )}
+                    ))}
                     <IonButton expand="block" type="submit" className="ion-margin-top">
                         Login
                     </IonButton>

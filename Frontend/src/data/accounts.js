@@ -13,11 +13,11 @@ const tagsClient = axios.create({
 });
 
 // Verifies the user via login
-const verifyUser = async (email, password) => {
+const verifyUser = async (data) => {
     // Return format: If it was successful, error message to be shown to the user
     // Sends the user to the backend
     try {
-        const res = await userClient.post('/login', { email, password });
+        const res = await userClient.post('/login', data);
 
         // If there was success
         if (res.status === 200) {
@@ -34,15 +34,12 @@ const verifyUser = async (email, password) => {
 };
 
 // Registers the user
-const registerUser = async (email, password, first_name, last_name) => {
+const registerUser = async (data) => {
     // Return format: If it was successful, error message to be shown to the user
     // Sends the user to the backend
     try {
         const res = await userClient.post('/register', {
-            email,
-            password,
-            first_name,
-            last_name,
+            ...data,
             // TODO: Edit this
             profile: 'Entrepreneur',
         });
@@ -78,14 +75,10 @@ const getUserInfo = async (email) => {
     }
 };
 
-const editUser = async (id, email, first_name, last_name, profile) => {
+const editUser = async (id, data) => {
     try {
-        const res = await userClient.put(`/${id}`, {
-            email,
-            first_name,
-            last_name,
-            profile,
-        });
+        delete data.id;
+        const res = await userClient.put(`/${id}`, data);
 
         // If there was success
         if (res.status === 200) {

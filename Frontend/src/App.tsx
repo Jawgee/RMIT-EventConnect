@@ -47,7 +47,6 @@ setupIonicReact();
 
 export const replacePage = (page: string, router: UseIonRouterResult) => {
     router.push(`/${page}`, 'root', 'replace');
-    console.log(router.routeInfo);
 };
 
 export const pushPage = (page: string, router: UseIonRouterResult) => {
@@ -95,7 +94,7 @@ const App: React.FC = () => {
                                     <Inbox />
                                 </Route>
                                 <Route path="/:tab(eventadd)">
-                                    <EventAdd />
+                                    <EventAdd user={user} />
                                 </Route>
                                 <Route path="/tags">
                                     <SelectTags id={id} showBack={false} />

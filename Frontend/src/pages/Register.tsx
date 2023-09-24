@@ -50,7 +50,7 @@ const Register: React.FC<{
 
     // Handles submit
     const registerUserOnSubmit = (data: any) => {
-        registerUser(data.email, data.password, data.first_name, data.last_name).then((e) => {
+        registerUser(data).then((e) => {
             // Get the information from the backend
             const [successful, message] = e;
 
@@ -77,21 +77,14 @@ const Register: React.FC<{
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonHeader>
-                    <IonToolbar>
-                        <IonTitle>Register</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
                 <form onSubmit={handleSubmit(registerUserOnSubmit)}>
                     {/* TODO: Decide if should make it into a list or not (aesthetic choice) */}
                     {/* <IonList> */}
-                    {formFields.map(
-                        (field, index) => (
-                            /* <IonItem> */
-                            <Input {...field} control={control} key={index} />
-                        )
+                    {formFields.map((field, index) => (
+                        /* <IonItem> */
+                        <Input {...field} control={control} key={index} />
                         /* </IonItem> */
-                    )}
+                    ))}
                     <IonButton expand="block" type="submit" className="ion-margin-top">
                         Register
                     </IonButton>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonItem, IonInput, IonChip, IonIcon, IonList, IonItemGroup } from '@ionic/react';
+import { IonInput, IonChip, IonIcon, IonItemGroup } from '@ionic/react';
 import { Controller, Control } from 'react-hook-form';
 
 export interface InputProps {

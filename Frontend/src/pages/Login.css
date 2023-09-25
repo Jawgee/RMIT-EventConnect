@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
-ion-title {
+/* ion-title {
     color: #3880ff;
     place-self: end center;
     font-size: 400%;
     font-family: 'Nunito', sans-serif;
     font-weight: 400;
     
-}
+} */
 
 ion-icon {
     font-size: 40px;
@@ -25,9 +25,9 @@ ion-icon {
     height: 45px;
 } */
 
-ion-header {
+/* ion-header {
     --background: #EE34A3;
-}
+} */
 
 ion-item {
     padding-bottom: var(--ion-safe-area-top, 10);

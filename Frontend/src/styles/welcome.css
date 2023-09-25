@@ -11,7 +11,7 @@
 }
 
 .login-button:active {
-    --background: #1037F6;
+    --background: #3880ff;
     --color: #FFFFFF;
     --transition: all .4s ease;
    

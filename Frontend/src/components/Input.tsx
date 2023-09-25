@@ -37,7 +37,7 @@ const Input: React.FC<InputProps> = ({
             <Controller
                 // console.log(field);
                 render={({ field }) => (
-                    <IonItemGroup>
+                    <>
                         <IonChip outline={true}>
                             {/* style={{padding: "10px"}} */}
                             {icon && (
@@ -60,8 +60,8 @@ const Input: React.FC<InputProps> = ({
 
                             />
                         </IonChip>
-                        {helperText && <p style={{ marginTop: '4px', fontSize: '12px' }}>{helperText}</p>}
-                    </IonItemGroup>
+                        {helperText && <p style={{ marginTop: '4px', fontSize: '12px', textAlign: "center" }}>{helperText}</p>}
+                    </>
                 )}
                 name={name}
                 control={control}

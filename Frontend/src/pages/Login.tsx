@@ -90,7 +90,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                         <Input {...field} control={control} key={index} />
                         /* </IonItem> */
                     ))}
-                    <IonButton className="theLogInButton" shape="round" expand="block" color="primary" fill="solid">
+                    <IonButton className="theLogInButton" shape="round" color="primary" fill="solid" type="submit">
                         Log In
                         <IonRippleEffect type="unbounded"></IonRippleEffect>
                     </IonButton>
@@ -100,9 +100,13 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                 </form>
                 {/* Link to register page */}
                 <p>Don't have an account yet?</p>
-                <button className="RegisterNowButton"  
-                onClick={() => {replacePage('register', router);}}>
-                     Create an account!
+                <button
+                    className="RegisterNowButton"
+                    onClick={() => {
+                        replacePage('register', router);
+                    }}
+                >
+                    Create an account!
                 </button>
             </IonContent>
         </IonPage>

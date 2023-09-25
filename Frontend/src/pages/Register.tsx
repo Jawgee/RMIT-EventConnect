@@ -94,51 +94,57 @@ const Register: React.FC<{
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
-            
-                <IonContent fullscreen>
-                    <div className='register-container'>
-                        <div className='register-header'>
-                            <IonHeader className='ion-no-border'>
-                                <IonTitle className='register-ion-title' >
-                                    Sign Up
-                                </IonTitle>
-                            </IonHeader>
-                        </div>
-                        <form className='register-form' onSubmit={handleSubmit(registerUserOnSubmit)}>
-                            {/* TODO: Decide if should make it into a list or not (aesthetic choice) */}
-                            {/* <IonList> */}
-                            {formFields.map(
-                                (field, index) => (
-                                    /* <IonItem> */
-                                    
-                                    <Input {...field} control={control} key={index} />
 
-                                )   
-                                /* </IonItem> */
-                            )} 
-                            <div className='register-button'>
-                                <IonButton className="theSignUpButton" shape="round" color="primary" fill="solid">
-                                    Sign Up
-                                    <IonRippleEffect type="unbounded"></IonRippleEffect>
-                                </IonButton>
-                            </div>
-                            {/* </IonList> */}
-                            {/* TODO: make this look better */}
-                            {errorMessage && <p>{errorMessage}</p>}
-                        </form>
-                            {/* Link to login page */}
-                        <div className='register-info'>
-                            <p>Don't have an account yet? {" "}
-                            <button className="LoginNowButton"
+            <IonContent fullscreen>
+                <div className="register-container">
+                    <div className="register-header">
+                        <IonHeader className="ion-no-border">
+                            <IonTitle className="register-ion-title">Sign Up</IonTitle>
+                        </IonHeader>
+                    </div>
+                    <form className="register-form" onSubmit={handleSubmit(registerUserOnSubmit)}>
+                        {/* TODO: Decide if should make it into a list or not (aesthetic choice) */}
+                        {/* <IonList> */}
+                        {formFields.map(
+                            (field, index) => (
+                                /* <IonItem> */
+
+                                <Input {...field} control={control} key={index} />
+                            )
+                            /* </IonItem> */
+                        )}
+                        <div className="register-button">
+                            <IonButton
+                                className="theSignUpButton"
+                                shape="round"
+                                color="primary"
+                                fill="solid"
+                                type="submit"
+                            >
+                                Sign Up
+                                <IonRippleEffect type="unbounded"></IonRippleEffect>
+                            </IonButton>
+                        </div>
+                        {/* </IonList> */}
+                        {/* TODO: make this look better */}
+                        {errorMessage && <p>{errorMessage}</p>}
+                    </form>
+                    {/* Link to login page */}
+                    <div className="register-info">
+                        <p>
+                            Don't have an account yet?{' '}
+                            <button
+                                className="LoginNowButton"
                                 onClick={() => {
                                     replacePage('login', router);
                                 }}
                             >
                                 Login here!
-                            </button></p>
-                        </div>
+                            </button>
+                        </p>
                     </div>
-                </IonContent>
+                </div>
+            </IonContent>
         </IonPage>
     );
 };

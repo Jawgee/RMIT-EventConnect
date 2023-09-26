@@ -1,39 +1,39 @@
 const lists = {
     Profile: {
-        tags: ['Entrepreneur', 'Corporate', 'Investor', 'Startup', 'Academy', 'Ecosystem Facilitator', 'Accelerator', 'Incubator', 'SME', 'Agency', 'NGO'],
+        tags: ['entrepreneur', 'corporate', 'investor', 'startup', 'academy', 'ecosystem facilitator', 'accelerator', 'incubator', 'sme', 'agency', 'ngo'],
         required: true
     },
     Sector: {
-        tags: ["Pitch", "Metaverse", "Online", "Stand", "Round_table", "Tourism", "Tech", "Bio", "Health", "Sustainability", "Agro", "Fintech", "GreenTech", "Mobility", "Logistic", "Food", "Smart_cities", "Blue_economy", "Space"],
+        tags: ["pitch", "metaverse", "online", "stand", "round_table", "tourism", "tech", "bio", "health", "sustainability", "agro", "fintech", "greenTech", "mobility", "logistic", "food", "smart_cities", "blue_economy", "space"],
         required: true
     },
     Category: {
-        tags: ["State of the art", "Round table", "Living test", "Stand", "Pitch", "Showroom"],
+        tags: ["state of the art", "round table", "living test", "stand", "pitch", "showroom"],
         required: true
     },
     Frequency: {
-        tags: ["Unique", "Monthly", "Yearly"],
+        tags: ["unique", "monthly", "yearly"],
         required: true,
     },
     Environment: {
-        tags: ["Red carpet", "Informal", "Cocktail", "Party", "Prize"],
+        tags: ["red carpet", "informal", "cocktail", "party", "prize"],
         required: true,
-    },  
+    },
     Privacy: {
-        tags: ["Private", "Public"],
+        tags: ["private", "public"],
         required: true,
     },
     Entrance: {
-        tags: ["Free", "Paid"],
+        tags: ["free", "paid"],
         required: true,
     },
     Accessibility: {
-        tags: ["In-person", "Online", "Hybrid"],
+        tags: ["in-person", "online", "hybrid"],
         required: true,
-    },  
+    },
     Motivation: {
-        tags: ["Validation", "Investor", "Partner", "Scouting"],
-        required : true,    
+        tags: ["validation", "investor", "partner", "scouting"],
+        required: true,
     },
 };
 

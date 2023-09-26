@@ -1,7 +1,7 @@
 const connectionPool = require('../connectionPool.js');
 const subCategories = require('../eventTags.js');
 
-const allowedColumns = subCategories.sector;
+const allowedColumns = subCategories.Sector;
 
 exports.getUserByTag = async (req, res) => {
   const bool = req.params.bool;

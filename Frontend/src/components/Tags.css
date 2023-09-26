@@ -1,10 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
 ion-checkbox {
-    background-color: purple;
+    background: rgba(255, 214, 10, 0.1);
     margin: 5px;
+    border-radius: 20px;
+    padding-left: 15px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border: 2px solid rgba(255, 230, 68, 0.3);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    letter-spacing: 1px;
 }
 
 ion-checkbox.checkbox-checked {
-    background-color: violet;
+    border: 2px solid rgba(255, 230, 68, 1);
+    background: rgba(255, 214, 10, 1);
+    color: white;
 }
 ion-checkbox > * {
     margin-inline: 0px;
@@ -14,4 +26,47 @@ ion-checkbox > * {
 
 ion-checkbox::part(container) {
     display: none;
+}
+
+.tags-container {
+    margin: 0;
+    height: 84vh;
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-areas:
+        "sect1"
+        "sect2"
+        "sect3"
+}
+
+.tags-header {
+    grid-area: sect1;
+    place-self: center;
+}
+
+.tags-tags {
+    grid-area: sect2;
+    justify-self: center;
+    align-self: center;
+}
+
+.tags-button {
+    grid-area: sect3;
+    place-self: center;
+    font-size: 15px;
+    
+}
+
+.tags-ion-title {
+    color: #3880ff;
+    font-size: 180%;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+}
+
+.tags-card {
+    max-width: 450px;
+    box-shadow: none;
+    text-align: center;
+    padding-right: 20px;
 }

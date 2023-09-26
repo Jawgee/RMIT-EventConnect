@@ -132,14 +132,14 @@ const Register: React.FC<{
                     {/* Link to login page */}
                     <div className="register-info">
                         <p>
-                            Don't have an account yet?{' '}
+                            Already have an account?{' '}
                             <button
                                 className="LoginNowButton"
                                 onClick={() => {
                                     replacePage('login', router);
                                 }}
                             >
-                                Login here!
+                                Log In!
                             </button>
                         </p>
                     </div>

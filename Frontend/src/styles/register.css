@@ -28,7 +28,7 @@
 
 .register-container {
     margin: 0;
-    height: 100vh;
+    height: 92vh;
     display: grid;
     padding: 0 50px;
     grid-template-rows: 1fr 2fr 1fr;
@@ -52,9 +52,4 @@
     grid-area: sect3;
     justify-self: center;
     font-size: 15px;
-}
-
-.grid-form {
-    display: grid;
-    grid-template-columns: 1fr; /* Adjust the number of columns as needed */
 }

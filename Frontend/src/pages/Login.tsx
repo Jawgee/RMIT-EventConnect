@@ -87,7 +87,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                     <div className="login-header">
                         <IonHeader className="ion-no-border">
                             <IonTitle className="login-ion-title">
-                                Login
+                                Log In
                             </IonTitle>
                         </IonHeader>
                     </div>
@@ -96,7 +96,9 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                         {/* <IonList> */}
                         {formFields.map((field, index) => (
                             /* <IonItem> */
-                            <Input {...field} control={control} key={index} />
+                            <div className='tester-thing'>
+                                <Input {...field} control={control} key={index} />
+                            </div>
                             /* </IonItem> */
                         ))}
                         <div className="login-button">

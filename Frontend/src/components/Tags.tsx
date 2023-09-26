@@ -5,13 +5,7 @@ import './Tags.css';
 import { replacePage } from '../App';
 
 const getInfo = async (id: number) => {
-    const info = await getTags(id);
-    if (typeof info === 'string') {
-        // Do something to show that something went wrong
-        return {};
-    } else {
-        return info;
-    }
+    return await getTags(id);
 };
 const Tags: React.FC<{
     id: number;
@@ -23,7 +17,7 @@ const Tags: React.FC<{
         getInfo(id).then((e) => {
             if (typeof e === 'string') {
                 // Do something to show that something went wrong
-                return {};
+                setErrorMessage(e);
             } else {
                 // send tags info somewhere
                 setTags(e);

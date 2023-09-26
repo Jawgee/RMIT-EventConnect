@@ -61,10 +61,10 @@ export const PasswordRegex = '^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$';
 // Or will be used later, with added functionality
 // To get info from storage somewhere and add it into the app
 const App: React.FC = () => {
-    const [user, setUser] = useState<string | null>(null); // used for profile
-    const [id, setID] = useState<number>(0); // used for tags
-    // const [user, setUser] = useState<string | null>('test@ing.com'); // for testing purposes, enable to bypass login area
-    // const [id, setID] = useState<number>(1); // for testing purposes, enable to test tags when bypassing login area
+    // const [user, setUser] = useState<string | null>(null); // used for profile
+    // const [id, setID] = useState<number>(0); // used for tags
+    const [user, setUser] = useState<string | null>('test@ing.com'); // for testing purposes, enable to bypass login area
+    const [id, setID] = useState<number>(1); // for testing purposes, enable to test tags when bypassing login area
 
     const logout = () => {
         setUser(null);

@@ -1,5 +1,7 @@
+import axios from 'axios';
+
 const userClient = axios.create({
-    baseURL: 'http://localhost:4000/api/event',
+    baseURL: 'http://localhost:4000/api/events',
 });
 
 // Creates an event
@@ -22,4 +24,38 @@ const addEvent = async (data) => {
     }
 };
 
-export { addEvent };
+const getProfile = async () => {
+    try {
+        const res = await userClient.get('/Categories/profile');
+
+        // If there was success
+        if (res.status === 200) {
+            return res.data;
+        }
+
+        // Fallback, in case the code reaches here
+        return 'Something went wrong, try again';
+    } catch (e) {
+        // If there was a 4xx/5xx response, it throws an error
+        return e.response.data.error;
+    }
+};
+
+const getTags = async () => {
+    try {
+        const res = await userClient.get('/Categories/tags');
+
+        // If there was success
+        if (res.status === 200) {
+            return res.data;
+        }
+
+        // Fallback, in case the code reaches here
+        return 'Something went wrong, try again';
+    } catch (e) {
+        // If there was a 4xx/5xx response, it throws an error
+        return e.response.data.error;
+    }
+};
+
+export { addEvent, getProfile, getTags };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonInput, IonChip, IonIcon, IonItemGroup } from '@ionic/react';
+import { IonInput, IonChip, IonIcon } from '@ionic/react';
 import { Controller, Control } from 'react-hook-form';
 import './Input.css';
 
@@ -57,10 +57,11 @@ const Input: React.FC<InputProps> = ({
                                 pattern={pattern}
                                 label={label}
                                 labelPlacement="floating"
-
                             />
                         </IonChip>
-                        {helperText && <p style={{ marginTop: '4px', fontSize: '12px', textAlign: "center" }}>{helperText}</p>}
+                        {helperText && (
+                            <p style={{ marginTop: '4px', fontSize: '12px', textAlign: 'center' }}>{helperText}</p>
+                        )}
                     </>
                 )}
                 name={name}

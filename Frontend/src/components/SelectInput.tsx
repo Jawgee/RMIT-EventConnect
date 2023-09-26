@@ -9,7 +9,7 @@ const SelectInput: React.FC<{ control: Control<any>; options: any[]; placeholder
 }) => {
     return (
         <Controller
-            name="TextField"
+            name={label}
             control={control}
             render={({ field }) => (
                 <IonChip outline={true}>

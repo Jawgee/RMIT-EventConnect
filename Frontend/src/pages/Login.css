@@ -1,13 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
-/* ion-title {
+.login-ion-title {
     color: #3880ff;
-    place-self: end center;
     font-size: 400%;
     font-family: 'Nunito', sans-serif;
     font-weight: 400;
     
-} */
+}
+
+.login-header {
+    grid-area: sect1;
+    place-self: center;
+}
+
+.login-container {
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    padding: 0 50px;
+    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-areas:
+        "sect1"
+        "sect2"
+        "sect3"
+    }
 
 ion-icon {
     font-size: 40px;
@@ -15,19 +31,25 @@ ion-icon {
     --background: # ;
 }
 
-.theLogInButton {
-    width: 50%;
+.login-info {
+    grid-area: sect3;
+    justify-self: center;
+    font-size: 15px;
 }
 
+.login-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-/* ion-chip {
-    width: 70%;
-    height: 45px;
-} */
-
-/* ion-header {
-    --background: #EE34A3;
-} */
+.theLogInButton {
+    width: 60%;
+}
+.login-form {
+    grid-area: sect2;
+    align-self: center;
+}
 
 ion-item {
     padding-bottom: var(--ion-safe-area-top, 10);
@@ -39,18 +61,10 @@ ion-item {
     font-family: 'Nunito', sans-serif;
     font-weight: 600;
     color: #3880ff;
+    background: transparent
 }  
 
-/* ion-content {
-    padding-bottom: var(--ion-safe-area-top, 10);
-    color: ;
-} */
-
-/* .top-image {
-    grid-area: sect1;
-    max-width: 250px;
-    min-width: 175px;
-    width: 40%;
-    place-self: end center;
-    animation: color-change 4s ease-in-out;
-} */
+.grid-form {
+    display: grid;
+    grid-template-columns: 1fr; /* Adjust the number of columns as needed */
+}

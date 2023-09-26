@@ -20,9 +20,11 @@ import Explore from './pages/Explore';
 import Inbox from './pages/Inbox';
 import EventAdd from './pages/EventAdd';
 import Login from './pages/Login';
+import Welcome from './pages/Welcome';
 import Register from './pages/Register';
 import ProfileEdit from './pages/ProfileEdit';
 import SelectTags from './pages/SelectTags';
+// import HomePractice from './pages/HomePractice';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -104,7 +106,7 @@ const App: React.FC = () => {
                                 </Route>
                                 <Route render={() => <Redirect to={'/home'} />} />
                             </IonRouterOutlet>
-                            <IonTabBar slot="bottom">
+                            <IonTabBar slot="bottom" color="warning">
                                 <IonTabButton tab="home" href="/home">
                                     <IonIcon aria-hidden="true" icon={home} />
                                     <IonLabel>Home</IonLabel>
@@ -142,12 +144,14 @@ const App: React.FC = () => {
                             </Route>
                             <Route path="/register">
                                 <Register setUser={setUser} setID={setID} />
-                                {/* <RegisterTest /> */}
+                            </Route>
+                            <Route path="/welcome">
+                                <Welcome />
                             </Route>
                             <Route exact path="/">
-                                <Redirect to="/register" />
+                                <Redirect to="/welcome" />
                             </Route>
-                            <Route render={() => <Redirect to={'/register'} />} />
+                            <Route render={() => <Redirect to={'/welcome'} />} />
                         </IonRouterOutlet>
                     </IonReactRouter>
                 </IonApp>

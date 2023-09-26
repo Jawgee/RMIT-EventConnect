@@ -58,7 +58,7 @@ const Tags: React.FC<{
             <p>Click to select or deselect a tag!</p>
             {tags &&
                 Object.keys(tags).map((key, i) => {
-                    console.log(key, tags[key]);
+                    // console.log(key, tags[key]);
                     return (
                         <IonCheckbox
                             key={i}

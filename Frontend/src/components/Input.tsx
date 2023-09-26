@@ -1,6 +1,7 @@
-import { type FC } from 'react';
-import { IonItem, IonInput } from '@ionic/react';
-import { Controller, type Control } from 'react-hook-form';
+import React from 'react';
+import { IonInput, IonChip, IonIcon } from '@ionic/react';
+import { Controller, Control } from 'react-hook-form';
+import './Input.css';
 
 export interface InputProps {
     name: string;
@@ -13,11 +14,12 @@ export interface InputProps {
     pattern?: string;
     required?: boolean;
     helperText?: string;
+    icon?: string;
 }
 
 // Default values are used here to simplify code
 // Minimum length 3, Maximum length 45, Required true
-const Input: FC<InputProps> = ({
+const Input: React.FC<InputProps> = ({
     name,
     control,
     label,
@@ -28,31 +30,43 @@ const Input: FC<InputProps> = ({
     pattern,
     required = true,
     helperText,
+    icon,
 }) => {
     return (
         <>
-            <IonItem>
-                <Controller
-                    // console.log(field);
-                    render={({ field }) => (
-                        <IonInput
-                            onIonChange={field.onChange}
-                            value={field.value}
-                            type={type}
-                            clearOnEdit={clearOnEdit}
-                            required={required}
-                            minlength={min}
-                            maxlength={max}
-                            pattern={pattern}
-                            helperText={helperText}
-                            label={label}
-                            labelPlacement="floating"
-                        />
-                    )}
-                    name={name}
-                    control={control}
-                />
-            </IonItem>
+            <Controller
+                // console.log(field);
+                render={({ field }) => (
+                    <>
+                        <IonChip outline={true}>
+                            {/* style={{padding: "10px"}} */}
+                            {icon && (
+                                <IonIcon
+                                    icon={icon}
+                                    // style={{ backgroundColor: 'blue' }}
+                                ></IonIcon>
+                            )}
+                            <IonInput
+                                onIonChange={field.onChange}
+                                value={field.value}
+                                type={type}
+                                clearOnEdit={clearOnEdit}
+                                required={required}
+                                minlength={min}
+                                maxlength={max}
+                                pattern={pattern}
+                                label={label}
+                                labelPlacement="floating"
+                            />
+                        </IonChip>
+                        {helperText && (
+                            <p style={{ marginTop: '4px', fontSize: '12px', textAlign: 'center' }}>{helperText}</p>
+                        )}
+                    </>
+                )}
+                name={name}
+                control={control}
+            />
         </>
     );
 };

@@ -38,11 +38,7 @@ const registerUser = async (data) => {
     // Return format: If it was successful, error message to be shown to the user
     // Sends the user to the backend
     try {
-        const res = await userClient.post('/register', {
-            ...data,
-            // TODO: Edit this
-            profile: 'Entrepreneur',
-        });
+        const res = await userClient.post('/register', data);
 
         // If there was success
         if (res.status === 200) {

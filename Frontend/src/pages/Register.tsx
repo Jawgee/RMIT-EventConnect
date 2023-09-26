@@ -11,12 +11,14 @@ import {
     IonRippleEffect,
 } from '@ionic/react';
 import '../styles/register.css';
-import { useState } from 'react';
+import { Suspense, lazy, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';
 import { registerUser } from '../data/accounts.js';
 import { PasswordRegex, replacePage } from '../App';
 import { mail, lockClosed, person } from 'ionicons/icons';
+import LoadingSpinner from './LoadingSpinner';
+const RegisterProfile = lazy(() => import('../components/RegisterProfile'));
 
 const Register: React.FC<{
     setUser: React.Dispatch<React.SetStateAction<string | null>>;
@@ -106,6 +108,9 @@ const Register: React.FC<{
                         {formFields.map((field, index) => (
                             <Input {...field} control={control} key={index} />
                         ))}
+                        <Suspense fallback={<LoadingSpinner />}>
+                            <RegisterProfile control={control} />
+                        </Suspense>
                         <div className="register-button">
                             <IonButton
                                 className="theSignUpButton"

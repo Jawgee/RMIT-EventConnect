@@ -1,5 +1,6 @@
 import { IonChip, IonSelect, IonSelectOption } from '@ionic/react';
 import { Controller, Control } from 'react-hook-form';
+import './Input.css';
 
 const SelectInput: React.FC<{ control: Control<any>; options: any[]; placeholder: string; label: string }> = ({
     control,
@@ -19,6 +20,7 @@ const SelectInput: React.FC<{ control: Control<any>; options: any[]; placeholder
                         placeholder={placeholder}
                         label={label}
                         labelPlacement="floating"
+                        style={{ textTransform: 'capitalize' }}
                     >
                         {options.map((e, i) => (
                             <IonSelectOption key={i} value={e}>

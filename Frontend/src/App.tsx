@@ -49,7 +49,6 @@ setupIonicReact();
 
 export const replacePage = (page: string, router: UseIonRouterResult) => {
     router.push(`/${page}`, 'root', 'replace');
-    console.log(router.routeInfo);
 };
 
 export const pushPage = (page: string, router: UseIonRouterResult) => {

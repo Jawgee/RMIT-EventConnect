@@ -39,10 +39,10 @@ const Profile: React.FC<{
     }, []);
 
     const onLogoutClick = () => {
-        // redirect to /login after logging out
+        // redirect to /welcome after logging out
         logout();
         dispatch(clearProfileInfo());
-        replacePage('login', router);
+        replacePage('welcome', router);
     };
 
     const profileFields = [

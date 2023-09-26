@@ -1,10 +1,22 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, useIonRouter } from '@ionic/react';
-// import './Register.css';
+import {
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    IonButton,
+    useIonRouter,
+    IonButtons,
+    IonBackButton,
+    IonRippleEffect,
+} from '@ionic/react';
+import '../styles/register.css';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';
 import { registerUser } from '../data/accounts.js';
 import { PasswordRegex, replacePage } from '../App';
+import { mail, lockClosed, person } from 'ionicons/icons';
 
 const Register: React.FC<{
     setUser: React.Dispatch<React.SetStateAction<string | null>>;
@@ -25,16 +37,19 @@ const Register: React.FC<{
         {
             name: 'first_name',
             label: 'First Name',
+            icon: person,
         },
         {
             name: 'last_name',
             label: 'Last Name',
+            icon: person,
         },
         {
             name: 'email',
             type: 'email',
             label: 'Email',
             max: 45,
+            icon: mail,
         },
         {
             name: 'password',
@@ -45,6 +60,7 @@ const Register: React.FC<{
             max: 45,
             pattern: PasswordRegex,
             helperText: 'Password should have at least 1 uppercase letter, 1 digit and 1 special character.',
+            icon: lockClosed,
         },
     ];
 
@@ -71,43 +87,63 @@ const Register: React.FC<{
     // TODO: Create proper design
     return (
         <IonPage>
-            <IonHeader>
+            <IonHeader className="ion-no-border">
                 <IonToolbar>
-                    <IonTitle>Register</IonTitle>
+                    <IonButtons slot="start">
+                        <IonBackButton></IonBackButton>
+                    </IonButtons>
                 </IonToolbar>
             </IonHeader>
+
             <IonContent fullscreen>
-                <IonHeader>
-                    <IonToolbar>
-                        <IonTitle>Register</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
-                <form onSubmit={handleSubmit(registerUserOnSubmit)}>
-                    {/* TODO: Decide if should make it into a list or not (aesthetic choice) */}
-                    {/* <IonList> */}
-                    {formFields.map(
-                        (field, index) => (
-                            /* <IonItem> */
-                            <Input {...field} control={control} key={index} />
-                        )
-                        /* </IonItem> */
-                    )}
-                    <IonButton expand="block" type="submit" className="ion-margin-top">
-                        Register
-                    </IonButton>
-                    {/* </IonList> */}
-                    {/* TODO: make this look better */}
-                    {errorMessage && <p>{errorMessage}</p>}
-                    <br />
-                </form>
-                {/* Link to login page */}
-                <button
-                    onClick={() => {
-                        replacePage('login', router);
-                    }}
-                >
-                    Have an account? Login here
-                </button>
+                <div className="register-container">
+                    <div className="register-header">
+                        <IonHeader className="ion-no-border">
+                            <IonTitle className="register-ion-title">Sign Up</IonTitle>
+                        </IonHeader>
+                    </div>
+                    <form className="register-form" onSubmit={handleSubmit(registerUserOnSubmit)}>
+                        {/* TODO: Decide if should make it into a list or not (aesthetic choice) */}
+                        {/* <IonList> */}
+                        {formFields.map(
+                            (field, index) => (
+                                /* <IonItem> */
+
+                                <Input {...field} control={control} key={index} />
+                            )
+                            /* </IonItem> */
+                        )}
+                        <div className="register-button">
+                            <IonButton
+                                className="theSignUpButton"
+                                shape="round"
+                                color="primary"
+                                fill="solid"
+                                type="submit"
+                            >
+                                Sign Up
+                                <IonRippleEffect type="unbounded"></IonRippleEffect>
+                            </IonButton>
+                        </div>
+                        {/* </IonList> */}
+                        {/* TODO: make this look better */}
+                        {errorMessage && <p>{errorMessage}</p>}
+                    </form>
+                    {/* Link to login page */}
+                    <div className="register-info">
+                        <p>
+                            Don't have an account yet?{' '}
+                            <button
+                                className="LoginNowButton"
+                                onClick={() => {
+                                    replacePage('login', router);
+                                }}
+                            >
+                                Login here!
+                            </button>
+                        </p>
+                    </div>
+                </div>
             </IonContent>
         </IonPage>
     );

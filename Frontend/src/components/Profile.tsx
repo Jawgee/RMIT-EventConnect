@@ -34,7 +34,7 @@ const Profile: React.FC<{
     useEffect(() => {
         getInfo(user).then((e) => {
             dispatch(setProfileInfo(e));
-            setID(e.id);
+            setID(e.id ?? 0);
         });
     }, []);
 

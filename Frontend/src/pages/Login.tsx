@@ -12,15 +12,16 @@ import {
 } from '@ionic/react';
 import './Login.css';
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';
 import { verifyUser } from '../data/accounts.js';
 import { PasswordRegex, replacePage } from '../App';
 import { lockClosed, mail } from 'ionicons/icons';
+import { UserInfo } from '../data/profileReducer';
 
 const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | null>> }> = ({ setUser }) => {
     // Controller for the forms
-    const { control, handleSubmit } = useForm();
+    const { control, handleSubmit } = useForm<UserInfo>();
 
     // Routing to allow to manually redirect the user
     const router = useIonRouter();
@@ -52,7 +53,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
     ];
 
     // Handles submit
-    const loginUserOnSubmit = (data: any) => {
+    const loginUserOnSubmit: SubmitHandler<UserInfo> = (data) => {
         verifyUser(data).then((e) => {
             // Get the information from the backend
             const [successful, message] = e;

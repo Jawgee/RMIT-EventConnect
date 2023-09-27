@@ -13,15 +13,15 @@ import {
 } from '@ionic/react';
 import { pushPage } from '../App';
 import Input from '../components/Input';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { editUser } from '../data/accounts';
 import { useState } from 'react';
-import { setProfileInfo } from '../data/profileReducer';
+import { UserInfo, setProfileInfo } from '../data/profileReducer';
 
 const ProfileEdit = () => {
     const userInfo = useAppSelector((state) => state.value);
-    const { control, handleSubmit } = useForm({ defaultValues: userInfo });
+    const { control, handleSubmit } = useForm<UserInfo>({ defaultValues: userInfo });
     const router = useIonRouter();
 
     const dispatch = useAppDispatch();
@@ -30,7 +30,7 @@ const ProfileEdit = () => {
     // When there was a fail from the backend
     const [errorMessage, setErrorMessage] = useState('');
 
-    const onSubmit = (data: any) => {
+    const onSubmit: SubmitHandler<UserInfo> = (data) => {
         editUser(data.id, data).then((e) => {
             // Get the information from the backend
             const [successful, message] = e;

@@ -12,12 +12,13 @@ import {
 } from '@ionic/react';
 import '../styles/register.css';
 import { Suspense, lazy, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';
 import { registerUser } from '../data/accounts.js';
 import { PasswordRegex, replacePage } from '../App';
 import { mail, lockClosed, person } from 'ionicons/icons';
 import LoadingSpinner from './LoadingSpinner';
+import { UserInfo } from '../data/profileReducer';
 const RegisterProfile = lazy(() => import('../components/RegisterProfile'));
 
 const Register: React.FC<{
@@ -25,7 +26,7 @@ const Register: React.FC<{
     setID: React.Dispatch<React.SetStateAction<number>>;
 }> = ({ setUser, setID }) => {
     // Controller for the forms
-    const { control, handleSubmit } = useForm();
+    const { control, handleSubmit } = useForm<UserInfo>();
 
     // Routing to allow to manually redirect the user
     const router = useIonRouter();
@@ -67,7 +68,7 @@ const Register: React.FC<{
     ];
 
     // Handles submit
-    const registerUserOnSubmit = (data: any) => {
+    const registerUserOnSubmit: SubmitHandler<UserInfo> = (data) => {
         registerUser(data).then((e) => {
             // Get the information from the backend
             const [successful, message] = e;

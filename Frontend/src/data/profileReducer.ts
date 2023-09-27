@@ -1,11 +1,12 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface UserInfo {
-    first_name: string;
-    last_name: string;
+    first_name?: string;
+    last_name?: string;
     email: string;
-    profile: string;
-    id: number;
+    profile?: string;
+    id?: number;
+    password?: string;
 }
 
 export const defaultInfo: UserInfo = {

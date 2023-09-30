@@ -46,7 +46,8 @@
 
 .register-form {
     grid-area: sect2;
-    align-self: center;
+    place-self: center;
+    max-width: 500px;
 }
 
 .register-info {

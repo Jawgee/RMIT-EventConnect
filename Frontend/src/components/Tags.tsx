@@ -54,43 +54,41 @@ const Tags: React.FC<{
     };
 
     return (
-            <>  
-                <div className='tags-container'>
-                    <div className='tags-header'>
-                        <IonHeader className="ion-no-border">
-                            <IonTitle className="tags-ion-title">Select your relevant tags!</IonTitle>
-                        </IonHeader>
-                    </div>
-                    <div className='tags-tags'>
-                        <IonCard className='tags-card'>
-                            {tags &&
-                                Object.keys(tags).map((key, i) => {
-                                    // console.log(key, tags[key]);
-                                    return (
-                                        
-                                            <IonCheckbox
-                                                key={i}
-                                                checked={tags[key]}
-                                                onIonChange={() => invertSelection(key, tags[key])}
-                                                style={{ textTransform: 'capitalize', textAlign: "center" }}
-
-                                                // labelPlacement='fixed'
-                                            >
-                                                {key.replace('_', ' ')}
-                                            </IonCheckbox>
-                                        
-                                    );
-                                })}
-                        </IonCard>
-                    </div>
-                        <div className='tags-button'>
-                            <IonButton shape="round"
-                                color="primary"
-                                fill="solid" onClick={submitTags}>Submit Tags</IonButton>
-                            {errorMessage && <p>{errorMessage}</p>}
-                        </div>
+        <>
+            <div className="tags-container">
+                <div className="tags-header">
+                    <IonHeader className="ion-no-border">
+                        <IonTitle className="tags-ion-title">Select your relevant tags!</IonTitle>
+                    </IonHeader>
                 </div>
-            </>
+                <div className="tags-tags">
+                    <IonCard className="tags-card">
+                        {tags &&
+                            Object.keys(tags).map((key, i) => {
+                                // console.log(key, tags[key]);
+                                return (
+                                    <IonCheckbox
+                                        key={i}
+                                        checked={tags[key]}
+                                        onIonChange={() => invertSelection(key, tags[key])}
+                                        style={{ textTransform: 'capitalize', textAlign: 'center' }}
+
+                                        // labelPlacement='fixed'
+                                    >
+                                        #{key.replace('_', ' ')}
+                                    </IonCheckbox>
+                                );
+                            })}
+                    </IonCard>
+                </div>
+                <div className="tags-button">
+                    <IonButton shape="round" color="primary" fill="solid" onClick={submitTags}>
+                        Submit Tags
+                    </IonButton>
+                    {errorMessage && <p>{errorMessage}</p>}
+                </div>
+            </div>
+        </>
     );
 };
 

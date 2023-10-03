@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { getTags, updateTags } from '../data/accounts';
 import { IonButton, IonCard, IonCheckbox, IonHeader, IonTitle, useIonRouter } from '@ionic/react';
-import './Tags.css';
 import { replacePage } from '../App';
+import '../styles/Tags.css';
 
 const getInfo = async (id: number) => {
     const info = await getTags(id);

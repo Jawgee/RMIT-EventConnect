@@ -22,7 +22,7 @@ import 'swiper/css';
 import '@ionic/react/css/ionic-swiper.css';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import './HomePractice.css';
+import '../styles/HomePractice.css';
 
 interface Post {
     id: string;

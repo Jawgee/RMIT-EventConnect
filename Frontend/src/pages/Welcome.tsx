@@ -1,5 +1,4 @@
 import { IonContent, IonPage, IonButton, useIonRouter, IonImg } from '@ionic/react';
-// import './Register.css';
 import { pushPage } from '../App';
 import '../styles/Welcome.css';
 

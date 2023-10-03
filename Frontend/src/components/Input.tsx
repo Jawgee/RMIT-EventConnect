@@ -1,7 +1,7 @@
 import React from 'react';
 import { IonInput, IonChip, IonIcon } from '@ionic/react';
 import { Controller, Control } from 'react-hook-form';
-import './Input.css';
+import '../styles/Input.css';
 
 export interface InputProps {
     name: string;
@@ -39,7 +39,7 @@ const Input: React.FC<InputProps> = ({
                 render={({ field }) => (
                     <>
                         <IonChip outline={true}>
-                        {/* <IonItem> */}
+                            {/* <IonItem> */}
                             {/* style={{padding: "10px"}} */}
                             {icon && (
                                 <IonIcon
@@ -59,7 +59,7 @@ const Input: React.FC<InputProps> = ({
                                 label={label}
                                 labelPlacement="floating"
                             />
-                        {/* </IonItem> */}
+                            {/* </IonItem> */}
                         </IonChip>
                         {helperText && (
                             <p style={{ marginTop: '4px', fontSize: '12px', textAlign: 'center' }}>{helperText}</p>

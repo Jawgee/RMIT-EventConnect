@@ -10,7 +10,7 @@ import {
     IonRippleEffect,
     IonTitle,
 } from '@ionic/react';
-import './Login.css';
+import '../styles/Login.css';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';

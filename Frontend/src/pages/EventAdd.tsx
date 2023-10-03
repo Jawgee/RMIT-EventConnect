@@ -10,7 +10,7 @@ const EventAddTags = lazy(() => import('../components/EventAddTags'));
 
 const EventAdd: React.FC<{ user: string }> = ({ user }) => {
     // Controller for the forms
-    const { control, handleSubmit } = useForm();
+    const { control, handleSubmit } = useForm({ defaultValues: { owner: user } });
     // Routing to allow to manually redirect the user
     const router = useIonRouter();
     // Used for error message handling
@@ -35,6 +35,7 @@ const EventAdd: React.FC<{ user: string }> = ({ user }) => {
 
     // Handles submit
     const addEventOnSubmit = (data: any) => {
+        console.log(data);
         addEvent(data).then((e) => {
             // Get the information from the backend
             const [successful, message] = e;
@@ -60,7 +61,10 @@ const EventAdd: React.FC<{ user: string }> = ({ user }) => {
                     {/* TODO: Create proper design */}
 
                     <Controller
-                        render={({ field }) => <input onChange={field.onChange} value={user} type="hidden" />}
+                        render={({ field }) => {
+                            console.log(field);
+                            return <input onChange={field.onChange} value={field.value} type="hidden" />;
+                        }}
                         name="owner"
                         control={control}
                     />

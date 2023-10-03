@@ -7,7 +7,7 @@ const getInfo = async () => {
     return await getProfile();
 };
 
-const RegisterProfile: React.FC<{ control: Control<any> }> = ({ control }) => {
+const ProfileOptions: React.FC<{ control: Control<any> }> = ({ control }) => {
     // Tag info
     const [tags, setTags] = useState<any[]>([]);
 
@@ -29,11 +29,17 @@ const RegisterProfile: React.FC<{ control: Control<any> }> = ({ control }) => {
     return (
         <>
             {tags && (
-                <SelectInput control={control} options={tags} placeholder={'Select an option'} label={'Profile'} />
+                <SelectInput
+                    control={control}
+                    options={tags}
+                    placeholder={'Select an option'}
+                    label={'Profile'}
+                    name={'profile'}
+                />
             )}
             {errorMessage && <p>{errorMessage}</p>}
         </>
     );
 };
 
-export default RegisterProfile;
+export default ProfileOptions;

@@ -1,20 +1,8 @@
-import {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonTitle,
-    IonToolbar,
-    IonSearchbar,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
-    IonCardSubtitle,
-    IonImg,
-    IonText,
-    IonChip,
-} from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar } from '@ionic/react';
 import './testing.css';
+import { Suspense, lazy } from 'react';
+import LoadingSpinner from './LoadingSpinner';
+const HomePractice = lazy(() => import('../components/HomePractice'));
 // import './Home.css';
 
 const Home: React.FC = () => {
@@ -25,16 +13,16 @@ const Home: React.FC = () => {
                 <IonToolbar color="primary">
                     <IonTitle>Home</IonTitle>
                 </IonToolbar>
-                <IonToolbar>
+                {/* <IonToolbar>
                     <IonSearchbar></IonSearchbar>
-                </IonToolbar>
+                </IonToolbar> */}
             </IonHeader>
 
             <IonContent fullscreen>
-                <IonCard>
+                {/* <IonCard>
                     <IonCardHeader>
                         <IonImg src="" />
-                        {/* ^^^ not sure how to add image source */}
+                        {/* ^^^ not sure how to add image source *}
                         <IonCardTitle>Live Festival!</IonCardTitle>
                         <IonCardSubtitle>Location: </IonCardSubtitle>
                     </IonCardHeader>
@@ -56,7 +44,11 @@ const Home: React.FC = () => {
                     <IonCardContent>
                         Here's a small text description for the card content. Nothing more, nothing less.
                     </IonCardContent>
-                </IonCard>
+                </IonCard> */}
+                <Suspense fallback={<LoadingSpinner />}>
+                    {/* <ProfileOptions control={control} /> */}
+                    <HomePractice />
+                </Suspense>
             </IonContent>
         </IonPage>
     );

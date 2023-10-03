@@ -16,8 +16,13 @@ import Input from '../components/Input';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { editUser } from '../data/accounts';
-import { useState } from 'react';
+import {
+    // Suspense, lazy,
+    useState,
+} from 'react';
 import { UserInfo, setProfileInfo } from '../data/profileReducer';
+// import LoadingSpinner from './LoadingSpinner';
+// const ProfileOptions = lazy(() => import('../components/ProfileOptions'));
 
 const ProfileEdit = () => {
     const userInfo = useAppSelector((state) => state.value);
@@ -71,13 +76,6 @@ const ProfileEdit = () => {
             label: 'Last Name',
             name: 'last_name',
         },
-        {
-            // TODO: Get the options from the backend
-            // And change this from raw input
-            // Into a selection with aforementioned options
-            label: 'Profile',
-            name: 'profile',
-        },
     ];
 
     return (
@@ -94,19 +92,25 @@ const ProfileEdit = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <IonList>
                         <Controller
-                            // console.log(field);
-                            render={({ field }) => (
-                                <input onChange={field.onChange} value={field.value} type="hidden" />
-                            )}
+                            render={({ field }) => {
+                                console.log(field);
+                                return <input onChange={field.onChange} value={field.value} type="hidden" />;
+                            }}
                             name="id"
                             control={control}
                         />
                         {profileFields.map((field, index) => (
                             <Input {...field} control={control} key={index} />
                         ))}
+                        {/* <IonItem>
+                            <Suspense fallback={<LoadingSpinner />}>
+                                <ProfileOptions control={control} />
+                            </Suspense>
+                        </IonItem> */}
                         <IonItem>
                             <IonButton onClick={() => pushPage('profile/tags', router)}>Click to edit tags</IonButton>
                         </IonItem>
+
                         <IonItem>
                             <IonButton type="submit">Submit</IonButton>
                         </IonItem>

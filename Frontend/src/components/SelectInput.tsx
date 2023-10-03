@@ -7,17 +7,18 @@ const SelectInput: React.FC<{
     options: any[];
     placeholder: string;
     label: string;
+    name?: string;
     icon?: string;
-}> = ({ control, options, placeholder, label, icon }) => {
+}> = ({ control, options, placeholder, label, icon, name }) => {
     return (
         <Controller
-            name={label}
             control={control}
+            name={name ?? label.toLowerCase()}
             render={({ field }) => (
                 <IonChip outline={true}>
                     {icon && <IonIcon icon={icon}></IonIcon>}
                     <IonSelect
-                        {...field}
+                        value={field.value}
                         onIonChange={field.onChange}
                         placeholder={placeholder}
                         label={label}

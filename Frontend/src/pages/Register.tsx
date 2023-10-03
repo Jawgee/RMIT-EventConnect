@@ -19,7 +19,7 @@ import { PasswordRegex, replacePage } from '../App';
 import { mail, lockClosed, person } from 'ionicons/icons';
 import LoadingSpinner from './LoadingSpinner';
 import { UserInfo } from '../data/profileReducer';
-const RegisterProfile = lazy(() => import('../components/RegisterProfile'));
+const ProfileOptions = lazy(() => import('../components/ProfileOptions'));
 
 const Register: React.FC<{
     setUser: React.Dispatch<React.SetStateAction<string | null>>;
@@ -106,12 +106,14 @@ const Register: React.FC<{
                         </IonHeader>
                     </div>
                     <form className="register-form" onSubmit={handleSubmit(registerUserOnSubmit)}>
+                        {/* TODO: Decide if this needs to go in the middle or something */}
+                        <Suspense fallback={<LoadingSpinner />}>
+                            <ProfileOptions control={control} />
+                        </Suspense>
                         {formFields.map((field, index) => (
                             <Input {...field} control={control} key={index} />
                         ))}
-                        <Suspense fallback={<LoadingSpinner />}>
-                            <RegisterProfile control={control} />
-                        </Suspense>
+
                         <div className="register-button">
                             <IonButton
                                 className="theSignUpButton"

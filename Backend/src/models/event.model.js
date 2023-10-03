@@ -4,15 +4,15 @@ const Joi = require('joi');
 const eventSchema = Joi.object({
   name: Joi.string().max(50).required(),
   owner: Joi.string().max(50).required(),
-  sector: Joi.string().valid('Tourism', 'Tech', 'Bio', 'Health', 'Sustainability', 'Agro', 'Fintech', 'GreenTech', 'Mobility', 'Logistic', 'Food', 'Smart Cities', 'Blue Economy', 'Space').required(),
-  profile: Joi.string().valid('Entrepreneur', 'Corporate', 'Investor', 'Startup', 'Academy', 'Ecosystem Facilitator', 'Acelerator', 'Incubator', 'SME', 'Agency', 'NGO').required(),
-  category: Joi.string().valid('State of the art', 'Round Table', 'Living Test', 'Stand', 'Pitch', 'ShowRoom').required(),
-  frequency: Joi.string().valid('Unique', 'Yearly', 'Monthly'),
-  environment: Joi.string().valid('Red Carpet', 'Informal', 'Cocktail', 'Party', 'Prize'),
+  sector: Joi.string().valid('tourism', 'tech', 'bio', 'health', 'sustainability', 'agro', 'fintech', 'greentech', 'mobility', 'logistic', 'food', 'smart cities', 'blue economy', 'space').required(),
+  profile: Joi.string().valid('entrepreneur', 'corporate', 'investor', 'startup', 'academy', 'ecosystem facilitator', 'accelerator', 'incubator', 'sme', 'agency', 'ngo').required(),
+  category: Joi.string().valid('state of the art', 'round table', 'living test', 'stand', 'pitch', 'showroom').required(),
+  frequency: Joi.string().valid('unique', 'yearly', 'monthly'),
+  environment: Joi.string().valid('red carpet', 'informal', 'cocktail', 'party', 'prize'),
   privacy: Joi.string().valid('public', 'private').required(),
-  entrance: Joi.string().valid('Free', 'Paid'),
-  accessibility: Joi.string().valid('In-person', 'Online', 'Hybrid'),
-  motivation: Joi.string().valid('Validation', 'Investor', 'Partner', 'Scouting'),
+  entrance: Joi.string().valid('free', 'paid'),
+  accessibility: Joi.string().valid('in-person', 'online', 'hybrid'),
+  motivation: Joi.string().valid('validation', 'investor', 'partner', 'scouting'),
   description: Joi.string().required(),
   location: Joi.string().required()
 

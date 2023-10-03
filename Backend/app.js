@@ -15,13 +15,13 @@ function logError(message, error) {
   const logFile = 'error.log';
   const logFilePath = `${logDir}/${logFile}`;
   const logMessage = `${new Date().toISOString()} - ${message}\n${error.stack}\n\n`;
-  
-  if(!fs.existsSync(logDir)) {
+
+  if (!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir);
   }
 
   fs.appendFile(logFilePath, logMessage, (err) => {
-    if(err){
+    if (err) {
       console.error('Error writing to the log file:', err);
     }
   });
@@ -44,25 +44,26 @@ connectionPool.getConnection((err, connection) => {
       password VARCHAR(255) NOT NULL,
       profile ENUM('Entrepreneur','Corporate','Investor','Startup','Academy','Ecosystem Facilitator','Accelerator','Incubator','SME','Agency','NGO') NOT NULL
     )`;
-  
+
   const createEventTableQuery = `
     CREATE TABLE IF NOT EXISTS events (
       id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(100) NOT NULL,
       owner VARCHAR(100) NOT NULL,
-      sector ENUM('Tourism','Tech','Bio','Health','Sustainability','Agro','Fintech','GreenTech','Mobility','Logistic','Food','Smart Cities','Blue Economy','Space') NOT NULL,
-      profile ENUM('Entrepreneur','Corporate','Investor','Startup','Academy','Ecosystem Facilitator','Accelerator','Incubator','SME','Agency','NGO') NOT NULL,
-      category ENUM('State of the art','Round Table','Living Test','Stand','Pitch','ShowRoom') NOT NULL,
-      frequency ENUM('Unique', 'Yearly', 'Monthly'),
-      environment ENUM('Red Carpet','Informal','Cocktail','Party','Prize'),
+      sector ENUM('tourism','tech','bio','health','sustainability','agro','fintech','greentech','mobility','logistic','food','smart cities','blue economy','space') NOT NULL,
+      profile ENUM('entrepreneur','corporate','investor','startup','academy','ecosystem facilitator','accelerator','incubator','sme','agency','ngo') NOT NULL,
+      category ENUM('state of the art','round table','living test','stand','pitch','showroom') NOT NULL,
+      frequency ENUM('unique', 'yearly', 'monthly'),
+      environment ENUM('red carpet','informal','cocktail','party','prize'),
       privacy ENUM('public', 'private') NOT NULL DEFAULT 'public',
-      entrance ENUM('Free', 'Paid'),
-      accessibility ENUM('In-person', 'Online', 'Hybrid'),
-      motivation ENUM('Validation', 'Investor', 'Partner', 'Scouting'),
+      entrance ENUM('free', 'paid'),
+      accessibility ENUM('in-person', 'online', 'hybrid'),
+      motivation ENUM('validation', 'investor', 'partner', 'scouting'),
       description VARCHAR(255) NOT NULL,
       location VARCHAR(255) NOT NULL
     )`;
-  
+
+
   const createTagTableQuery = `
     CREATE TABLE IF NOT EXISTS tags (
       id INT AUTO_INCREMENT PRIMARY KEY,

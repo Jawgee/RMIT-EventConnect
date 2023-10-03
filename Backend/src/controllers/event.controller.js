@@ -20,7 +20,7 @@ const columns = [
 
 
 exports.listEvents = async (req, res) => {
-  connectionPool.query("SELECT name, owner FROM events", (err, rows) => {
+  connectionPool.query("SELECT * FROM events", (err, rows) => {
     if (err) {
       console.error("Error executing query:", err.stack);
       return res.status(500).json({ error: "Error retrieving events" });

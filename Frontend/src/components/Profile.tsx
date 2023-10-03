@@ -1,9 +1,11 @@
-import { useIonRouter, IonList, IonItem, IonLabel, IonButton, IonText } from '@ionic/react';
+import { useIonRouter, IonList, IonItem, IonLabel, IonButton, IonText, IonIcon } from '@ionic/react';
 import { pushPage, replacePage } from '../App';
 import { UserInfo, clearProfileInfo, defaultInfo, setProfileInfo } from '../data/profileReducer';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { getUserInfo } from '../data/accounts';
 import { useEffect } from 'react';
+import './Profile.css';
+import { personCircle } from 'ionicons/icons';
 
 export const getInfo = async (user: string) => {
     const info = await getUserInfo(user);
@@ -65,20 +67,44 @@ const Profile: React.FC<{
     ];
 
     return (
-        <IonList>
-            {profileFields.map((field, index) => (
-                <IonItem key={index}>
-                    <IonLabel>{field.label}</IonLabel>
-                    <IonText>{field.value}</IonText>
-                </IonItem>
-            ))}
-            <IonItem>
-                <IonButton onClick={() => pushPage('profile/edit', router)}>Edit</IonButton>
-            </IonItem>
-            <IonItem>
-                <IonButton onClick={onLogoutClick}>Log out</IonButton>
-            </IonItem>
-        </IonList>
+        <div className="profile-container">
+            {/* <IonCard> */}
+                <div className="icon-container">
+                    <div className="card">
+                        <div className="header">
+                            <div className="avatar icon-container">
+                                <IonIcon className="avatar-icon" icon={personCircle} color="tertiary"></IonIcon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                        
+                        <IonList className="list-container">
+                            {profileFields.map((field, index) => (
+                            
+                                <IonItem key={index}>
+                                    <IonItem>
+                                        <IonLabel>{field.label}</IonLabel>
+                                    </IonItem>
+                                    <IonItem>
+                                        <IonText>{field.value}</IonText>
+                                    </IonItem>
+                                </IonItem>
+                                    
+                                ))}            
+                        </IonList>
+
+                        <div className="button-container">   
+                            <IonButton className="profile-button" shape="round" color="primary" fill="solid" type="submit" onClick={() => pushPage('profile/edit', router)}>
+                                Edit
+                            </IonButton>     
+                            <IonButton className="profile-button" shape="round" color="secondary" fill="solid" type="submit" onClick={onLogoutClick}>
+                                Log out
+                            </IonButton>         
+                        </div> 
+                 
+            {/* </IonCard> */}
+        </div>
     );
 };
 

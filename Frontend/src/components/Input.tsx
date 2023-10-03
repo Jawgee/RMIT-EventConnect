@@ -39,6 +39,7 @@ const Input: React.FC<InputProps> = ({
                 render={({ field }) => (
                     <>
                         <IonChip outline={true}>
+                        {/* <IonItem> */}
                             {/* style={{padding: "10px"}} */}
                             {icon && (
                                 <IonIcon
@@ -58,6 +59,7 @@ const Input: React.FC<InputProps> = ({
                                 label={label}
                                 labelPlacement="floating"
                             />
+                        {/* </IonItem> */}
                         </IonChip>
                         {helperText && (
                             <p style={{ marginTop: '4px', fontSize: '12px', textAlign: 'center' }}>{helperText}</p>

@@ -27,7 +27,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
 
     // Used for error message handling
     // When there was a fail from the backend
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('test');
 
     // Holds all of the fields and their information
     const formFields: InputProps[] = [
@@ -70,7 +70,6 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
         });
     };
 
-    // TODO: Create proper design
     return (
         <IonPage>
             <IonHeader className="ion-no-border">
@@ -86,28 +85,25 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                 <div className="login-container">
                     <div className="login-header">
                         <IonHeader className="ion-no-border">
-                            <IonTitle className="login-ion-title">
-                                Log In
-                            </IonTitle>
+                            <IonTitle className="login-ion-title">Log In</IonTitle>
                         </IonHeader>
                     </div>
                     <form className="login-form" onSubmit={handleSubmit(loginUserOnSubmit)}>
-                        {/* TODO: Decide if should make it into a list or not (aesthetic choice) */}
-                        {/* <IonList> */}
                         {formFields.map((field, index) => (
-                            /* <IonItem> */
-                            <div className='tester-thing'>
-                                <Input {...field} control={control} key={index} />
-                            </div>
-                            /* </IonItem> */
+                            <Input {...field} control={control} key={index} />
                         ))}
                         <div className="login-button">
-                            <IonButton className="theLogInButton" shape="round" color="primary" fill="solid" type="submit">
+                            <IonButton
+                                className="theLogInButton"
+                                shape="round"
+                                color="primary"
+                                fill="solid"
+                                type="submit"
+                            >
                                 Log In
                                 <IonRippleEffect type="unbounded"></IonRippleEffect>
                             </IonButton>
                         </div>
-                        {/* </IonList> */}
                         {/* TODO: make this look better */}
                         {errorMessage && <p>{errorMessage}</p>}
                     </form>
@@ -115,8 +111,13 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                     <div className="login-info">
                         <p>
                             Don't have an account yet?{' '}
-                            <button className="RegisterNowButton" onClick={() => {replacePage('register', router);}}>
-                            Sign up!
+                            <button
+                                className="RegisterNowButton"
+                                onClick={() => {
+                                    replacePage('register', router);
+                                }}
+                            >
+                                Sign up!
                             </button>
                         </p>
                     </div>

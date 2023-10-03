@@ -135,7 +135,7 @@ const ProfileEdit = () => {
                         </IonButton>
                     </div>
 
-                    {errorMessage && <p>{errorMessage}</p>}
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
                 </form>
             </IonContent>
         </IonPage>

@@ -27,7 +27,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
 
     // Used for error message handling
     // When there was a fail from the backend
-    const [errorMessage, setErrorMessage] = useState('test');
+    const [errorMessage, setErrorMessage] = useState('');
 
     // Holds all of the fields and their information
     const formFields: InputProps[] = [
@@ -105,7 +105,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                             </IonButton>
                         </div>
                         {/* TODO: make this look better */}
-                        {errorMessage && <p>{errorMessage}</p>}
+                        {errorMessage && <p className="error-message">{errorMessage}</p>}
                     </form>
                     {/* Link to register page */}
                     <div className="login-info">

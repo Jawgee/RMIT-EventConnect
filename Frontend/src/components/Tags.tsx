@@ -85,7 +85,7 @@ const Tags: React.FC<{
                     <IonButton shape="round" color="primary" fill="solid" onClick={submitTags}>
                         Submit Tags
                     </IonButton>
-                    {errorMessage && <p>{errorMessage}</p>}
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
                 </div>
             </div>
         </>

@@ -84,7 +84,6 @@ const Register: React.FC<{
         });
     };
 
-    // TODO: Create proper design
     return (
         <IonPage>
             <IonHeader className="ion-no-border">
@@ -103,16 +102,9 @@ const Register: React.FC<{
                         </IonHeader>
                     </div>
                     <form className="register-form" onSubmit={handleSubmit(registerUserOnSubmit)}>
-                        {/* TODO: Decide if should make it into a list or not (aesthetic choice) */}
-                        {/* <IonList> */}
-                        {formFields.map(
-                            (field, index) => (
-                                /* <IonItem> */
-
-                                <Input {...field} control={control} key={index} />
-                            )
-                            /* </IonItem> */
-                        )}
+                        {formFields.map((field, index) => (
+                            <Input {...field} control={control} key={index} />
+                        ))}
                         <div className="register-button">
                             <IonButton
                                 className="theSignUpButton"
@@ -125,9 +117,7 @@ const Register: React.FC<{
                                 <IonRippleEffect type="unbounded"></IonRippleEffect>
                             </IonButton>
                         </div>
-                        {/* </IonList> */}
-                        {/* TODO: make this look better */}
-                        {errorMessage && <p>{errorMessage}</p>}
+                        {errorMessage && <p className="error-message">{errorMessage}</p>}
                     </form>
                     {/* Link to login page */}
                     <div className="register-info">

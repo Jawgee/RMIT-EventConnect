@@ -63,3 +63,9 @@ ion-item {
     color: #3880ff;
     background: transparent;
 }
+
+.error-message {
+    color: #d94d32;
+    text-align: center;
+    font-style: italic;
+}

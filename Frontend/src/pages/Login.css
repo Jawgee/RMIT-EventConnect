@@ -5,7 +5,6 @@
     font-size: 400%;
     font-family: 'Nunito', sans-serif;
     font-weight: 400;
-    
 }
 
 .login-header {
@@ -20,15 +19,21 @@
     padding: 0 50px;
     grid-template-rows: 1fr 2fr 1fr;
     grid-template-areas:
-        "sect1"
-        "sect2"
-        "sect3"
-    }
+        'sect1'
+        'sect2'
+        'sect3';
+}
 
 ion-icon {
     font-size: 40px;
-    color:#3880ff;
-    --background: # ;
+    color: #3880ff;
+    --background: #;
+}
+
+ion-header ion-icon {
+    /* font-size: 40px; */
+    color: #fff;
+    --background: #;
 }
 
 .login-info {
@@ -53,7 +58,6 @@ ion-icon {
 
 ion-item {
     padding-bottom: var(--ion-safe-area-top, 10);
-    
 }
 
 .RegisterNowButton {
@@ -61,8 +65,8 @@ ion-item {
     font-family: 'Nunito', sans-serif;
     font-weight: 600;
     color: #3880ff;
-    background: transparent
-}  
+    background: transparent;
+}
 
 .grid-form {
     display: grid;

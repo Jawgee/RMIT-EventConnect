@@ -4,7 +4,7 @@ import {
     IonPage,
     IonTitle,
     IonToolbar,
-    IonSearchbar,
+    // IonSearchbar,
     IonCard,
     IonCardHeader,
     IonCardTitle,
@@ -13,21 +13,34 @@ import {
     IonImg,
     IonText,
     IonChip,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    useIonRouter,
+    IonBackButton,
 } from '@ionic/react';
 import './testing.css';
+import { calendar } from 'ionicons/icons';
+import { pushPage } from '../App';
 // import './Home.css';
 
 const Home: React.FC = () => {
-    // const router = useIonRouter();
+    const router = useIonRouter();
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar color="primary">
                     <IonTitle>Home</IonTitle>
+                    <IonButtons slot="start">
+                        <IonBackButton></IonBackButton>
+                    </IonButtons>
+                    <IonButtons slot="end">
+                        <IonButton onClick={() => pushPage('home/calendar', router)}>
+                            <IonIcon icon={calendar}></IonIcon>
+                        </IonButton>
+                    </IonButtons>
                 </IonToolbar>
-                <IonToolbar>
-                    <IonSearchbar></IonSearchbar>
-                </IonToolbar>
+                {/* <IonToolbar><IonSearchbar></IonSearchbar></IonToolbar> */}
             </IonHeader>
 
             <IonContent fullscreen>

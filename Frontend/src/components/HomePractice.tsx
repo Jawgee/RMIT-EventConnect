@@ -1,13 +1,13 @@
 import {
-    IonHeader,
-    IonPage,
-    IonTitle,
-    IonToolbar,
+    // IonHeader,
+    // IonPage,
+    // IonTitle,
+    // IonToolbar,
     IonCard,
     IonCardContent,
     IonImg,
     IonText,
-    IonContent,
+    // IonContent,
     IonList,
     IonItem,
 } from '@ionic/react';
@@ -59,7 +59,7 @@ const HomePractice: React.FC = () => {
     }, []);
 
     const getTagsFromObject = (object: any) => {
-        // let tags = ({ name: _, description: _, id: _, location: _, ...rest } = object);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return (({ name, description, id, location, owner, index, ...o }) => o)(object);
     };
     return (

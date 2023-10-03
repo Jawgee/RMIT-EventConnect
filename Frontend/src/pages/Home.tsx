@@ -1,4 +1,11 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar } from '@ionic/react';
+import {
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    // IonSearchbar
+} from '@ionic/react';
 import './testing.css';
 import { Suspense, lazy } from 'react';
 import LoadingSpinner from './LoadingSpinner';

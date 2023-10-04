@@ -151,17 +151,17 @@ describe("Event API Tests", () => {
         const response = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
-            sector: "Tech",
-            profile: "Startup",
-            category: "Round Table",
+            sector: "tech",
+            profile: "startup",
+            category: "round table",
             privacy: "public",
             description: "An awesome tech startup event",
             location: "Tech Hub",
-            frequency: "Yearly",
-            environment: "Informal",
-            entrance: "Free",
-            accessibility: "In-person",
-            motivation: "Validation"
+            frequency: "yearly",
+            environment: "informal",
+            entrance: "free",
+            accessibility: "in-person",
+            motivation: "validation"
         });
         expect(response.statusCode).toBe(201);
         createdEventId = response.body.id;
@@ -179,17 +179,17 @@ describe("Event API Tests", () => {
         const response = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
-            sector: "Tech",
-            profile: "Startup",
-            category: "Round Table",
+            sector: "tech",
+            profile: "startup",
+            category: "round table",
             privacy: "public",
             description: "An awesome tech startup event",
             location: "Tech Hub",
-            frequency: "Yearly",
-            environment: "Informal",
-            entrance: "Free",
-            accessibility: "In-person",
-            motivation: "Validation"
+            frequency: "yearly",
+            environment: "informal",
+            entrance: "free",
+            accessibility: "in-person",
+            motivation: "validation"
         });
         expect(response.statusCode).toBe(409);
     });
@@ -257,17 +257,17 @@ describe("Tags API Tests", () => {
         const EventResponse = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
-            sector: "Tech",
-            profile: "Startup",
-            category: "Round Table",
+            sector: "tech",
+            profile: "startup",
+            category: "round table",
             privacy: "public",
             description: "An awesome tech startup event",
             location: "Tech Hub",
-            frequency: "Yearly",
-            environment: "Informal",
-            entrance: "Free",
-            accessibility: "In-person",
-            motivation: "Validation"
+            frequency: "yearly",
+            environment: "informal",
+            entrance: "free",
+            accessibility: "in-person",
+            motivation: "validation"
         });
         MockEventId = EventResponse.body.id;
     });
@@ -333,17 +333,17 @@ describe("Enlist API Tests", () => {
         const EventResponse = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
-            sector: "Tech",
-            profile: "Startup",
-            category: "Round Table",
+            sector: "tech",
+            profile: "startup",
+            category: "round table",
             privacy: "public",
             description: "An awesome tech startup event",
             location: "Tech Hub",
-            frequency: "Yearly",
-            environment: "Informal",
-            entrance: "Free",
-            accessibility: "In-person",
-            motivation: "Validation"
+            frequency: "yearly",
+            environment: "informal",
+            entrance: "free",
+            accessibility: "in-person",
+            motivation: "validation"
         });
         MockEventId = EventResponse.body.id;
     });

@@ -18,7 +18,7 @@ const SelectTags: React.FC<{ id: number; showBack: boolean }> = ({ id, showBack 
             </IonHeader>
             <IonContent fullscreen>
                 <Suspense fallback={<LoadingSpinner />}>
-                    <Tags id={id} />
+                    <Tags id={id} showBack={showBack} />
                 </Suspense>
             </IonContent>
         </IonPage>

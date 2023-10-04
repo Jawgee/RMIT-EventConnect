@@ -10,7 +10,7 @@ import {
     IonRippleEffect,
     IonTitle,
 } from '@ionic/react';
-import './Login.css';
+import '../styles/Login.css';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';
@@ -70,7 +70,6 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
         });
     };
 
-    // TODO: Create proper design
     return (
         <IonPage>
             <IonHeader className="ion-no-border">
@@ -86,35 +85,39 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                 <div className="login-container">
                     <div className="login-header">
                         <IonHeader className="ion-no-border">
-                            <IonTitle className="login-ion-title">
-                                Login
-                            </IonTitle>
+                            <IonTitle className="login-ion-title">Log In</IonTitle>
                         </IonHeader>
                     </div>
                     <form className="login-form" onSubmit={handleSubmit(loginUserOnSubmit)}>
-                        {/* TODO: Decide if should make it into a list or not (aesthetic choice) */}
-                        {/* <IonList> */}
                         {formFields.map((field, index) => (
-                            /* <IonItem> */
                             <Input {...field} control={control} key={index} />
-                            /* </IonItem> */
                         ))}
                         <div className="login-button">
-                            <IonButton className="theLogInButton" shape="round" color="primary" fill="solid" type="submit">
+                            <IonButton
+                                className="theLogInButton"
+                                shape="round"
+                                color="primary"
+                                fill="solid"
+                                type="submit"
+                            >
                                 Log In
                                 <IonRippleEffect type="unbounded"></IonRippleEffect>
                             </IonButton>
                         </div>
-                        {/* </IonList> */}
                         {/* TODO: make this look better */}
-                        {errorMessage && <p>{errorMessage}</p>}
+                        {errorMessage && <p className="error-message">{errorMessage}</p>}
                     </form>
                     {/* Link to register page */}
                     <div className="login-info">
                         <p>
                             Don't have an account yet?{' '}
-                            <button className="RegisterNowButton" onClick={() => {replacePage('register', router);}}>
-                            Sign up!
+                            <button
+                                className="RegisterNowButton"
+                                onClick={() => {
+                                    replacePage('register', router);
+                                }}
+                            >
+                                Sign up!
                             </button>
                         </p>
                     </div>

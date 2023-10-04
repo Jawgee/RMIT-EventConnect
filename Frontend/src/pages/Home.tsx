@@ -8,7 +8,7 @@ import {
 } from '@ionic/react';
 import '../styles/testing.css';
 import { Suspense, lazy } from 'react';
-import LoadingSpinner from './LoadingSpinner';
+import LoadingSpinner from '../components/LoadingSpinner';
 const HomePractice = lazy(() => import('../components/HomePractice'));
 
 const Home: React.FC = () => {

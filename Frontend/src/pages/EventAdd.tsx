@@ -1,6 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { Suspense, lazy, useState } from 'react';
-import LoadingSpinner from './LoadingSpinner';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { Controller, useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';
 import { replacePage } from '../App';

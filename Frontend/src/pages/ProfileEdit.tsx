@@ -26,7 +26,7 @@ import { UserInfo, setProfileInfo } from '../data/profileReducer';
 import '../styles/ProfileEdit.css';
 
 const ProfileEdit = () => {
-    const userInfo = useAppSelector((state) => state.value);
+    const userInfo = useAppSelector((state) => state.profile.value);
     const { control, handleSubmit } = useForm<UserInfo>({ defaultValues: userInfo });
     const router = useIonRouter();
 

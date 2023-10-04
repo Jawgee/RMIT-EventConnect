@@ -29,7 +29,7 @@ const Profile: React.FC<{
     user: string;
     setID: React.Dispatch<React.SetStateAction<number>>;
 }> = ({ logout, user, setID }) => {
-    const userInfo = useAppSelector((state) => state.value);
+    const userInfo = useAppSelector((state) => state.profile.value);
     const router = useIonRouter();
     const dispatch = useAppDispatch();
 

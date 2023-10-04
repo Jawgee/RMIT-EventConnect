@@ -17,7 +17,7 @@ import Input, { type InputProps } from '../components/Input';
 import { registerUser } from '../data/accounts.js';
 import { PasswordRegex, replacePage } from '../App';
 import { mail, lockClosed, person } from 'ionicons/icons';
-import LoadingSpinner from './LoadingSpinner';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { UserInfo } from '../data/profileReducer';
 const ProfileOptions = lazy(() => import('../components/ProfileOptions'));
 

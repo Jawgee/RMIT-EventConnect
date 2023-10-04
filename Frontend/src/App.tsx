@@ -44,6 +44,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import EventView from './pages/EventView';
 
 setupIonicReact();
 
@@ -83,8 +84,11 @@ const App: React.FC = () => {
                     <IonReactRouter>
                         <IonTabs>
                             <IonRouterOutlet>
-                                <Route path="/:tab(home)">
+                                <Route exact path="/:tab(home)">
                                     <Home />
+                                </Route>
+                                <Route path="/:tab(home)/event">
+                                    <EventView />
                                 </Route>
                                 <Route path="/:tab(profile)/edit">
                                     <ProfileEdit />

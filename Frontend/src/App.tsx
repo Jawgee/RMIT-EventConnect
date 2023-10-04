@@ -71,6 +71,12 @@ const App: React.FC = () => {
         setUser(null);
     };
 
+    // const testFunction = (router: UseIonRouterResult) => {
+    //     setUser('test@ing.com');
+    //     setID(2);
+    //     replacePage('tags', router);
+    // };
+
     if (user) {
         return (
             <>
@@ -147,7 +153,11 @@ const App: React.FC = () => {
                                 <Login setUser={setUser} />
                             </Route>
                             <Route path="/register">
-                                <Register setUser={setUser} setID={setID} />
+                                <Register
+                                    setUser={setUser}
+                                    setID={setID}
+                                    // testFunction={testFunction}
+                                />
                             </Route>
                             <Route path="/welcome">
                                 <Welcome />

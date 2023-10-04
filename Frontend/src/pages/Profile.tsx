@@ -15,7 +15,7 @@ const ProfilePage: React.FC<{
                     <IonTitle>Profile</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent fullscreen>
+            <IonContent>
                 <Suspense fallback={<LoadingSpinner />}>
                     <Profile logout={logout} user={user} setID={setID} />
                 </Suspense>

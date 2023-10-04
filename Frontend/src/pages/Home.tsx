@@ -19,10 +19,10 @@ import {
     useIonRouter,
     IonBackButton,
 } from '@ionic/react';
-import './testing.css';
 import { calendar } from 'ionicons/icons';
 import { pushPage } from '../App';
 // import './Home.css';
+import '../styles/testing.css';
 
 const Home: React.FC = () => {
     const router = useIonRouter();

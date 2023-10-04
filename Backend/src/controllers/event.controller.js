@@ -102,6 +102,91 @@ exports.getProfileCategories = async (req, res) => {
   }
 };
 
+//gets all events associated with a tag
+
+exports.listEventsByTag = async (req, res) => {
+  const tag = req.params.tag;
+
+  if (!tag) {
+    return res.status(400).json({ error: "Tag is required" });
+  }
+
+  try {
+    connectionPool.query(
+      `SELECT e.id, e.name, e.owner
+       FROM events e
+       JOIN tags t ON e.id = t.event_id
+       WHERE t.tag_type = 'event' AND t.${tag} = 1`,
+      (err, rows) => {
+        if (err) {
+          console.error("Error executing query:", err.stack);
+          return res.status(500).json({ error: "Error retrieving events" });
+        }
+
+        res.json(rows);
+      }
+    );
+  } catch (error) {
+    console.error("Error retrieving events:", error.stack);
+    res.status(500).json({ error: "Error retrieving events" });
+  }
+};
+
+//gets all events associated with a user's tags
+exports.listEventsForUser = async (req, res) => {
+  const userId = req.params.user_id;
+
+  try {
+    const userTagsQuery = `SELECT tag_type, ${subCategories.Sector.tags.join(', ')} FROM tags WHERE user_id = ?`;
+    connectionPool.query(userTagsQuery, [userId], (err, userTagsResults) => {
+      if (err) {
+        console.error("Error executing query:", err.stack);
+        return res.status(500).json({ error: "Error retrieving user's selected tags" });
+      }
+
+      const userSelectedTags = userTagsResults[0];
+
+      if (!userSelectedTags) {
+        return res.status(404).json({ error: "User not found or no selected tags" });
+      }
+
+      const matchingEventsQuery = `
+        SELECT e.id, e.name, e.owner, ${subCategories.Sector.tags.map(tag => `t.${tag}`).join(', ')}
+        FROM events e
+        JOIN tags t ON e.id = t.event_id
+        WHERE t.tag_type = 'event'
+      `;
+
+      connectionPool.query(matchingEventsQuery, (err, matchingEventsResults) => {
+        if (err) {
+          console.error("Error executing query:", err.stack);
+          return res.status(500).json({ error: "Error retrieving matching events" });
+        }
+
+        const relevantTagsUsed = subCategories.Sector.tags.filter(tag => userSelectedTags[tag] === 1 && matchingEventsResults.some(event => event[tag] === 1));
+
+        matchingEventsResults.forEach(event => {
+          subCategories.Sector.tags.forEach(tag => {
+            delete event[tag];
+          });
+        });
+
+        const response = {
+          relevantTagsUsed: relevantTagsUsed,
+          events: matchingEventsResults
+        };
+
+        res.json(response);
+      });
+    });
+  } catch (error) {
+    console.error("Error retrieving user's selected tags:", error.stack);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
+
 exports.createEvent = async (req, res) => {
   const result = validateEvent(req.body);
 
@@ -327,17 +412,17 @@ exports.deleteEvent = async (req, res) => {
 
 // example EVENT JSON:
 // {
-//   "name": "Sample Event",
-//   "owner": "John Doe",
-//   "sector": "Tech",
-//   "profile": "Startup",
-//   "category": "Round Table",
+//   "name": "Sample Event2",
+//   "owner": "Zain",
+//   "sector": "tech",
+//   "profile": "entrepreneur",
+//   "category": "stand",
 //   "privacy": "public",
 //   "description": "An awesome tech startup event",
 //   "location": "Tech Hub",
-//   "frequency": "Yearly",
-//   "environment": "Informal",
-//   "entrance": "Free",
-//   "accessibility": "In-person",
-//   "motivation": "Validation"
+//   "frequency": "yearly",
+//   "environment": "informal",
+//   "entrance": "free",
+//   "accessibility": "in-person",
+//   "motivation": "validation"
 // }

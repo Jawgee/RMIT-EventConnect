@@ -71,7 +71,7 @@ const HomePractice: React.FC = () => {
                     <IonTitle>Blog Posts</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent fullscreen>
+            <IonContent>
                 <div className="content-container">
                     {posts.map((arr, i) => (
                         <Swiper slidesPerView={2.15} spaceBetween={100} key={i}>

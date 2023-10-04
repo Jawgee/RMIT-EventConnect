@@ -102,7 +102,7 @@ const Register: React.FC<{
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent fullscreen>
+            <IonContent>
                 <div className="register-container">
                     <div className="register-header">
                         <IonHeader className="ion-no-border">

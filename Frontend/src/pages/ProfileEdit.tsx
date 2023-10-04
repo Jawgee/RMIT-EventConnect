@@ -90,7 +90,7 @@ const ProfileEdit = () => {
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent fullscreen>
+            <IonContent>
                 <form className="edit-profile-container" onSubmit={handleSubmit(onSubmit)}>
                     <div className="edit-profile-header">
                         <IonHeader className="ion-no-border">

@@ -24,7 +24,7 @@ const Home: React.FC = () => {
                 </IonToolbar> */}
             </IonHeader>
 
-            <IonContent fullscreen>
+            <IonContent>
                 {/* <IonCard>
                     <IonCardHeader>
                         <IonImg src="" />

@@ -9,7 +9,7 @@ export interface UserInfo {
     password?: string;
 }
 
-export const defaultInfo: UserInfo = {
+export const defaultProfileInfo: UserInfo = {
     first_name: '',
     last_name: '',
     email: '',
@@ -20,14 +20,14 @@ export const defaultInfo: UserInfo = {
 export const profileSlice = createSlice({
     name: 'profile',
     initialState: {
-        value: defaultInfo,
+        value: defaultProfileInfo,
     },
     reducers: {
         setProfileInfo: (state, action: PayloadAction<UserInfo>) => {
             state.value = action.payload;
         },
         clearProfileInfo: (state) => {
-            state.value = defaultInfo;
+            state.value = defaultProfileInfo;
         },
     },
 });

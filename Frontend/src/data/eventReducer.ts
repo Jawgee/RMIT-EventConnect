@@ -9,30 +9,32 @@ export interface EventInfo {
     [key: string]: string;
 }
 
-export const defaultInfo: EventInfo = {
+export const defaultEventInfo: EventInfo = {
     name: '',
     description: '',
     location: '',
     owner: '',
+    // Change the default image here
     image: 'https://cdn.mos.cms.futurecdn.net/wtqqnkYDYi2ifsWZVW2MT4.jpg',
 };
 
 export const eventSlice = createSlice({
     name: 'event',
     initialState: {
-        value: defaultInfo,
+        value: defaultEventInfo,
     },
     reducers: {
         setEventInfo: (state, action: PayloadAction<EventInfo>) => {
-            const payload = action.payload;
-            console.log(payload.image);
-            if (payload.image == undefined) {
-                payload.image = defaultInfo.image;
-            }
-            state.value = payload;
+            state.value =
+                //action.payload;
+                // console.log(action.payload);
+                {
+                    ...action.payload,
+                    image: action.payload.image == undefined ? defaultEventInfo.image : action.payload.image,
+                };
         },
         clearEventInfo: (state) => {
-            state.value = defaultInfo;
+            state.value = defaultEventInfo;
         },
     },
 });

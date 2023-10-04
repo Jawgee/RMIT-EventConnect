@@ -16,7 +16,7 @@ const SelectTags: React.FC<{ id: number; showBack: boolean }> = ({ id, showBack 
                     <IonTitle>Tags</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent fullscreen>
+            <IonContent>
                 <Suspense fallback={<LoadingSpinner />}>
                     <Tags id={id} showBack={showBack} />
                 </Suspense>

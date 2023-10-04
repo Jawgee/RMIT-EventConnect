@@ -1,6 +1,6 @@
 import { useIonRouter, IonList, IonItem, IonLabel, IonButton, IonText, IonIcon } from '@ionic/react';
 import { pushPage, replacePage } from '../App';
-import { UserInfo, clearProfileInfo, defaultInfo, setProfileInfo } from '../data/profileReducer';
+import { UserInfo, clearProfileInfo, defaultProfileInfo, setProfileInfo } from '../data/profileReducer';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { getUserInfo } from '../data/accounts';
 import { useEffect } from 'react';
@@ -11,7 +11,7 @@ export const getInfo = async (user: string) => {
     const info = await getUserInfo(user);
     if (typeof info === 'string') {
         // Do something to show that something went wrong
-        return defaultInfo;
+        return defaultProfileInfo;
     } else {
         const newInfo: UserInfo = {
             first_name: info.first_name,

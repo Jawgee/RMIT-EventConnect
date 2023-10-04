@@ -16,7 +16,7 @@ import '../styles/HomePractice.css';
 import { getEvents } from '../data/events';
 import { pushPage } from '../App';
 import { useAppDispatch } from '../hooks';
-import { EventInfo, defaultInfo, setEventInfo } from '../data/eventReducer';
+import { EventInfo, clearEventInfo, defaultEventInfo, setEventInfo } from '../data/eventReducer';
 
 const HomePractice: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -28,13 +28,15 @@ const HomePractice: React.FC = () => {
     // Used for error message handling
     // When there was a fail from the backend
     const [errorMessage, setErrorMessage] = useState('');
+
     useEffect(() => {
+        dispatch(clearEventInfo());
         getEvents().then((e) => {
             if (typeof e === 'string') {
                 // Do something to show that something went wrong
                 setErrorMessage(e);
             } else {
-                console.log(e);
+                // console.log(e);
                 // send tags info somewhere
                 const newInfo: EventInfo[] = [];
                 e.forEach((n: any) => {
@@ -48,7 +50,7 @@ const HomePractice: React.FC = () => {
                     };
                     newInfo.push(info);
                 });
-                console.log(newInfo);
+                // console.log(newInfo);
                 setPosts(newInfo);
             }
         });
@@ -66,16 +68,25 @@ const HomePractice: React.FC = () => {
                                     className="ion-no-padding"
                                     onClick={() => {
                                         dispatch(setEventInfo(post));
-                                        console.log(post);
+                                        // console.log(post);
                                         pushPage('home/event', router);
                                     }}
                                 >
-                                    <motion.div className="card-content" layoutId={'card-' + index}>
-                                        <motion.div layoutId={'image-container' + index}>
-                                            <IonImg className="card-image" src={post.image ?? defaultInfo.image} />
-                                        </motion.div>
+                                    {/* <motion. */}
+                                    <div
+                                        className="card-content"
+                                        // layoutId={'card-' + index}
+                                    >
+                                        {/* <motion. */}
+                                        <div
+                                        // layoutId={'image-container' + index}
+                                        >
+                                            <IonImg className="card-image" src={post.image ?? defaultEventInfo.image} />
+                                            {/* </motion.div> */}
+                                        </div>
                                         <IonCardContent>
-                                            <motion.div
+                                            {/* <motion. */}
+                                            <div
                                                 className="title-container"
                                                 // variants={{
                                                 //     show: {
@@ -96,9 +107,11 @@ const HomePractice: React.FC = () => {
                                                 // animate={selectedPost?.index === index ? 'hidden' : 'show'}
                                             >
                                                 <IonText>{post.name}</IonText>
-                                            </motion.div>
+                                                {/* </motion.div> */}
+                                            </div>
                                         </IonCardContent>
-                                    </motion.div>
+                                        {/* </motion.div> */}
+                                    </div>
                                 </IonCard>
                             </SwiperSlide>
                         ))}

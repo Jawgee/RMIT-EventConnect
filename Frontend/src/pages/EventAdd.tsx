@@ -56,7 +56,7 @@ const EventAdd: React.FC<{ user: string }> = ({ user }) => {
                     <IonTitle>Create an Event</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent fullscreen>
+            <IonContent>
                 <form onSubmit={handleSubmit(addEventOnSubmit)}>
                     {/* TODO: Create proper design */}
 

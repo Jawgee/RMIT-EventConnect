@@ -81,7 +81,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent fullscreen>
+            <IonContent>
                 <div className="login-container">
                     <div className="login-header">
                         <IonHeader className="ion-no-border">

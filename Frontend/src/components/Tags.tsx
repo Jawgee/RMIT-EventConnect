@@ -15,7 +15,8 @@ const getInfo = async (id: number) => {
 };
 const Tags: React.FC<{
     id: number;
-}> = ({ id }) => {
+    showBack: boolean;
+}> = ({ id, showBack }) => {
     const [tags, setTags] = useState<any>({});
     const [errorMessage, setErrorMessage] = useState('');
     const router = useIonRouter();
@@ -41,7 +42,7 @@ const Tags: React.FC<{
         updateTags(id, tags).then((e) => {
             const [successful, message] = e;
             if (successful) {
-                if (router.canGoBack()) {
+                if (showBack) {
                     router.goBack();
                 } else {
                     replacePage('home', router);

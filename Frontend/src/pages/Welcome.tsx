@@ -2,7 +2,7 @@ import { IonContent, IonPage, IonButton, useIonRouter, IonImg } from '@ionic/rea
 import { pushPage } from '../App';
 import '../styles/Welcome.css';
 
-const Register = () => {
+const Welcome = () => {
     // Routing to allow to manually redirect the user
     const router = useIonRouter();
 
@@ -35,4 +35,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default Welcome;

@@ -21,7 +21,12 @@ import { mail, lockClosed, person } from 'ionicons/icons';
 const Register: React.FC<{
     setUser: React.Dispatch<React.SetStateAction<string | null>>;
     setID: React.Dispatch<React.SetStateAction<number>>;
-}> = ({ setUser, setID }) => {
+    // testFunction: Function;
+}> = ({
+    setUser,
+    setID,
+    // testFunction
+}) => {
     // Controller for the forms
     const { control, handleSubmit } = useForm();
 
@@ -133,6 +138,9 @@ const Register: React.FC<{
                             </button>
                         </p>
                     </div>
+                    {/* <IonButton className="signup-button" onClick={() => testFunction(router)}>
+                        test button
+                    </IonButton> */}
                 </div>
             </IonContent>
         </IonPage>

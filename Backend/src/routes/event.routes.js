@@ -11,6 +11,12 @@ module.exports = (express, app) => {
     // Get attendee list
     router.get("/Attendees/:id", controller.getAttendeeList);
 
+    // Get event subcategories
+    router.get("/Categories/tags", controller.getCategories);
+
+    // Get profile categories
+    router.get("/Categories/profile", controller.getProfileCategories);
+
     // edit event's list of tags
     router.put("/:id", controller.editEvent);
 

@@ -147,7 +147,7 @@ require("./src/routes/enlist.routes.js")(express, app);  // Include event-relate
 
 // Start the server and listen for requests on the specified port
 app.listen(serverConfig.PORT, () => {
-
+  console.log(`Server is running on port ${serverConfig.PORT}.`);
 });
 
 module.exports = app;  // Export the app for testing purposes

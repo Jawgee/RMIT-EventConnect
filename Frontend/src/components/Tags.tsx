@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import { getTags, updateTags } from '../data/accounts';
-import { IonButton, IonCheckbox, useIonRouter } from '@ionic/react';
-import './Tags.css';
+import { IonButton, IonCard, IonCheckbox, IonHeader, IonTitle, useIonRouter } from '@ionic/react';
 import { replacePage } from '../App';
+import '../styles/Tags.css';
 
 const getInfo = async (id: number) => {
     return await getTags(id);
 };
 const Tags: React.FC<{
     id: number;
-}> = ({ id }) => {
+    showBack: boolean;
+}> = ({ id, showBack }) => {
     const [tags, setTags] = useState<any>({});
     const [errorMessage, setErrorMessage] = useState('');
     const router = useIonRouter();
@@ -35,7 +36,7 @@ const Tags: React.FC<{
         updateTags(id, tags).then((e) => {
             const [successful, message] = e;
             if (successful) {
-                if (router.canGoBack()) {
+                if (showBack) {
                     router.goBack();
                 } else {
                     replacePage('home', router);
@@ -49,25 +50,39 @@ const Tags: React.FC<{
 
     return (
         <>
-            <p>Click to select or deselect a tag!</p>
-            {tags &&
-                Object.keys(tags).map((key, i) => {
-                    // console.log(key, tags[key]);
-                    return (
-                        <IonCheckbox
-                            key={i}
-                            checked={tags[key]}
-                            onIonChange={() => invertSelection(key, tags[key])}
-                            labelPlacement="fixed"
-                            style={{ textTransform: 'capitalize' }}
-                        >
-                            {key.replace('_', ' ')}
-                        </IonCheckbox>
-                    );
-                })}
-            <br />
-            <IonButton onClick={submitTags}>Submit Tags</IonButton>
-            {errorMessage && <p>{errorMessage}</p>}
+            <div className="tags-container">
+                <div className="tags-header">
+                    <IonHeader className="ion-no-border">
+                        <IonTitle className="tags-ion-title">Select your relevant tags!</IonTitle>
+                    </IonHeader>
+                </div>
+                <div className="tags-tags">
+                    <IonCard className="tags-card">
+                        {tags &&
+                            Object.keys(tags).map((key, i) => {
+                                // console.log(key, tags[key]);
+                                return (
+                                    <IonCheckbox
+                                        key={i}
+                                        checked={tags[key]}
+                                        onIonChange={() => invertSelection(key, tags[key])}
+                                        style={{ textTransform: 'capitalize', textAlign: 'center' }}
+
+                                        // labelPlacement='fixed'
+                                    >
+                                        #{key.replace('_', ' ')}
+                                    </IonCheckbox>
+                                );
+                            })}
+                    </IonCard>
+                </div>
+                <div className="tags-button">
+                    <IonButton shape="round" color="primary" fill="solid" onClick={submitTags}>
+                        Submit Tags
+                    </IonButton>
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
+                </div>
+            </div>
         </>
     );
 };

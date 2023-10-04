@@ -9,6 +9,7 @@
 }
 
 .theSignUpButton {
+    max-width: 250px;
     width: 60%;
 }
 
@@ -28,7 +29,7 @@
 
 .register-container {
     margin: 0;
-    height: 100vh;
+    height: 92vh;
     display: grid;
     padding: 0 50px;
     grid-template-rows: 1fr 2fr 1fr;
@@ -45,16 +46,12 @@
 
 .register-form {
     grid-area: sect2;
-    align-self: center;
+    place-self: center;
+    max-width: 500px;
 }
 
 .register-info {
     grid-area: sect3;
     justify-self: center;
     font-size: 15px;
-}
-
-.grid-form {
-    display: grid;
-    grid-template-columns: 1fr; /* Adjust the number of columns as needed */
 }

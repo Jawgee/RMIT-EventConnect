@@ -5,7 +5,6 @@
     font-size: 400%;
     font-family: 'Nunito', sans-serif;
     font-weight: 400;
-    
 }
 
 .login-header {
@@ -15,20 +14,20 @@
 
 .login-container {
     margin: 0;
-    height: 100vh;
+    height: 93vh;
     display: grid;
     padding: 0 50px;
     grid-template-rows: 1fr 2fr 1fr;
     grid-template-areas:
-        "sect1"
-        "sect2"
-        "sect3"
-    }
+        'sect1'
+        'sect2'
+        'sect3';
+}
 
 ion-icon {
     font-size: 40px;
-    color:#3880ff;
-    --background: # ;
+    color: #3880ff;
+    --background: #;
 }
 
 .login-info {
@@ -44,16 +43,17 @@ ion-icon {
 }
 
 .theLogInButton {
+    max-width: 250px;
     width: 60%;
 }
 .login-form {
     grid-area: sect2;
-    align-self: center;
+    place-self: center;
+    max-width: 500px;
 }
 
 ion-item {
     padding-bottom: var(--ion-safe-area-top, 10);
-    
 }
 
 .RegisterNowButton {
@@ -61,10 +61,11 @@ ion-item {
     font-family: 'Nunito', sans-serif;
     font-weight: 600;
     color: #3880ff;
-    background: transparent
-}  
+    background: transparent;
+}
 
-.grid-form {
-    display: grid;
-    grid-template-columns: 1fr; /* Adjust the number of columns as needed */
+.error-message {
+    color: #d94d32;
+    text-align: center;
+    font-style: italic;
 }

@@ -10,7 +10,7 @@ import {
     IonRippleEffect,
     IonTitle,
 } from '@ionic/react';
-import './Login.css';
+import '../styles/Login.css';
 import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';
@@ -85,7 +85,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                 <div className="login-container">
                     <div className="login-header">
                         <IonHeader className="ion-no-border">
-                            <IonTitle className="login-ion-title">Login</IonTitle>
+                            <IonTitle className="login-ion-title">Log In</IonTitle>
                         </IonHeader>
                     </div>
                     <form className="login-form" onSubmit={handleSubmit(loginUserOnSubmit)}>
@@ -104,7 +104,7 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                                 <IonRippleEffect type="unbounded"></IonRippleEffect>
                             </IonButton>
                         </div>
-                        {errorMessage && <p>{errorMessage}</p>}
+                        {errorMessage && <p className="error-message">{errorMessage}</p>}
                     </form>
 
                     {/* Link to register page */}

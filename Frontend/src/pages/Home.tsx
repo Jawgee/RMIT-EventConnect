@@ -6,11 +6,10 @@ import {
     IonToolbar,
     // IonSearchbar
 } from '@ionic/react';
-import './testing.css';
+import '../styles/testing.css';
 import { Suspense, lazy } from 'react';
 import LoadingSpinner from './LoadingSpinner';
 const HomePractice = lazy(() => import('../components/HomePractice'));
-// import './Home.css';
 
 const Home: React.FC = () => {
     // const router = useIonRouter();

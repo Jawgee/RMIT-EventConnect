@@ -5,7 +5,8 @@ const secretKey = "testing"; // change after finishing testing
 const bcrypt = require("bcrypt");
 const connectionPool = require('../connectionPool.js');
 
-const { google } = require('googleapis');
+//npm install these things 
+const { google } = require('googleapis'); 
 require('dotenv').config();
 
 const oauth2Client = new google.auth.OAuth2(
@@ -15,11 +16,10 @@ const oauth2Client = new google.auth.OAuth2(
 );
 
 const scopes = [
-  'https://www.googleapis.com/auth/calender',
+  'https://www.googleapis.com/auth/calender.readonly',
 ];
 
 exports.google= async (req, res) => {
-console.log(process.env.CLIENT_ID);
   const url = oauth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: scopes,

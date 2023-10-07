@@ -116,25 +116,25 @@ const App: React.FC = () => {
                                 </Route>
                                 <Route render={() => <Redirect to={'/home'} />} />
                             </IonRouterOutlet>
-                            <IonTabBar slot="bottom" color="warning">
+                            <IonTabBar slot="bottom" color="medium">
                                 <IonTabButton tab="home" href="/home">
-                                    <IonIcon aria-hidden="true" icon={home} />
+                                    <IonIcon color="danger" aria-hidden="true" icon={home} />
                                     <IonLabel>Home</IonLabel>
                                 </IonTabButton>
                                 <IonTabButton tab="explore" href="/explore">
-                                    <IonIcon aria-hidden="true" icon={search} />
+                                    <IonIcon color="success" aria-hidden="true" icon={search} />
                                     <IonLabel>Explore</IonLabel>
                                 </IonTabButton>
                                 <IonTabButton tab="eventadd" href="/eventadd">
-                                    <IonIcon aria-hidden="true" icon={addCircle} />
+                                    <IonIcon color="secondary" aria-hidden="true" icon={addCircle} />
                                     <IonLabel>Add Event</IonLabel>
                                 </IonTabButton>
                                 <IonTabButton tab="inbox" href="/inbox">
-                                    <IonIcon aria-hidden="true" icon={mail} />
+                                    <IonIcon color="warning" aria-hidden="true" icon={mail} />
                                     <IonLabel>Inbox</IonLabel>
                                 </IonTabButton>
                                 <IonTabButton tab="profile" href="/profile">
-                                    <IonIcon aria-hidden="true" icon={personCircle} />
+                                    <IonIcon color="primary" aria-hidden="true" icon={personCircle} />
                                     <IonLabel>Profile</IonLabel>
                                 </IonTabButton>
                             </IonTabBar>

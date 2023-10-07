@@ -35,7 +35,7 @@ const EventView = () => {
     return (
         <IonPage>
             <IonHeader>
-                <IonToolbar color="primary">
+                <IonToolbar color="medium">
                     <IonTitle>Event - {selectedPost.name ?? 'Event'}</IonTitle>
                     <IonButtons slot="start">
                         <IonBackButton></IonBackButton>
@@ -96,7 +96,7 @@ const EventView = () => {
                                 </IonItem>
                                 {Object.keys(getTagsFromObject(selectedPost)).map((e, i) => (
                                     <IonItem key={i}>
-                                        <p>
+                                        <p >
                                             {e}: {selectedPost[e]}
                                         </p>
                                     </IonItem>

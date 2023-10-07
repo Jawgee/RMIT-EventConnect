@@ -17,7 +17,7 @@ ion-content {
 }
 
 ion-card {
-    width: 100%;
+    
     background-color: #fff;
 }
 
@@ -25,6 +25,7 @@ ion-card .card-content ion-text {
     font-size: 1.5rem;
     font-weight: 600;
     color: #333;
+
 }
 
 ion-card ion-img {
@@ -63,4 +64,10 @@ ion-card ion-img {
     font-size: 1.1rem;
     padding: 0 20px;
     line-height: 2rem;
+}
+
+ion-chip {
+    place-self: center;
+    
+    width: auto;
 }

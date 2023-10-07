@@ -16,7 +16,7 @@ const Home: React.FC = () => {
     return (
         <IonPage>
             <IonHeader>
-                <IonToolbar color="primary">
+                <IonToolbar color="medium">
                     <IonTitle>Home</IonTitle>
                 </IonToolbar>
                 {/* <IonToolbar>

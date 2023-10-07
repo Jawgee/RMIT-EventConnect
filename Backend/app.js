@@ -50,6 +50,7 @@ connectionPool.getConnection((err, connection) => {
       id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(100) NOT NULL,
       owner VARCHAR(100) NOT NULL,
+      URL VARCHAR(255),
       sector ENUM('Tourism','Tech','Bio','Health','Sustainability','Agro','Fintech','GreenTech','Mobility','Logistic','Food','Smart Cities','Blue Economy','Space') NOT NULL,
       profile ENUM('Entrepreneur','Corporate','Investor','Startup','Academy','Ecosystem Facilitator','Accelerator','Incubator','SME','Agency','NGO') NOT NULL,
       category ENUM('State of the art','Round Table','Living Test','Stand','Pitch','ShowRoom') NOT NULL,

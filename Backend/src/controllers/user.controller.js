@@ -5,6 +5,33 @@ const secretKey = "testing"; // change after finishing testing
 const bcrypt = require("bcrypt");
 const connectionPool = require('../connectionPool.js');
 
+const { google } = require('googleapis');
+require('dotenv').config();
+
+const oauth2Client = new google.auth.OAuth2(
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
+  process.env.REDIRECT_URL
+);
+
+const scopes = [
+  'https://www.googleapis.com/auth/calender',
+];
+
+exports.google= async (req, res) => {
+console.log(process.env.CLIENT_ID);
+  const url = oauth2Client.generateAuthUrl({
+    access_type: 'offline',
+    scope: scopes,
+  });
+  res.redirect(url);
+};
+
+exports.redirect = async (req, res) => {
+
+  res.send("it's working");
+};
+
 exports.listUsers = async (_, res) => {
   connectionPool.query("SELECT * FROM users", (err, rows) => {
     if (err) {

@@ -2,6 +2,10 @@ module.exports = (express, app) => {
     const controller = require("../controllers/user.controller.js");
     const router = express.Router();
 
+
+    router.get("/google", controller.google)
+    router.get("/google/redirect", controller.redirect)
+
     // Get all users
     router.get("/", controller.listUsers);
 

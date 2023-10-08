@@ -60,9 +60,10 @@ const HomePractice: React.FC = () => {
         <>
             {errorMessage && <p>{errorMessage}</p>}
             <div className="content-container">
-                <IonChip>#XXXX</IonChip>
+
+                <IonChip className="selected-post">#XXXX</IonChip>
                 
-                <div style={{ display: 'block' }}>
+                <div style={{ display: 'block'}}>
                     <Swiper slidesPerView={1.25} spaceBetween={20}>
                         {posts.map((post, index) => (
                             <SwiperSlide key={'card-' + index} className="ion-no-padding ion-no-inner-padding">
@@ -117,6 +118,7 @@ const HomePractice: React.FC = () => {
                         ))}
                     </Swiper>
                 </div>
+                <IonChip className="selected-post">#XXXX</IonChip>
             </div>
         </>
     );

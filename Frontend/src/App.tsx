@@ -118,23 +118,23 @@ const App: React.FC = () => {
                             </IonRouterOutlet>
                             <IonTabBar slot="bottom" color="medium">
                                 <IonTabButton tab="home" href="/home">
-                                    <IonIcon color="danger" aria-hidden="true" icon={home} />
+                                    <IonIcon className="navbar-size" aria-hidden="true" icon={home} />
                                     <IonLabel>Home</IonLabel>
                                 </IonTabButton>
                                 <IonTabButton tab="explore" href="/explore">
-                                    <IonIcon color="success" aria-hidden="true" icon={search} />
+                                    <IonIcon className="navbar-size" aria-hidden="true" icon={search} />
                                     <IonLabel>Explore</IonLabel>
                                 </IonTabButton>
                                 <IonTabButton tab="eventadd" href="/eventadd">
-                                    <IonIcon color="secondary" aria-hidden="true" icon={addCircle} />
+                                    <IonIcon className="navbar-size" aria-hidden="true" icon={addCircle} />
                                     <IonLabel>Add Event</IonLabel>
                                 </IonTabButton>
                                 <IonTabButton tab="inbox" href="/inbox">
-                                    <IonIcon color="warning" aria-hidden="true" icon={mail} />
+                                    <IonIcon className="navbar-size" aria-hidden="true" icon={mail} />
                                     <IonLabel>Inbox</IonLabel>
                                 </IonTabButton>
                                 <IonTabButton tab="profile" href="/profile">
-                                    <IonIcon color="primary" aria-hidden="true" icon={personCircle} />
+                                    <IonIcon className="navbar-size" aria-hidden="true" icon={personCircle} />
                                     <IonLabel>Profile</IonLabel>
                                 </IonTabButton>
                             </IonTabBar>

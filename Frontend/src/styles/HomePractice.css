@@ -1,5 +1,5 @@
 ion-title {
-    color: #1e5093;
+    color: #fff;
 }
 
 ion-content {
@@ -12,12 +12,9 @@ ion-content {
     height: 100%;
 }
 
-.swiper-wrapper {
-    margin: 10px;
-}
+
 
 ion-card {
-    
     background-color: #fff;
 }
 
@@ -29,7 +26,7 @@ ion-card .card-content ion-text {
 }
 
 ion-card ion-img {
-    height: 250px;
+    height: 175px;
     width: 100%;
     object-fit: cover;
 }
@@ -54,9 +51,10 @@ ion-card ion-img {
 
 .popup-container h1 {
     color: #333;
-    font-size: 1.5rem;
+    font-size: 3rem;
     font-weight: 600;
-    padding: 20px;
+    padding-top: 20px;
+    padding-left: 20px;
 }
 
 .popup-container p {
@@ -70,4 +68,40 @@ ion-chip {
     place-self: center;
     
     width: auto;
+}
+
+.event-title {
+    font-family: 'Nunito', sans-serif;
+    /* font-weight: 800; */
+}
+
+.description-location {
+    padding-left: 20px;
+    color: #3880ff;
+    font-size: 150%;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+}
+.selectpost-padding {
+    padding-left: 20px;
+    font-size: 120%;
+    padding-bottom: 10px;
+    padding-right: 20px;
+}
+
+.selected-post{
+    width: auto;
+    background: rgba(255, 214, 10, 0.7);
+    border: 2px solid rgba(255, 230, 68, 0.3);
+}
+
+.selectedpost-e {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    color: black;
+    
+}
+
+.calendar-icon-size {
+    font-size: 40px;
 }

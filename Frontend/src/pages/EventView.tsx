@@ -10,12 +10,17 @@ import {
     IonToolbar,
     IonBackButton,
     IonButtons,
+    IonChip,
+    IonButton,
+    IonIcon,
 } from '@ionic/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { EventInfo, clearEventInfo } from '../data/eventReducer';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import '../styles/HomePractice.css';
 import { useEffect, useLayoutEffect } from 'react';
+import { calendar } from 'ionicons/icons';
+import { pushPage } from '../App';
 
 const EventView = () => {
     const dispatch = useAppDispatch();
@@ -39,6 +44,12 @@ const EventView = () => {
                     <IonTitle>Event - {selectedPost.name ?? 'Event'}</IonTitle>
                     <IonButtons slot="start">
                         <IonBackButton></IonBackButton>
+                    </IonButtons>
+
+                    <IonButtons slot="end">
+                        <IonButton onClick={() => pushPage('home/calendar', router)}>
+                            <IonIcon className="calendar-icon-size" icon={calendar}></IonIcon>
+                        </IonButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
@@ -67,7 +78,7 @@ const EventView = () => {
                                     transitionDelay: '0.15s',
                                 }}
                             > */}
-                        <h1>{selectedPost.name}</h1>
+                        <h1 className="event-title">{selectedPost.name}</h1>
                         {/* </motion.div>
                             <motion.div
                                 initial={{ opacity: 0, transform: 'translateY(20px)' }}
@@ -88,17 +99,22 @@ const EventView = () => {
                                         culpa qui officia deserunt mollit anim id est laborum.
                                     </p> */}
                             <IonList>
-                                <IonItem>
-                                    <p>Description: {selectedPost.description}</p>
-                                </IonItem>
-                                <IonItem>
-                                    <p>Location: {selectedPost.location}</p>
-                                </IonItem>
+                                {/* <IonItem> */}
+                                    <h2 className="description-location">Description </h2> 
+                                    <h2 className="selectpost-padding">{selectedPost.description}</h2>
+                                {/* </IonItem> */}
+                                {/* <IonItem> */}
+                                    <h2 className="description-location">Location </h2>
+                                    <h2 className="selectpost-padding">{selectedPost.location}</h2>
+                                {/* </IonItem> */}
+                            </IonList>
+
+                            <IonList>
                                 {Object.keys(getTagsFromObject(selectedPost)).map((e, i) => (
                                     <IonItem key={i}>
-                                        <p >
-                                            {e}: {selectedPost[e]}
-                                        </p>
+                                        <IonChip className="selected-post">
+                                            <p className="selectedpost-e">{e}: {selectedPost[e]}</p>
+                                        </IonChip>
                                     </IonItem>
                                 ))}
                             </IonList>

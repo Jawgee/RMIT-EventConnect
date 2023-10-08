@@ -39,7 +39,7 @@ const Input: React.FC<InputProps> = ({
                 render={({ field }) => (
                     <>
                         <IonChip outline={true}>
-                            {icon && <IonIcon icon={icon}></IonIcon>}
+                            {icon && <IonIcon className="icon-login" icon={icon}></IonIcon>}
                             <IonInput
                                 onIonChange={field.onChange}
                                 value={field.value}

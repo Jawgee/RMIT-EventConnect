@@ -9,7 +9,7 @@ import {
 import '../styles/testing.css';
 import { Suspense, lazy } from 'react';
 import LoadingSpinner from '../components/LoadingSpinner';
-const HomePractice = lazy(() => import('../components/HomePractice'));
+const AllEvents = lazy(() => import('../components/AllEvents'));
 
 const Home: React.FC = () => {
     // const router = useIonRouter();
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
                 </IonCard> */}
                 <Suspense fallback={<LoadingSpinner />}>
                     {/* <ProfileOptions control={control} /> */}
-                    <HomePractice />
+                    <AllEvents />
                 </Suspense>
             </IonContent>
         </IonPage>

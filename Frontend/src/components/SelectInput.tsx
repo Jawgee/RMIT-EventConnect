@@ -1,6 +1,6 @@
 import { IonChip, IonIcon, IonSelect, IonSelectOption } from '@ionic/react';
 import { Controller, Control } from 'react-hook-form';
-import './Input.css';
+import '../styles/Input.css';
 
 const SelectInput: React.FC<{
     control: Control<any>;

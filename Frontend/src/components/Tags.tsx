@@ -57,7 +57,6 @@ const Tags: React.FC<{
                     <IonCard className="tags-card">
                         {tags &&
                             Object.keys(tags).map((key, i) => {
-                                // console.log(key, tags[key]);
                                 return (
                                     <IonCheckbox
                                         key={i}

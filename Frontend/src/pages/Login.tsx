@@ -19,7 +19,7 @@ import { PasswordRegex, replacePage } from '../App';
 import { lockClosed, mail } from 'ionicons/icons';
 import { UserInfo } from '../data/profileReducer';
 
-const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | null>> }> = ({ setUser }) => {
+const Login: React.FC<{ setUser: (user?: string, id?: number) => void }> = ({ setUser }) => {
     // Controller for the forms
     const { control, handleSubmit } = useForm<UserInfo>();
 

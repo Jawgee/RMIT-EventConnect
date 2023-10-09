@@ -6,7 +6,7 @@ const Profile = lazy(() => import('../components/Profile'));
 const ProfilePage: React.FC<{
     logout: () => void;
     user: string;
-    setID: React.Dispatch<React.SetStateAction<number>>;
+    setID: (user?: string, id?: number) => void;
 }> = ({ logout, user, setID }) => {
     return (
         <IonPage>

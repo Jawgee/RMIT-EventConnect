@@ -11,7 +11,7 @@ import 'swiper/css';
 
 import '@ionic/react/css/ionic-swiper.css';
 
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
 import '../styles/HomePractice.css';
 import { getEvents } from '../data/events';
 import { pushPage } from '../App';
@@ -21,7 +21,7 @@ import { EventInfo, clearEventInfo, defaultEventInfo, setEventInfo } from '../da
 const HomePractice: React.FC = () => {
     const dispatch = useAppDispatch();
 
-    // Tag info
+    // Post info
     const [posts, setPosts] = useState<any[]>([]);
     const router = useIonRouter();
 
@@ -36,7 +36,6 @@ const HomePractice: React.FC = () => {
                 // Do something to show that something went wrong
                 setErrorMessage(e);
             } else {
-                // console.log(e);
                 // send tags info somewhere
                 const newInfo: EventInfo[] = [];
                 e.forEach((n: any) => {
@@ -50,7 +49,6 @@ const HomePractice: React.FC = () => {
                     };
                     newInfo.push(info);
                 });
-                // console.log(newInfo);
                 setPosts(newInfo);
             }
         });
@@ -69,7 +67,6 @@ const HomePractice: React.FC = () => {
                                     className="ion-no-padding"
                                     onClick={() => {
                                         dispatch(setEventInfo(post));
-                                        // console.log(post);
                                         pushPage('home/event', router);
                                     }}
                                 >

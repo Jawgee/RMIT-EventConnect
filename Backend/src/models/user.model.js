@@ -8,9 +8,7 @@ const userSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().pattern(new RegExp('^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$')).required().max(20),
   profile: Joi.string().valid(
-    'Entrepreneur', 'Corporate', 'Investor', 'Startup',
-    'Academy', 'Ecosystem Facilitator', 'Acelerator',
-    'Incubator', 'SME', 'Agency', 'NGO'
+    'entrepreneur', 'corporate', 'investor', 'startup', 'academy', 'ecosystem facilitator', 'accelerator', 'incubator', 'sme', 'agency', 'ngo'
   ).required(),
 });
 const updateUserSchema = Joi.object({
@@ -20,9 +18,7 @@ const updateUserSchema = Joi.object({
   email: Joi.string().email(),
   password: Joi.string().pattern(new RegExp('^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$')).max(20),
   profile: Joi.string().valid(
-    'Entrepreneur', 'Corporate', 'Investor', 'Startup',
-    'Academy', 'Ecosystem Facilitator', 'Acelerator',
-    'Incubator', 'SME', 'Agency', 'NGO'
+    'entrepreneur', 'corporate', 'investor', 'startup', 'academy', 'ecosystem facilitator', 'accelerator', 'incubator', 'sme', 'agency', 'ngo'
   ),
 });
 

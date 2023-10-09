@@ -95,7 +95,7 @@ exports.getCategories = async (req, res) => {
 
 exports.getProfileCategories = async (req, res) => {
   try {
-    res.status(200).json(subCategories.Profile.tags);
+    res.status(200).json(subCategories.profile.tags);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });

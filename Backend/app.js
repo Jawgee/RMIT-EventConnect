@@ -42,7 +42,7 @@ connectionPool.getConnection((err, connection) => {
       photo VARCHAR(300),
       email VARCHAR(320) NOT NULL UNIQUE,
       password VARCHAR(255) NOT NULL,
-      profile ENUM('Entrepreneur','Corporate','Investor','Startup','Academy','Ecosystem Facilitator','Accelerator','Incubator','SME','Agency','NGO') NOT NULL
+      profile ENUM('entrepreneur','corporate','investor','startup','academy','ecosystem facilitator','accelerator','incubator','sme','agency','ngo') NOT NULL
     )`;
 
   const createEventTableQuery = `

@@ -18,7 +18,7 @@ describe("User/Login API Tests", () => {
             // Invalid Email
             email: "testemail.com",
             password: "Test123!",
-            profile: "Incubator",
+            profile: "incubator",
         });
         expect(response.statusCode).toBe(422);
     });
@@ -30,7 +30,7 @@ describe("User/Login API Tests", () => {
             email: "test@email.com",
             // Invalid Password
             password: "Test",
-            profile: "Incubator",
+            profile: "incubator",
         });
         expect(response.statusCode).toBe(422);
     });
@@ -52,7 +52,7 @@ describe("User/Login API Tests", () => {
             last_name: "User",
             email: "test@email.com",
             password: "Test123!",
-            profile: "Incubator",
+            profile: "incubator",
         });
         expect(response.statusCode).toBe(200);
         createdUserId = response.body.id;
@@ -135,7 +135,7 @@ describe("Event API Tests", () => {
             last_name: "User",
             email: "event_test@email.com",
             password: "Test123!",
-            profile: "Incubator",
+            profile: "incubator",
         });
         MockUserId = response.body.id;
     });
@@ -250,7 +250,7 @@ describe("Tags API Tests", () => {
             last_name: "User",
             email: "event_test@email.com",
             password: "Test123!",
-            profile: "Incubator",
+            profile: "incubator",
         });
         MockUserId = UserResponse.body.id;
         // Create a temporary dummy event to test the tag endpoints
@@ -326,7 +326,7 @@ describe("Enlist API Tests", () => {
             last_name: "User",
             email: "event_test@email.com",
             password: "Test123!",
-            profile: "Incubator",
+            profile: "incubator",
         });
         MockUserId = UserResponse.body.id;
         // Create a temporary dummy event to test the enlist endpoints

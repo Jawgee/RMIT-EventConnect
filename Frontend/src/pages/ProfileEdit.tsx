@@ -5,24 +5,19 @@ import {
     IonTitle,
     IonToolbar,
     useIonRouter,
-    IonList,
     IonButton,
     IonBackButton,
     IonButtons,
-    IonItem,
 } from '@ionic/react';
 import { pushPage } from '../App';
 import Input from '../components/Input';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { editUser } from '../data/accounts';
-import {
-    // Suspense, lazy,
-    useState,
-} from 'react';
+import { Suspense, lazy, useState } from 'react';
 import { UserInfo, setProfileInfo } from '../data/profileReducer';
-// import LoadingSpinner from './LoadingSpinner';
-// const ProfileOptions = lazy(() => import('../components/ProfileOptions'));
+import LoadingSpinner from '../components/LoadingSpinner';
+const ProfileOptions = lazy(() => import('../components/ProfileOptions'));
 import '../styles/ProfileEdit.css';
 
 const ProfileEdit = () => {
@@ -37,7 +32,12 @@ const ProfileEdit = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const onSubmit: SubmitHandler<UserInfo> = (data) => {
-        editUser(data.id, data).then((e) => {
+        editUser(data.id, {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            email: data.email,
+            profile: data.profile,
+        }).then((e) => {
             // Get the information from the backend
             const [successful, message] = e;
 
@@ -98,10 +98,9 @@ const ProfileEdit = () => {
                         </IonHeader>
                     </div>
 
-                    <IonList className="edit-list-container">
+                    <div className="edit-list-container">
                         <Controller
                             render={({ field }) => {
-                                console.log(field);
                                 return <input onChange={field.onChange} value={field.value} type="hidden" />;
                             }}
                             name="id"
@@ -110,13 +109,10 @@ const ProfileEdit = () => {
                         {profileFields.map((field, index) => (
                             <Input {...field} control={control} key={index} />
                         ))}
-                        <IonItem>
-                            <IonButton onClick={() => pushPage('profile/tags', router)}>Click to edit tags</IonButton>
-                        </IonItem>
-                        <IonItem>
-                            <IonButton type="submit">Submit</IonButton>
-                        </IonItem>
-                    </IonList>
+                        <Suspense fallback={<LoadingSpinner />}>
+                            <ProfileOptions control={control} />
+                        </Suspense>
+                    </div>
 
                     <div className="edit-button-container">
                         <IonButton

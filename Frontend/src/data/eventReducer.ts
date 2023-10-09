@@ -25,13 +25,10 @@ export const eventSlice = createSlice({
     },
     reducers: {
         setEventInfo: (state, action: PayloadAction<EventInfo>) => {
-            state.value =
-                //action.payload;
-                // console.log(action.payload);
-                {
-                    ...action.payload,
-                    image: action.payload.image == undefined ? defaultEventInfo.image : action.payload.image,
-                };
+            state.value = {
+                ...action.payload,
+                image: action.payload.image == undefined ? defaultEventInfo.image : action.payload.image,
+            };
         },
         clearEventInfo: (state) => {
             state.value = defaultEventInfo;

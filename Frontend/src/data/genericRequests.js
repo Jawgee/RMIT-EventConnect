@@ -5,7 +5,7 @@ const getRequest = async (client, requestURL) => {
         const res = await client.get(requestURL);
 
         // If there was success
-        if (res.status === 200) {
+        if (res.status >= 200 && res.status <= 299) {
             return res.data;
         }
 
@@ -39,7 +39,7 @@ const putRequest = async (client, requestURL, data) => {
     // Return format: If it was successful, error message to be shown to the user
     // Sends the user to the backend
     try {
-        const res = await client.post(requestURL, data);
+        const res = await client.put(requestURL, data);
         // If there was success
         if (res.status >= 200 && res.status <= 299) {
             return [true, res.data];

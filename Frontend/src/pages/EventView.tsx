@@ -14,28 +14,23 @@ import {
     IonButton,
     IonIcon,
 } from '@ionic/react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { EventInfo, clearEventInfo } from '../data/eventReducer';
-import { useAppDispatch, useAppSelector } from '../hooks';
+// import { AnimatePresence, motion } from 'framer-motion';
+import { EventInfo } from '../data/eventReducer';
+import { useAppSelector } from '../hooks';
 import '../styles/HomePractice.css';
-import { useEffect, useLayoutEffect } from 'react';
 import { calendar } from 'ionicons/icons';
-import { pushPage } from '../App';
+
 
 const EventView = () => {
-    const dispatch = useAppDispatch();
+    // const dispatch = useAppDispatch();
+    // Gets post from internal event info
     const selectedPost = useAppSelector((state) => state.event.value);
+
+    // Helper value to get all elements except those which are pre-defined through EventInfo interface
     const getTagsFromObject = (object: EventInfo) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return (({ name, description, id, location, owner, image, ...o }) => o)(object);
     };
-
-    // useEffect(() => {
-    //     console.log(selectedPost);
-    //     return () => {
-    //         // dispatch(clearEventInfo());
-    //     };
-    // }, []);
 
     return (
         <IonPage>
@@ -47,7 +42,7 @@ const EventView = () => {
                     </IonButtons>
 
                     <IonButtons slot="end">
-                        <IonButton onClick={() => pushPage('home/calendar', router)}>
+                        <IonButton>
                             <IonIcon className="calendar-icon-size" icon={calendar}></IonIcon>
                         </IonButton>
                     </IonButtons>

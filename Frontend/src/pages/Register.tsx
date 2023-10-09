@@ -22,12 +22,10 @@ import { UserInfo } from '../data/profileReducer';
 const ProfileOptions = lazy(() => import('../components/ProfileOptions'));
 
 const Register: React.FC<{
-    setUser: React.Dispatch<React.SetStateAction<string | null>>;
-    setID: React.Dispatch<React.SetStateAction<number>>;
+    setInfo: (user?: string, id?: number) => void;
     // testFunction: Function;
 }> = ({
-    setUser,
-    setID,
+    setInfo,
     // testFunction
 }) => {
     // Controller for the forms
@@ -81,8 +79,7 @@ const Register: React.FC<{
             // If there were no issues
             if (successful) {
                 // Set the user to be used elsewhere
-                setUser(message.email);
-                setID(message.id);
+                setInfo(message.email, message.id);
                 // Send the user to the home page
                 replacePage('tags', router);
             } else {

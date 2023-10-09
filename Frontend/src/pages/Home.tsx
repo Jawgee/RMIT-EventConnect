@@ -1,10 +1,8 @@
 import {
     IonBackButton,
-    IonButton,
     IonButtons,
     IonContent,
     IonHeader,
-    IonIcon,
     IonPage,
     IonTitle,
     IonToolbar,
@@ -14,9 +12,7 @@ import '../styles/testing.css';
 import '../styles/HomePractice.css';
 import { Suspense, lazy } from 'react';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { pushPage } from '../App';
-import { calendar } from 'ionicons/icons';
-const HomePractice = lazy(() => import('../components/HomePractice'));
+const AllEvents = lazy(() => import('../components/AllEvents'));
 
 const Home: React.FC = () => {
     // const router = useIonRouter();
@@ -28,11 +24,7 @@ const Home: React.FC = () => {
                     <IonButtons slot="start">
                         <IonBackButton></IonBackButton>
                     </IonButtons>
-                    <IonButtons slot="end">
-                        <IonButton onClick={() => pushPage('home/calendar', router)}>
-                            <IonIcon className="calendar-icon-size" icon={calendar}></IonIcon>
-                        </IonButton>
-                    </IonButtons>
+                    
 
                 </IonToolbar>
                 {/* <IonToolbar>
@@ -69,7 +61,7 @@ const Home: React.FC = () => {
                 </IonCard> */}
                 <Suspense fallback={<LoadingSpinner />}>
                     {/* <ProfileOptions control={control} /> */}
-                    <HomePractice />
+                    <AllEvents />
                 </Suspense>
             </IonContent>
         </IonPage>

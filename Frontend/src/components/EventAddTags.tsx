@@ -3,10 +3,6 @@ import { getTags } from '../data/events';
 import SelectInput from './SelectInput';
 import { Control } from 'react-hook-form';
 
-const getInfo = async () => {
-    return await getTags();
-};
-
 const EventAddTags: React.FC<{ control: Control<any> }> = ({ control }) => {
     // Tag info
     const [tags, setTags] = useState<any[]>([]);
@@ -15,7 +11,7 @@ const EventAddTags: React.FC<{ control: Control<any> }> = ({ control }) => {
     // When there was a fail from the backend
     const [errorMessage, setErrorMessage] = useState('');
     useEffect(() => {
-        getInfo().then((e) => {
+        getTags().then((e) => {
             if (typeof e === 'string') {
                 // Do something to show that something went wrong
                 setErrorMessage(e);

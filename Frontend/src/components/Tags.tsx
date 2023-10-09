@@ -4,9 +4,6 @@ import { IonButton, IonCard, IonCheckbox, IonHeader, IonTitle, useIonRouter } fr
 import { replacePage } from '../App';
 import '../styles/Tags.css';
 
-const getInfo = async (id: number) => {
-    return await getTags(id);
-};
 const Tags: React.FC<{
     id: number;
     showBack: boolean;
@@ -15,7 +12,7 @@ const Tags: React.FC<{
     const [errorMessage, setErrorMessage] = useState('');
     const router = useIonRouter();
     useEffect(() => {
-        getInfo(id).then((e) => {
+        getTags(id).then((e) => {
             if (typeof e === 'string') {
                 // Do something to show that something went wrong
                 setErrorMessage(e);

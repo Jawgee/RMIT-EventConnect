@@ -61,6 +61,7 @@ const HomePractice: React.FC = () => {
             {errorMessage && <p>{errorMessage}</p>}
             <div className="content-container">
                 <div style={{ display: 'block' }}>
+                    <h3>All current events</h3>
                     <Swiper slidesPerView={1.25} spaceBetween={20}>
                         {posts.map((post, index) => (
                             <SwiperSlide key={'card-' + index} className="ion-no-padding ion-no-inner-padding">

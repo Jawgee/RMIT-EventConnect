@@ -58,19 +58,18 @@ const AllEvents: React.FC = () => {
         <>
             {errorMessage && <p>{errorMessage}</p>}
             <div className="content-container">
-
-                
-                <div style={{ display: 'block'}}>
                 <div style={{ display: 'block' }}>
                     <h3>{posts.length === 0 ? 'No events currently exist' : 'All current events'}</h3>
                     <Swiper slidesPerView={1.25} spaceBetween={20}>
                         {posts.map((post, index) => (
                             <SwiperSlide key={'card-' + index} className="ion-no-padding ion-no-inner-padding">
-                                <IonCard className="ion-no-padding" onClick={() => {
+                                <IonCard
+                                    className="ion-no-padding"
+                                    onClick={() => {
                                         dispatch(setEventInfo(post));
                                         pushPage('home/event', router);
-                                    }}>
-                                        
+                                    }}
+                                >
                                     {/* <motion. */}
                                     <div
                                         className="card-content"
@@ -85,7 +84,8 @@ const AllEvents: React.FC = () => {
                                         </div>
                                         <IonCardContent>
                                             {/* <motion. */}
-                                            <div className="title-container"
+                                            <div
+                                                className="title-container"
                                                 // variants={{
                                                 //     show: {
                                                 //         opacity: 1,
@@ -105,7 +105,7 @@ const AllEvents: React.FC = () => {
                                                 // animate={selectedPost?.index === index ? 'hidden' : 'show'}
                                             >
                                                 <IonText>{post.name}</IonText>
-                                                
+
                                                 {/* </motion.div> */}
                                             </div>
                                         </IonCardContent>

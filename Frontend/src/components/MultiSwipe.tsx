@@ -24,7 +24,7 @@ interface Post {
     description?: string;
 }
 
-const HomePractice: React.FC = () => {
+const MultiSwipe: React.FC = () => {
     const [selectedPost, setSelectedPost] = useState<Post | undefined>(undefined);
 
     const posts: Post[][] = [
@@ -165,4 +165,4 @@ const HomePractice: React.FC = () => {
     );
 };
 
-export default HomePractice;
+export default MultiSwipe;

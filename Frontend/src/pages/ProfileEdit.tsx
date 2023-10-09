@@ -34,7 +34,12 @@ const ProfileEdit = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const onSubmit: SubmitHandler<UserInfo> = (data) => {
-        editUser(data.id, data).then((e) => {
+        editUser(data.id, {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            email: data.email,
+            profile: data.profile,
+        }).then((e) => {
             // Get the information from the backend
             const [successful, message] = e;
 
@@ -95,7 +100,7 @@ const ProfileEdit = () => {
                         </IonHeader>
                     </div>
 
-                    <IonList className="edit-list-container">
+                    <div className="edit-list-container">
                         <Controller
                             render={({ field }) => {
                                 return <input onChange={field.onChange} value={field.value} type="hidden" />;
@@ -109,13 +114,7 @@ const ProfileEdit = () => {
                         <Suspense fallback={<LoadingSpinner />}>
                             <ProfileOptions control={control} />
                         </Suspense>
-                        <IonItem>
-                            <IonButton onClick={() => pushPage('profile/tags', router)}>Click to edit tags</IonButton>
-                        </IonItem>
-                        <IonItem>
-                            <IonButton type="submit">Submit</IonButton>
-                        </IonItem>
-                    </IonList>
+                    </div>
 
                     <div className="edit-button-container">
                         <IonButton

@@ -25,7 +25,6 @@ import Welcome from './pages/Welcome';
 import Register from './pages/Register';
 import ProfileEdit from './pages/ProfileEdit';
 import SelectTags from './pages/SelectTags';
-// import HomePractice from './pages/HomePractice';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';

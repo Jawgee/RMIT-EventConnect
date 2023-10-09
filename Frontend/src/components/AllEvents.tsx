@@ -18,7 +18,7 @@ import { pushPage } from '../App';
 import { useAppDispatch } from '../hooks';
 import { EventInfo, clearEventInfo, defaultEventInfo, setEventInfo } from '../data/eventReducer';
 
-const HomePractice: React.FC = () => {
+const AllEvents: React.FC = () => {
     const dispatch = useAppDispatch();
 
     // Post info
@@ -120,4 +120,4 @@ const HomePractice: React.FC = () => {
     );
 };
 
-export default HomePractice;
+export default AllEvents;

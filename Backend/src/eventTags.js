@@ -1,37 +1,37 @@
 const lists = {
-    Profile: {
+    profile: {
         tags: ['entrepreneur', 'corporate', 'investor', 'startup', 'academy', 'ecosystem facilitator', 'accelerator', 'incubator', 'sme', 'agency', 'ngo'],
         required: true
     },
-    Sector: {
+    sector: {
         tags: ["pitch", "metaverse", "online", "stand", "round_table", "tourism", "tech", "bio", "health", "sustainability", "agro", "fintech", "greenTech", "mobility", "logistic", "food", "smart_cities", "blue_economy", "space"],
         required: true
     },
-    Category: {
+    category: {
         tags: ["state of the art", "round table", "living test", "stand", "pitch", "showroom"],
         required: true
     },
-    Frequency: {
+    frequency: {
         tags: ["unique", "monthly", "yearly"],
         required: true,
     },
-    Environment: {
+    environment: {
         tags: ["red carpet", "informal", "cocktail", "party", "prize"],
         required: true,
     },
-    Privacy: {
+    privacy: {
         tags: ["private", "public"],
         required: true,
     },
-    Entrance: {
+    entrance: {
         tags: ["free", "paid"],
         required: true,
     },
-    Accessibility: {
+    accessibility: {
         tags: ["in-person", "online", "hybrid"],
         required: true,
     },
-    Motivation: {
+    motivation: {
         tags: ["validation", "investor", "partner", "scouting"],
         required: true,
     },

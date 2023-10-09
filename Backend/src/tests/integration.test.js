@@ -18,7 +18,7 @@ describe("User/Login API Tests", () => {
             // Invalid Email
             email: "testemail.com",
             password: "Test123!",
-            profile: "Incubator",
+            profile: "incubator",
         });
         expect(response.statusCode).toBe(422);
     });
@@ -30,7 +30,7 @@ describe("User/Login API Tests", () => {
             email: "test@email.com",
             // Invalid Password
             password: "Test",
-            profile: "Incubator",
+            profile: "incubator",
         });
         expect(response.statusCode).toBe(422);
     });
@@ -52,7 +52,7 @@ describe("User/Login API Tests", () => {
             last_name: "User",
             email: "test@email.com",
             password: "Test123!",
-            profile: "Incubator",
+            profile: "incubator",
         });
         expect(response.statusCode).toBe(200);
         createdUserId = response.body.id;
@@ -135,7 +135,7 @@ describe("Event API Tests", () => {
             last_name: "User",
             email: "event_test@email.com",
             password: "Test123!",
-            profile: "Incubator",
+            profile: "incubator",
         });
         MockUserId = response.body.id;
     });
@@ -151,17 +151,17 @@ describe("Event API Tests", () => {
         const response = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
-            sector: "Tech",
-            profile: "Startup",
-            category: "Round Table",
+            sector: "tech",
+            profile: "startup",
+            category: "round table",
             privacy: "public",
             description: "An awesome tech startup event",
             location: "Tech Hub",
-            frequency: "Yearly",
-            environment: "Informal",
-            entrance: "Free",
-            accessibility: "In-person",
-            motivation: "Validation"
+            frequency: "yearly",
+            environment: "informal",
+            entrance: "free",
+            accessibility: "in-person",
+            motivation: "validation"
         });
         expect(response.statusCode).toBe(201);
         createdEventId = response.body.id;
@@ -179,17 +179,17 @@ describe("Event API Tests", () => {
         const response = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
-            sector: "Tech",
-            profile: "Startup",
-            category: "Round Table",
+            sector: "tech",
+            profile: "startup",
+            category: "round table",
             privacy: "public",
             description: "An awesome tech startup event",
             location: "Tech Hub",
-            frequency: "Yearly",
-            environment: "Informal",
-            entrance: "Free",
-            accessibility: "In-person",
-            motivation: "Validation"
+            frequency: "yearly",
+            environment: "informal",
+            entrance: "free",
+            accessibility: "in-person",
+            motivation: "validation"
         });
         expect(response.statusCode).toBe(409);
     });
@@ -250,24 +250,24 @@ describe("Tags API Tests", () => {
             last_name: "User",
             email: "event_test@email.com",
             password: "Test123!",
-            profile: "Incubator",
+            profile: "incubator",
         });
         MockUserId = UserResponse.body.id;
         // Create a temporary dummy event to test the tag endpoints
         const EventResponse = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
-            sector: "Tech",
-            profile: "Startup",
-            category: "Round Table",
+            sector: "tech",
+            profile: "startup",
+            category: "round table",
             privacy: "public",
             description: "An awesome tech startup event",
             location: "Tech Hub",
-            frequency: "Yearly",
-            environment: "Informal",
-            entrance: "Free",
-            accessibility: "In-person",
-            motivation: "Validation"
+            frequency: "yearly",
+            environment: "informal",
+            entrance: "free",
+            accessibility: "in-person",
+            motivation: "validation"
         });
         MockEventId = EventResponse.body.id;
     });
@@ -326,24 +326,24 @@ describe("Enlist API Tests", () => {
             last_name: "User",
             email: "event_test@email.com",
             password: "Test123!",
-            profile: "Incubator",
+            profile: "incubator",
         });
         MockUserId = UserResponse.body.id;
         // Create a temporary dummy event to test the enlist endpoints
         const EventResponse = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
-            sector: "Tech",
-            profile: "Startup",
-            category: "Round Table",
+            sector: "tech",
+            profile: "startup",
+            category: "round table",
             privacy: "public",
             description: "An awesome tech startup event",
             location: "Tech Hub",
-            frequency: "Yearly",
-            environment: "Informal",
-            entrance: "Free",
-            accessibility: "In-person",
-            motivation: "Validation"
+            frequency: "yearly",
+            environment: "informal",
+            entrance: "free",
+            accessibility: "in-person",
+            motivation: "validation"
         });
         MockEventId = EventResponse.body.id;
     });

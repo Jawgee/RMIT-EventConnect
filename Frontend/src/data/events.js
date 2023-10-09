@@ -17,4 +17,8 @@ const getTags = async () => await getRequest(eventClient, '/Categories/tags');
 
 const getEvents = async () => await getRequest(eventClient, '/');
 
-export { addEvent, getProfile, getTags, getEvents };
+const getEventsForUser = async (id) => await getRequest(eventClient, `/user/${id}`).events;
+
+const getEventForTag = async (tag) => await getRequest(eventClient, `/tags/${tag}`);
+
+export { addEvent, getProfile, getTags, getEvents, getEventsForUser, getEventForTag };

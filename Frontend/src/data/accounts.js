@@ -15,10 +15,10 @@ const tagsClient = axios.create({
 
 // Verifies the user via login
 const verifyUser = async (data) => {
-    const [didSucceed, res] = postRequest(userClient, '/login', data);
+    const [didSucceed, res] = await postRequest(userClient, '/login', data);
     // If there was success
     if (didSucceed) {
-        CapacitorCookies.setCookie({ url: location.protocol, key: 'jwt', value: res.data.token });
+        CapacitorCookies.setCookie({ url: location.protocol, key: 'jwt', value: res.token });
         return [true, ''];
     }
     return res;
@@ -26,7 +26,7 @@ const verifyUser = async (data) => {
 
 // Registers the user
 const registerUser = async (data) => {
-    const [didSucceed, res] = postRequest(userClient, '/register', data);
+    const [didSucceed, res] = await postRequest(userClient, '/register', data);
     if (didSucceed) {
         await CapacitorCookies.setCookie({ url: 'http://' + location.host, key: 'jwt', value: res.token });
         return [true, { email: res.email, id: res.id }];
@@ -34,7 +34,7 @@ const registerUser = async (data) => {
     return res;
 };
 
-const getUserInfo = async (email) => getRequest(userClient, `/Email/${email}`);
+const getUserInfo = async (email) => await getRequest(userClient, `/Email/${email}`);
 
 const editUser = async (id, data) => {
     const [didSucceed, res] = await putRequest(userClient, `/${id}`, data);
@@ -53,10 +53,10 @@ const getTags = async (id) => {
         delete data.last_name;
         return data;
     }
-    return data;
+    return res;
 };
 
-const updateTags = async (id, tags) => {
+const updateTags = async (id, data) => {
     const [didSucceed, _] = await putRequest(tagsClient, `/UserInterests/${id}`, data);
     return [didSucceed, ''];
 };

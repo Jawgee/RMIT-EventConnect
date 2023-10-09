@@ -10,9 +10,10 @@ import {
     type UseIonRouterResult,
     setupIonicReact,
 } from '@ionic/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IonReactRouter } from '@ionic/react-router';
 import { home, personCircle, search, mail, addCircle } from 'ionicons/icons';
+import { Drivers, Storage } from '@ionic/storage';
 
 import Home from './pages/Home';
 import Profile from './pages/Profile';
@@ -48,34 +49,72 @@ import EventView from './pages/EventView';
 
 setupIonicReact();
 
+// Helper classes for navigating between pages programatically
+// Replaces a page at the root level, i.e. nothing to go "back" to.
 export const replacePage = (page: string, router: UseIonRouterResult) => {
     router.push(`/${page}`, 'root', 'replace');
 };
 
+// Add a page to the router stack
 export const pushPage = (page: string, router: UseIonRouterResult) => {
     router.push(`/${page}`, 'forward');
 };
 
 export const PasswordRegex = '^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{7,}$';
 
+/*
+ * Current state of the program:
+ * - Home page currently displays all events
+ * - Event Creation page works (mostly) fine
+ * - Login, Register, Profile and Tags are fully done
+ */
+
 // the useState is most likely temporary
 // Or will be used later, with added functionality
 // To get info from storage somewhere and add it into the app
 const App: React.FC = () => {
-    // const [user, setUser] = useState<string | null>(null); // used for profile
-    // const [id, setID] = useState<number>(0); // used for tags
-    const [user, setUser] = useState<string | null>('test@ing.com'); // for testing purposes, enable to bypass login area
-    const [id, setID] = useState<number>(1); // for testing purposes, enable to test tags when bypassing login area
+    const store = new Storage({ name: 'Innovent', driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage] });
+
+    const [user, setUser] = useState<string | null>(null); // used for profile
+    const [id, setID] = useState<number>(0); // used for tags
+
+    // Set up storage solution
+    useEffect(() => {
+        (async () => {
+            await store.create();
+
+            const user = await store.get('user');
+            const id = await store.get('id');
+
+            setUser(!user ? null : user);
+            setID(!id ? 0 : id);
+        })();
+    }, []);
+
+    // Helper functions for using the storage
+    const clearStorage = () => {
+        store.clear();
+    };
+
+    const updateValues = (user?: string, id?: number) => {
+        (async () => {
+            await store.create();
+            if (user) {
+                store.set('user', user);
+                setUser(user);
+            }
+            if (id) {
+                store.set('id', id ?? 0);
+                setID(id ?? 0);
+            }
+        })();
+    };
 
     const logout = () => {
         setUser(null);
+        setID(0);
+        clearStorage();
     };
-
-    // const testFunction = (router: UseIonRouterResult) => {
-    //     setUser('test@ing.com');
-    //     setID(2);
-    //     replacePage('tags', router);
-    // };
 
     if (user) {
         return (
@@ -97,7 +136,7 @@ const App: React.FC = () => {
                                     <SelectTags id={id} showBack={true} />
                                 </Route>
                                 <Route exact path="/:tab(profile)">
-                                    <Profile logout={logout} user={user} setID={setID} />
+                                    <Profile logout={logout} user={user} setID={updateValues} />
                                 </Route>
                                 <Route path="/:tab(explore)">
                                     <Explore />
@@ -150,14 +189,10 @@ const App: React.FC = () => {
                     <IonReactRouter>
                         <IonRouterOutlet>
                             <Route path="/login">
-                                <Login setUser={setUser} />
+                                <Login setUser={updateValues} />
                             </Route>
                             <Route path="/register">
-                                <Register
-                                    setUser={setUser}
-                                    setID={setID}
-                                    // testFunction={testFunction}
-                                />
+                                <Register setInfo={updateValues} />
                             </Route>
                             <Route path="/welcome">
                                 <Welcome />

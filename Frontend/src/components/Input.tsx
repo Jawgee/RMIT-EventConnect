@@ -18,7 +18,7 @@ export interface InputProps {
 }
 
 // Default values are used here to simplify code
-// Minimum length 3, Maximum length 45, Required true
+// Minimum length 3, Maximum length 20, Required true
 const Input: React.FC<InputProps> = ({
     name,
     control,
@@ -35,7 +35,6 @@ const Input: React.FC<InputProps> = ({
     return (
         <>
             <Controller
-                // console.log(field);
                 render={({ field }) => (
                     <>
                         <IonChip outline={true}>

@@ -1,18 +1,20 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { Redirect } from 'react-router';
 
-const Tab3: React.FC = () => {
+// This page is not complete. It auto-redirects back to Home.
+const Explore: React.FC = () => {
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Explore</IonTitle>
+                    <IonTitle>Inbox</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <p>TODO: Add stuff here</p>
+                <Redirect to="/home" />
             </IonContent>
         </IonPage>
     );
 };
 
-export default Tab3;
+export default Explore;

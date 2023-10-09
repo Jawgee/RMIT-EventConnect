@@ -6,11 +6,11 @@ import { CapacitorCookies } from '@capacitor/core';
 // Also handles all of the HTTP requests easily
 
 const userClient = axios.create({
-    baseURL: 'http://localhost:4000/api/users',
+    baseURL: 'http://ec2-54-225-45-141.compute-1.amazonaws.com:4000/api/users',
 });
 
 const tagsClient = axios.create({
-    baseURL: 'http://localhost:4000/api/tags',
+    baseURL: 'http://ec2-54-225-45-141.compute-1.amazonaws.com:4000/api/tags',
 });
 
 // Verifies the user via login

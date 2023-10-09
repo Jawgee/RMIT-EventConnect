@@ -5,8 +5,8 @@ import { Redirect } from 'react-router';
 const Explore: React.FC = () => {
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar>
+            <IonHeader className="ion-no-border">
+                <IonToolbar color="medium">
                     <IonTitle>Inbox</IonTitle>
                 </IonToolbar>
             </IonHeader>

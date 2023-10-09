@@ -6,8 +6,8 @@ const Tags = lazy(() => import('../components/Tags'));
 const SelectTags: React.FC<{ id: number; showBack: boolean }> = ({ id, showBack }) => {
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar>
+            <IonHeader className="ion-no-border">
+                <IonToolbar color="medium">
                     {showBack && (
                         <IonButtons slot="start">
                             <IonBackButton></IonBackButton>

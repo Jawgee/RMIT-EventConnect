@@ -81,8 +81,8 @@ const ProfileEdit = () => {
 
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar>
+            <IonHeader className="ion-no-border">
+                <IonToolbar color="medium">
                     <IonButtons slot="start">
                         <IonBackButton></IonBackButton>
                     </IonButtons>

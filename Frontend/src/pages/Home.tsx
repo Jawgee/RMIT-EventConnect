@@ -18,7 +18,7 @@ const Home: React.FC = () => {
     // const router = useIonRouter();
     return (
         <IonPage>
-            <IonHeader>
+            <IonHeader className="ion-no-border">
                 <IonToolbar color="medium">
                     <IonTitle>Home</IonTitle>
                     <IonButtons slot="start">

@@ -34,7 +34,7 @@ const EventView = () => {
 
     return (
         <IonPage>
-            <IonHeader>
+            <IonHeader className="ion-no-border">
                 <IonToolbar color="medium">
                     <IonTitle>Event - {selectedPost.name ?? 'Event'}</IonTitle>
                     <IonButtons slot="start">

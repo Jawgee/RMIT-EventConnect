@@ -10,8 +10,8 @@ const ProfilePage: React.FC<{
 }> = ({ logout, user, setID }) => {
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar>
+            <IonHeader className="ion-no-border">
+                <IonToolbar color="medium">
                     <IonTitle>Profile</IonTitle>
                 </IonToolbar>
             </IonHeader>

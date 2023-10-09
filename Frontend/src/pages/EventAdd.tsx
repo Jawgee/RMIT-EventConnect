@@ -53,8 +53,8 @@ const EventAdd: React.FC<{ user: string }> = ({ user }) => {
     };
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar>
+            <IonHeader className="ion-no-border">
+                <IonToolbar color="medium">
                     <IonTitle>Create an Event</IonTitle>
                 </IonToolbar>
             </IonHeader>

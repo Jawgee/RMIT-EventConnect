@@ -18,7 +18,7 @@ export interface InputProps {
 }
 
 // Default values are used here to simplify code
-// Minimum length 3, Maximum length 45, Required true
+// Minimum length 3, Maximum length 20, Required true
 const Input: React.FC<InputProps> = ({
     name,
     control,
@@ -35,18 +35,10 @@ const Input: React.FC<InputProps> = ({
     return (
         <>
             <Controller
-                // console.log(field);
                 render={({ field }) => (
                     <>
                         <IonChip outline={true}>
-                            {/* <IonItem> */}
-                            {/* style={{padding: "10px"}} */}
-                            {icon && (
-                                <IonIcon
-                                    icon={icon}
-                                    // style={{ backgroundColor: 'blue' }}
-                                ></IonIcon>
-                            )}
+                            {icon && <IonIcon className="icon-login" icon={icon}></IonIcon>}
                             <IonInput
                                 onIonChange={field.onChange}
                                 value={field.value}
@@ -59,7 +51,6 @@ const Input: React.FC<InputProps> = ({
                                 label={label}
                                 labelPlacement="floating"
                             />
-                            {/* </IonItem> */}
                         </IonChip>
                         {helperText && (
                             <p style={{ marginTop: '4px', fontSize: '12px', textAlign: 'center' }}>{helperText}</p>

@@ -24,10 +24,10 @@
         'sect3';
 }
 
-ion-icon {
+.icon-login {
     font-size: 40px;
     color: #3880ff;
-    --background: #;
+    /* --background: #; */
 }
 
 .login-info {

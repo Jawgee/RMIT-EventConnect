@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getRequest, postRequest, putRequest } from './genericRequests';
 import { CapacitorCookies } from '@capacitor/core';
 
 // Axios stuff, will make sure that things are consistent etc
@@ -13,129 +14,51 @@ const tagsClient = axios.create({
 });
 
 // Verifies the user via login
-const verifyUser = async (email, password) => {
-    // Return format: If it was successful, error message to be shown to the user
-    // Sends the user to the backend
-    try {
-        const res = await userClient.post('/login', { email, password });
-
-        // If there was success
-        if (res.status === 200) {
-            CapacitorCookies.setCookie({ url: location.protocol, key: 'jwt', value: res.data.token });
-            return [true, ''];
-        }
-
-        // Fallback, in case the code reaches here
-        return [false, 'Something went wrong, try again'];
-    } catch (e) {
-        // If there was a 4xx/5xx response, it throws an error
-        return [false, e.response.data.error];
+const verifyUser = async (data) => {
+    const [didSucceed, res] = await postRequest(userClient, '/login', data);
+    // If there was success
+    if (didSucceed) {
+        CapacitorCookies.setCookie({ url: location.protocol, key: 'jwt', value: res.token });
+        return [true, ''];
     }
+    return [false, res];
 };
 
 // Registers the user
-const registerUser = async (email, password, first_name, last_name) => {
-    // Return format: If it was successful, error message to be shown to the user
-    // Sends the user to the backend
-    try {
-        const res = await userClient.post('/register', {
-            email,
-            password,
-            first_name,
-            last_name,
-            // TODO: Edit this
-            profile: 'Entrepreneur',
-        });
-
-        // If there was success
-        if (res.status === 200) {
-            await CapacitorCookies.setCookie({ url: 'http://' + location.host, key: 'jwt', value: res.data.token });
-            return [true, { email: res.data.email, id: res.data.id }];
-        }
-
-        // Fallback, in case the code reaches here
-        return [false, 'Something went wrong, try again'];
-    } catch (e) {
-        // If there was a 4xx/5xx response, it throws an error
-        return [false, e.response.data.error];
+const registerUser = async (data) => {
+    const [didSucceed, res] = await postRequest(userClient, '/register', data);
+    if (didSucceed) {
+        await CapacitorCookies.setCookie({ url: 'http://' + location.host, key: 'jwt', value: res.token });
+        return [true, { email: res.email, id: res.id }];
     }
+    return [false, res];
 };
 
-const getUserInfo = async (email) => {
-    try {
-        const res = await userClient.get(`/Email/${email}`);
+const getUserInfo = async (email) => await getRequest(userClient, `/Email/${email}`);
 
-        // If there was success
-        if (res.status === 200) {
-            return res.data;
-        }
-
-        // Fallback, in case the code reaches here
-        return 'Something went wrong, try again';
-    } catch (e) {
-        // If there was a 4xx/5xx response, it throws an error
-        return e.response.data.error;
+const editUser = async (id, data) => {
+    const [didSucceed, res] = await putRequest(userClient, `/${id}`, data);
+    if (didSucceed) {
+        await CapacitorCookies.setCookie({ url: 'http://' + location.host, key: 'jwt', value: res.token });
+        return [true, ''];
     }
-};
-
-const editUser = async (id, email, first_name, last_name, profile) => {
-    try {
-        const res = await userClient.put(`/${id}`, {
-            email,
-            first_name,
-            last_name,
-            profile,
-        });
-
-        // If there was success
-        if (res.status === 200) {
-            await CapacitorCookies.setCookie({ url: 'http://' + location.host, key: 'jwt', value: res.data.token });
-            return [true, ''];
-        }
-
-        // Fallback, in case the code reaches here
-        return [false, 'Something went wrong, try again'];
-    } catch (e) {
-        // If there was a 4xx/5xx response, it throws an error
-        return [false, e.response.data.error];
-    }
+    return [false, res];
 };
 
 const getTags = async (id) => {
-    try {
-        const res = await tagsClient.get(`/UserTagList/${id}`);
-
-        // If there was success
-        if (res.status === 200) {
-            let data = res.data[0];
-            delete data.first_name;
-            delete data.last_name;
-            return data;
-        }
-
-        // Fallback, in case the code reaches here
-        return 'Something went wrong, try again';
-    } catch (e) {
-        // If there was a 4xx/5xx response, it throws an error
-        return e.response.data.error;
+    const res = await getRequest(tagsClient, `/UserTagList/${id}`);
+    if (typeof res !== 'string') {
+        let data = res[0];
+        delete data.first_name;
+        delete data.last_name;
+        return data;
     }
+    return res;
 };
 
-const updateTags = async (id, tags) => {
-    try {
-        const res = await tagsClient.put(`/UserInterests/${id}`, tags);
-
-        // If there was success
-        if (res.status === 200) {
-            return [true, ''];
-        }
-
-        // Fallback, in case the code reaches here
-        return [false, 'Something went wrong, try again'];
-    } catch (e) {
-        // If there was a 4xx/5xx response, it throws an error
-        return [false, e.response.data.error];
-    }
+const updateTags = async (id, data) => {
+    const [didSucceed, _] = await putRequest(tagsClient, `/UserInterests/${id}`, data);
+    return [didSucceed, ''];
 };
 
 export { verifyUser, registerUser, getUserInfo, editUser, getTags, updateTags };

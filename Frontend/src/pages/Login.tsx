@@ -12,15 +12,16 @@ import {
 } from '@ionic/react';
 import '../styles/Login.css';
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';
 import { verifyUser } from '../data/accounts.js';
 import { PasswordRegex, replacePage } from '../App';
 import { lockClosed, mail } from 'ionicons/icons';
+import { UserInfo } from '../data/profileReducer';
 
-const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | null>> }> = ({ setUser }) => {
+const Login: React.FC<{ setUser: (user?: string, id?: number) => void }> = ({ setUser }) => {
     // Controller for the forms
-    const { control, handleSubmit } = useForm();
+    const { control, handleSubmit } = useForm<UserInfo>();
 
     // Routing to allow to manually redirect the user
     const router = useIonRouter();
@@ -52,8 +53,8 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
     ];
 
     // Handles submit
-    const loginUserOnSubmit = (data: any) => {
-        verifyUser(data.email, data.password).then((e) => {
+    const loginUserOnSubmit: SubmitHandler<UserInfo> = (data) => {
+        verifyUser(data).then((e) => {
             // Get the information from the backend
             const [successful, message] = e;
 
@@ -77,11 +78,10 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                     <IonButtons slot="start">
                         <IonBackButton></IonBackButton>
                     </IonButtons>
-                    {/* <IonTitle>Log In</IonTitle> */}
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent fullscreen>
+            <IonContent>
                 <div className="login-container">
                     <div className="login-header">
                         <IonHeader className="ion-no-border">
@@ -104,9 +104,9 @@ const Login: React.FC<{ setUser: React.Dispatch<React.SetStateAction<string | nu
                                 <IonRippleEffect type="unbounded"></IonRippleEffect>
                             </IonButton>
                         </div>
-                        {/* TODO: make this look better */}
                         {errorMessage && <p className="error-message">{errorMessage}</p>}
                     </form>
+
                     {/* Link to register page */}
                     <div className="login-info">
                         <p>

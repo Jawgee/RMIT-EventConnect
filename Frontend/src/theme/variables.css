@@ -60,21 +60,33 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-dark-tint: #383a3e;
 
     /** medium **/
-    --ion-color-medium: #92949c;
+    --ion-color-medium: #2e3136;
     --ion-color-medium-rgb: 146, 148, 156;
-    --ion-color-medium-contrast: #ffffff;
+    --ion-color-medium-contrast: #3dc2ff;
     --ion-color-medium-contrast-rgb: 255, 255, 255;
     --ion-color-medium-shade: #808289;
     --ion-color-medium-tint: #9d9fa6;
 
     /** light **/
-    --ion-color-light: #f4f5f8;
+    --ion-color-light: #fff;
     --ion-color-light-rgb: 244, 245, 248;
     --ion-color-light-contrast: #000000;
     --ion-color-light-contrast-rgb: 0, 0, 0;
     --ion-color-light-shade: #d7d8da;
     --ion-color-light-tint: #f5f6f9;
+
+    
 }
+
+.navbar-size {
+  font-size: 40px;
+
+  /* color: #3880ff; */
+  /* --background: #; */
+}
+
+
+
 /* 
 @media (prefers-color-scheme: dark) {
   /*

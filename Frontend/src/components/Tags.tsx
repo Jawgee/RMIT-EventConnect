@@ -4,15 +4,6 @@ import { IonButton, IonCard, IonCheckbox, IonHeader, IonTitle, useIonRouter } fr
 import { replacePage } from '../App';
 import '../styles/Tags.css';
 
-const getInfo = async (id: number) => {
-    const info = await getTags(id);
-    if (typeof info === 'string') {
-        // Do something to show that something went wrong
-        return {};
-    } else {
-        return info;
-    }
-};
 const Tags: React.FC<{
     id: number;
     showBack: boolean;
@@ -21,10 +12,10 @@ const Tags: React.FC<{
     const [errorMessage, setErrorMessage] = useState('');
     const router = useIonRouter();
     useEffect(() => {
-        getInfo(id).then((e) => {
+        getTags(id).then((e) => {
             if (typeof e === 'string') {
                 // Do something to show that something went wrong
-                return {};
+                setErrorMessage(e);
             } else {
                 // send tags info somewhere
                 setTags(e);
@@ -66,7 +57,6 @@ const Tags: React.FC<{
                     <IonCard className="tags-card">
                         {tags &&
                             Object.keys(tags).map((key, i) => {
-                                // console.log(key, tags[key]);
                                 return (
                                     <IonCheckbox
                                         key={i}

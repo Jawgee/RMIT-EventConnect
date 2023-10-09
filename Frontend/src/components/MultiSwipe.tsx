@@ -11,17 +11,10 @@ import {
 } from '@ionic/react';
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-// Import Swiper styles
-import 'swiper/css';
-// import 'swiper/css/navigation';
-// import 'swiper/css/pagination';
-// import 'swiper/css/scrollbar';
-
-// import { Navigation, Pagination } from 'swiper/modules';
-
-import '@ionic/react/css/ionic-swiper.css';
-
 import { AnimatePresence, motion } from 'framer-motion';
+
+import 'swiper/css';
+import '@ionic/react/css/ionic-swiper.css';
 import '../styles/HomePractice.css';
 
 interface Post {
@@ -31,25 +24,44 @@ interface Post {
     description?: string;
 }
 
-const HomePractice: React.FC = () => {
+const MultiSwipe: React.FC = () => {
     const [selectedPost, setSelectedPost] = useState<Post | undefined>(undefined);
 
-    const posts: Post[] = [
-        {
-            id: '1',
-            image: 'https://images.unsplash.com/photo-1599640842225-85d111c60e6b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80',
-            name: 'Cruises are sailing again',
-        },
-        {
-            id: '2',
-            image: 'https://images.unsplash.com/photo-1512649408904-c0a00fb810da?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2531&q=80',
-            name: 'Things to do when visiting Bali',
-        },
-        {
-            id: '3',
-            image: 'https://images.unsplash.com/photo-1545579133-99bb5ab189bd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3570&q=80',
-            name: '10 Best Islands to travel to in 2022',
-        },
+    const posts: Post[][] = [
+        [
+            {
+                id: '1',
+                image: 'https://images.unsplash.com/photo-1599640842225-85d111c60e6b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80',
+                name: 'Cruises are sailing again',
+            },
+            {
+                id: '2',
+                image: 'https://images.unsplash.com/photo-1512649408904-c0a00fb810da?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2531&q=80',
+                name: 'Things to do when visiting Bali',
+            },
+            {
+                id: '3',
+                image: 'https://images.unsplash.com/photo-1545579133-99bb5ab189bd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3570&q=80',
+                name: '10 Best Islands to travel to in 2022',
+            },
+        ],
+        [
+            {
+                id: '4',
+                image: 'https://images.unsplash.com/photo-1599640842225-85d111c60e6b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80',
+                name: 'bla',
+            },
+            {
+                id: '5',
+                image: 'https://images.unsplash.com/photo-1512649408904-c0a00fb810da?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2531&q=80',
+                name: 'random',
+            },
+            {
+                id: '6',
+                image: 'https://images.unsplash.com/photo-1545579133-99bb5ab189bd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3570&q=80',
+                name: 'etc',
+            },
+        ],
     ];
 
     return (
@@ -59,11 +71,11 @@ const HomePractice: React.FC = () => {
                     <IonTitle>Blog Posts</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent fullscreen>
+            <IonContent>
                 <div className="content-container">
-                    <div style={{ display: 'block' }}>
-                        <Swiper slidesPerView={2.15} spaceBetween={50}>
-                            {posts.map((post, index) => (
+                    {posts.map((arr, i) => (
+                        <Swiper slidesPerView={2.15} spaceBetween={100} key={i}>
+                            {arr.map((post, index) => (
                                 <SwiperSlide key={'card-' + index} className="ion-no-padding ion-no-inner-padding">
                                     <IonCard className="ion-no-padding" onClick={() => setSelectedPost(post)}>
                                         <motion.div className="card-content" layoutId={'card-' + post.id}>
@@ -99,7 +111,7 @@ const HomePractice: React.FC = () => {
                                 </SwiperSlide>
                             ))}
                         </Swiper>
-                    </div>
+                    ))}
 
                     <AnimatePresence>
                         {selectedPost && (
@@ -153,4 +165,4 @@ const HomePractice: React.FC = () => {
     );
 };
 
-export default HomePractice;
+export default MultiSwipe;

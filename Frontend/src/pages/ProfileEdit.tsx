@@ -5,23 +5,24 @@ import {
     IonTitle,
     IonToolbar,
     useIonRouter,
-    IonList,
     IonButton,
     IonBackButton,
     IonButtons,
 } from '@ionic/react';
 import { pushPage } from '../App';
 import Input from '../components/Input';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { editUser } from '../data/accounts';
-import { useState } from 'react';
-import { setProfileInfo } from '../data/profileReducer';
+import { Suspense, lazy, useState } from 'react';
+import { UserInfo, setProfileInfo } from '../data/profileReducer';
+import LoadingSpinner from '../components/LoadingSpinner';
+const ProfileOptions = lazy(() => import('../components/ProfileOptions'));
 import '../styles/ProfileEdit.css';
 
 const ProfileEdit = () => {
-    const userInfo = useAppSelector((state) => state.value);
-    const { control, handleSubmit } = useForm({ defaultValues: userInfo });
+    const userInfo = useAppSelector((state) => state.profile.value);
+    const { control, handleSubmit } = useForm<UserInfo>({ defaultValues: userInfo });
     const router = useIonRouter();
 
     const dispatch = useAppDispatch();
@@ -30,8 +31,13 @@ const ProfileEdit = () => {
     // When there was a fail from the backend
     const [errorMessage, setErrorMessage] = useState('');
 
-    const onSubmit = (data: any) => {
-        editUser(data.id, data.email, data.first_name, data.last_name, data.profile).then((e) => {
+    const onSubmit: SubmitHandler<UserInfo> = (data) => {
+        editUser(data.id, {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            email: data.email,
+            profile: data.profile,
+        }).then((e) => {
             // Get the information from the backend
             const [successful, message] = e;
 
@@ -71,19 +77,12 @@ const ProfileEdit = () => {
             label: 'Last Name',
             name: 'last_name',
         },
-        {
-            // TODO: Get the options from the backend
-            // And change this from raw input
-            // Into a selection with aforementioned options
-            label: 'Profile',
-            name: 'profile',
-        },
     ];
 
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar>
+            <IonHeader className="ion-no-border">
+                <IonToolbar color="medium">
                     <IonButtons slot="start">
                         <IonBackButton></IonBackButton>
                     </IonButtons>
@@ -91,7 +90,7 @@ const ProfileEdit = () => {
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent fullscreen>
+            <IonContent>
                 <form className="edit-profile-container" onSubmit={handleSubmit(onSubmit)}>
                     <div className="edit-profile-header">
                         <IonHeader className="ion-no-border">
@@ -99,19 +98,21 @@ const ProfileEdit = () => {
                         </IonHeader>
                     </div>
 
-                    <IonList className="edit-list-container">
+                    <div className="edit-list-container">
                         <Controller
-                            // console.log(field);
-                            render={({ field }) => (
-                                <input onChange={field.onChange} value={field.value} type="hidden" />
-                            )}
+                            render={({ field }) => {
+                                return <input onChange={field.onChange} value={field.value} type="hidden" />;
+                            }}
                             name="id"
                             control={control}
                         />
                         {profileFields.map((field, index) => (
                             <Input {...field} control={control} key={index} />
                         ))}
-                    </IonList>
+                        <Suspense fallback={<LoadingSpinner />}>
+                            <ProfileOptions control={control} />
+                        </Suspense>
+                    </div>
 
                     <div className="edit-button-container">
                         <IonButton

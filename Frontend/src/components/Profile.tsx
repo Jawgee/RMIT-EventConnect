@@ -1,43 +1,44 @@
 import { useIonRouter, IonList, IonItem, IonLabel, IonButton, IonText, IonIcon } from '@ionic/react';
 import { pushPage, replacePage } from '../App';
-import { UserInfo, clearProfileInfo, defaultInfo, setProfileInfo } from '../data/profileReducer';
+import { UserInfo, clearProfileInfo, defaultProfileInfo, setProfileInfo } from '../data/profileReducer';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { getUserInfo } from '../data/accounts';
 import { useEffect } from 'react';
 import '../styles/Profile.css';
 import { personCircle } from 'ionicons/icons';
 
-export const getInfo = async (user: string) => {
-    const info = await getUserInfo(user);
-    if (typeof info === 'string') {
-        // Do something to show that something went wrong
-        return defaultInfo;
-    } else {
-        const newInfo: UserInfo = {
-            first_name: info.first_name,
-            last_name: info.last_name,
-            email: info.email,
-            profile: info.profile,
-            id: info.id,
-        };
-        return newInfo;
-    }
-};
-
 const Profile: React.FC<{
     logout: () => void;
     user: string;
-    setID: React.Dispatch<React.SetStateAction<number>>;
+    setID: (user?: string, id?: number) => void;
 }> = ({ logout, user, setID }) => {
-    const userInfo = useAppSelector((state) => state.value);
+    const userInfo = useAppSelector((state) => state.profile.value);
     const router = useIonRouter();
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        getInfo(user).then((e) => {
-            dispatch(setProfileInfo(e));
-            setID(e.id);
-        });
+        // Check if the user information has already been gotten
+        if (!userInfo.email) {
+            // Get info from the backend
+            getUserInfo(user).then((e) => {
+                if (typeof e === 'string') {
+                    // Do something to show that something went wrong
+                    return defaultProfileInfo;
+                } else {
+                    const newInfo: UserInfo = {
+                        first_name: e.first_name,
+                        last_name: e.last_name,
+                        email: e.email,
+                        profile: e.profile,
+                        id: e.id,
+                    };
+                    // Send info
+                    dispatch(setProfileInfo(newInfo));
+                    // Set ID in the localstorage and through the app
+                    setID(undefined, newInfo.id);
+                }
+            });
+        }
     }, []);
 
     const onLogoutClick = () => {
@@ -63,17 +64,17 @@ const Profile: React.FC<{
         {
             label: 'Profile',
             value: userInfo.profile,
+            isCapital: true,
         },
     ];
 
     return (
         <div className="profile-container">
-            {/* <IonCard> */}
             <div className="icon-container">
                 <div className="card">
                     <div className="header">
                         <div className="avatar icon-container">
-                            <IonIcon className="avatar-icon" icon={personCircle} color="tertiary"></IonIcon>
+                            <IonIcon className="avatar-icon" icon={personCircle} color="primary"></IonIcon>
                         </div>
                     </div>
                 </div>
@@ -86,7 +87,9 @@ const Profile: React.FC<{
                             <IonLabel>{field.label}</IonLabel>
                         </IonItem>
                         <IonItem>
-                            <IonText>{field.value}</IonText>
+                            <IonText style={{ textTransform: field.isCapital ? 'capitalize' : 'initial' }}>
+                                {field.value}
+                            </IonText>
                         </IonItem>
                     </IonItem>
                 ))}
@@ -114,8 +117,6 @@ const Profile: React.FC<{
                     Log out
                 </IonButton>
             </div>
-
-            {/* </IonCard> */}
         </div>
     );
 };

@@ -14,3 +14,7 @@ ion-grid.ion-justify-content-center {
 ion-grid.ion-justify-content-center ion-row {
     height:100%;
 }
+
+.calendar-icon-size {
+    font-size: 40px;
+}

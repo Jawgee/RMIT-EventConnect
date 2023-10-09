@@ -14,8 +14,7 @@ import {
     IonText,
     IonChip,
 } from '@ionic/react';
-import './testing.css';
-// import './Home.css';
+import '../styles/testing.css';
 
 const Home: React.FC = () => {
     // const router = useIonRouter();

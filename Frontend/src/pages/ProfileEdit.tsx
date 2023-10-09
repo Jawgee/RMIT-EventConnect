@@ -6,7 +6,6 @@ import {
     IonToolbar,
     useIonRouter,
     IonList,
-    IonItem,
     IonButton,
     IonBackButton,
     IonButtons,
@@ -18,6 +17,7 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 import { editUser } from '../data/accounts';
 import { useState } from 'react';
 import { setProfileInfo } from '../data/profileReducer';
+import '../styles/ProfileEdit.css';
 
 const ProfileEdit = () => {
     const userInfo = useAppSelector((state) => state.value);
@@ -87,12 +87,19 @@ const ProfileEdit = () => {
                     <IonButtons slot="start">
                         <IonBackButton></IonBackButton>
                     </IonButtons>
-                    <IonTitle>Profile</IonTitle>
+                    <IonTitle>Edit Profile</IonTitle>
                 </IonToolbar>
             </IonHeader>
+
             <IonContent fullscreen>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <IonList>
+                <form className="edit-profile-container" onSubmit={handleSubmit(onSubmit)}>
+                    <div className="edit-profile-header">
+                        <IonHeader className="ion-no-border">
+                            <IonTitle className="edit-profile-title">Edit Profile Here!</IonTitle>
+                        </IonHeader>
+                    </div>
+
+                    <IonList className="edit-list-container">
                         <Controller
                             // console.log(field);
                             render={({ field }) => (
@@ -104,14 +111,31 @@ const ProfileEdit = () => {
                         {profileFields.map((field, index) => (
                             <Input {...field} control={control} key={index} />
                         ))}
-                        <IonItem>
-                            <IonButton onClick={() => pushPage('profile/tags', router)}>Click to edit tags</IonButton>
-                        </IonItem>
-                        <IonItem>
-                            <IonButton type="submit">Submit</IonButton>
-                        </IonItem>
                     </IonList>
-                    {errorMessage && <p>{errorMessage}</p>}
+
+                    <div className="edit-button-container">
+                        <IonButton
+                            className="edit-profile-button"
+                            shape="round"
+                            color="primary"
+                            fill="solid"
+                            onClick={() => pushPage('profile/tags', router)}
+                        >
+                            Click to edit tags
+                        </IonButton>
+
+                        <IonButton
+                            className="submit-profile-button"
+                            shape="round"
+                            color="secondary"
+                            fill="solid"
+                            type="submit"
+                        >
+                            Submit
+                        </IonButton>
+                    </div>
+
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
                 </form>
             </IonContent>
         </IonPage>

@@ -74,7 +74,7 @@ const Profile: React.FC<{
                 <div className="card">
                     <div className="header">
                         <div className="avatar icon-container">
-                            <IonIcon className="avatar-icon" icon={personCircle} color="tertiary"></IonIcon>
+                            <IonIcon className="avatar-icon" icon={personCircle} color="primary"></IonIcon>
                         </div>
                     </div>
                 </div>

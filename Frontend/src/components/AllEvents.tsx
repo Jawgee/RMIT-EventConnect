@@ -1,4 +1,4 @@
-import { IonCard, IonCardContent, IonChip, IonImg, IonText, useIonRouter } from '@ionic/react';
+import { IonCard, IonCardContent, IonImg, IonText, useIonRouter } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles

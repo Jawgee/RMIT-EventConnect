@@ -1,24 +1,32 @@
 const Joi = require('joi');
+const subCategories = require('../eventTags.js');
 
 // Define a Joi schema for the Event model
 const eventSchema = Joi.object({
-  name: Joi.string().max(50).required(),
-  owner: Joi.string().max(50).required(),
-  sector: Joi.string().valid('tourism', 'tech', 'bio', 'health', 'sustainability', 'agro', 'fintech', 'greentech', 'mobility', 'logistic', 'food', 'smart cities', 'blue economy', 'space').required(),
-  profile: Joi.string().valid('entrepreneur', 'corporate', 'investor', 'startup', 'academy', 'ecosystem facilitator', 'accelerator', 'incubator', 'sme', 'agency', 'ngo').required(),
-  category: Joi.string().valid('state of the art', 'round table', 'living test', 'stand', 'pitch', 'showroom').required(),
-  frequency: Joi.string().valid('unique', 'yearly', 'monthly'),
-  environment: Joi.string().valid('red carpet', 'informal', 'cocktail', 'party', 'prize'),
-  privacy: Joi.string().valid('public', 'private').required(),
-  entrance: Joi.string().valid('free', 'paid'),
-  accessibility: Joi.string().valid('in-person', 'online', 'hybrid'),
-  motivation: Joi.string().valid('validation', 'investor', 'partner', 'scouting'),
-  description: Joi.string().required(),
-  location: Joi.string().required()
-
+    name: Joi.string().max(50).required(),
+    owner: Joi.string().max(50).required(),
+    sector: Joi.string()
+        .valid(...subCategories.sector.tags)
+        .required(),
+    profile: Joi.string()
+        .valid(...subCategories.profile.tags)
+        .required(),
+    category: Joi.string()
+        .valid(...subCategories.category.tags)
+        .required(),
+    frequency: Joi.string().valid(...subCategories.frequency.tags),
+    environment: Joi.string().valid(...subCategories.environment.tags),
+    privacy: Joi.string()
+        .valid(...subCategories.privacy.tags)
+        .required(),
+    entrance: Joi.string().valid(...subCategories.entrance.tags),
+    accessibility: Joi.string().valid(...subCategories.accessibility.tags),
+    motivation: Joi.string().valid(...subCategories.motivation.tags),
+    description: Joi.string().required(),
+    location: Joi.string().required(),
 });
 
 module.exports = eventSchema;
 module.exports = {
-  validateEvent: (event) => eventSchema.validate(event)
+    validateEvent: (event) => eventSchema.validate(event),
 };

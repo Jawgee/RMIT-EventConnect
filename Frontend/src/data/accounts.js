@@ -21,7 +21,7 @@ const verifyUser = async (data) => {
         CapacitorCookies.setCookie({ url: location.protocol, key: 'jwt', value: res.token });
         return [true, ''];
     }
-    return res;
+    return [false, res];
 };
 
 // Registers the user
@@ -31,7 +31,7 @@ const registerUser = async (data) => {
         await CapacitorCookies.setCookie({ url: 'http://' + location.host, key: 'jwt', value: res.token });
         return [true, { email: res.email, id: res.id }];
     }
-    return res;
+    return [false, res];
 };
 
 const getUserInfo = async (email) => await getRequest(userClient, `/Email/${email}`);
@@ -42,7 +42,7 @@ const editUser = async (id, data) => {
         await CapacitorCookies.setCookie({ url: 'http://' + location.host, key: 'jwt', value: res.token });
         return [true, ''];
     }
-    return res;
+    return [false, res];
 };
 
 const getTags = async (id) => {

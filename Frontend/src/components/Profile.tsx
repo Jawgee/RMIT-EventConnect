@@ -64,6 +64,7 @@ const Profile: React.FC<{
         {
             label: 'Profile',
             value: userInfo.profile,
+            isCapital: true,
         },
     ];
 
@@ -86,7 +87,9 @@ const Profile: React.FC<{
                             <IonLabel>{field.label}</IonLabel>
                         </IonItem>
                         <IonItem>
-                            <IonText>{field.value}</IonText>
+                            <IonText style={{ textTransform: field.isCapital ? 'capitalize' : 'initial' }}>
+                                {field.value}
+                            </IonText>
                         </IonItem>
                     </IonItem>
                 ))}

@@ -13,7 +13,7 @@ const getRequest = async (client, requestURL) => {
         return 'Something went wrong, try again';
     } catch (e) {
         // If there was a 4xx/5xx response, it throws an error
-        return e.response.data.error;
+        return e.response.data.error ?? "Something went wrong, try again";
     }
 };
 
@@ -31,7 +31,7 @@ const postRequest = async (client, requestURL, data) => {
         return [false, 'Something went wrong, try again'];
     } catch (e) {
         // If there was a 4xx/5xx response, it throws an error
-        return [false, e.response.data.error];
+        return [false, e.response.data.error ?? "Something went wrong, try again"];
     }
 };
 
@@ -49,7 +49,7 @@ const putRequest = async (client, requestURL, data) => {
         return [false, 'Something went wrong, try again'];
     } catch (e) {
         // If there was a 4xx/5xx response, it throws an error
-        return [false, e.response.data.error];
+        return [false, e.response.data.error ?? "Something went wrong, try again"];
     }
 };
 

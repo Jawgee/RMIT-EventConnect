@@ -159,18 +159,18 @@ const App: React.FC = () => {
                                     <IonIcon className="navbar-size" aria-hidden="true" icon={home} />
                                     <IonLabel>Home</IonLabel>
                                 </IonTabButton>
-                                <IonTabButton tab="explore" href="/explore">
+                                {/* <IonTabButton tab="explore" href="/explore">
                                     <IonIcon className="navbar-size" aria-hidden="true" icon={search} />
                                     <IonLabel>Explore</IonLabel>
-                                </IonTabButton>
+                                </IonTabButton> */}
                                 <IonTabButton tab="eventadd" href="/eventadd">
                                     <IonIcon className="navbar-size" aria-hidden="true" icon={addCircle} />
                                     <IonLabel>Add Event</IonLabel>
                                 </IonTabButton>
-                                <IonTabButton tab="inbox" href="/inbox">
+                                {/* <IonTabButton tab="inbox" href="/inbox">
                                     <IonIcon className="navbar-size" aria-hidden="true" icon={mail} />
                                     <IonLabel>Inbox</IonLabel>
-                                </IonTabButton>
+                                </IonTabButton> */}
                                 <IonTabButton tab="profile" href="/profile">
                                     <IonIcon className="navbar-size" aria-hidden="true" icon={personCircle} />
                                     <IonLabel>Profile</IonLabel>

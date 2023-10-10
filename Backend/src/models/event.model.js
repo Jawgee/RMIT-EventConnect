@@ -3,8 +3,8 @@ const subCategories = require('../eventTags.js');
 
 // Define a Joi schema for the Event model
 const eventSchema = Joi.object({
-    name: Joi.string().max(50).required(),
-    owner: Joi.string().max(50).required(),
+    name: Joi.string().required(),
+    owner: Joi.string().required(),
     sector: Joi.string()
         .valid(...subCategories.sector.tags)
         .required(),

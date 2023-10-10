@@ -39,9 +39,9 @@ connectionPool.getConnection((err, connection) => {
     CREATE TABLE IF NOT EXISTS users (
       id INT AUTO_INCREMENT PRIMARY KEY,
       first_name VARCHAR(30) NOT NULL,
-      last_name VARCHAR(300) NOT NULL,
-      photo VARCHAR(300),
-      email VARCHAR(320) NOT NULL UNIQUE,
+      last_name VARCHAR(10000) NOT NULL,
+      photo VARCHAR(10000),
+      email VARCHAR(10000) NOT NULL UNIQUE,
       password VARCHAR(255) NOT NULL,
       profile ENUM(${subCategories.profile.tags.map((e) => `'${e}'`)}) NOT NULL
     )`;
@@ -49,8 +49,8 @@ connectionPool.getConnection((err, connection) => {
     const createEventTableQuery = `
     CREATE TABLE IF NOT EXISTS events (
       id INT AUTO_INCREMENT PRIMARY KEY,
-      name VARCHAR(100) NOT NULL,
-      owner VARCHAR(100) NOT NULL,
+      name VARCHAR(10000) NOT NULL,
+      owner VARCHAR(10000) NOT NULL,
       sector ENUM(${subCategories.sector.tags.map((e) => `'${e}'`)}) NOT NULL,
       profile ENUM(${subCategories.profile.tags.map((e) => `'${e}'`)}) NOT NULL,
       category ENUM(${subCategories.category.tags.map((e) => `'${e}'`)}) NOT NULL,
@@ -60,8 +60,8 @@ connectionPool.getConnection((err, connection) => {
       entrance ENUM(${subCategories.entrance.tags.map((e) => `'${e}'`)}),
       accessibility ENUM(${subCategories.accessibility.tags.map((e) => `'${e}'`)}),
       motivation ENUM(${subCategories.motivation.tags.map((e) => `'${e}'`)}),
-      description VARCHAR(255) NOT NULL,
-      location VARCHAR(255) NOT NULL
+      description VARCHAR(10000) NOT NULL,
+      location VARCHAR(10000) NOT NULL
     )`;
 
     const createTagTableQuery = `

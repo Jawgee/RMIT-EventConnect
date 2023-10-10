@@ -8,7 +8,7 @@ const Welcome = () => {
 
     return (
         <IonPage>
-            <IonContent className="whole-background" fullscreen>
+            <IonContent className="whole-background">
                 <div className="container">
                     <div className="top-image">
                         <div>

@@ -1,35 +1,16 @@
-import {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonTitle,
-    IonToolbar,
-    // IonSearchbar,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
-    IonCardSubtitle,
-    IonImg,
-    IonText,
-    IonChip,
-    IonButtons,
-    IonButton,
-    IonIcon,
-    useIonRouter,
-    IonBackButton,
-} from '@ionic/react';
-import { calendar } from 'ionicons/icons';
-import { pushPage } from '../App';
-// import './Home.css';
-import '../styles/testing.css';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import '../styles/Testing.css';
+import '../styles/HomePractice.css';
+import { Suspense, lazy } from 'react';
+import LoadingSpinner from '../components/LoadingSpinner';
+const AllEvents = lazy(() => import('../components/AllEvents'));
 
 const Home: React.FC = () => {
     const router = useIonRouter();
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar color="primary">
+            <IonHeader className="ion-no-border">
+                <IonToolbar color="medium">
                     <IonTitle>Home</IonTitle>
                     <IonButtons slot="start">
                         <IonBackButton></IonBackButton>
@@ -40,36 +21,12 @@ const Home: React.FC = () => {
                         </IonButton>
                     </IonButtons>
                 </IonToolbar>
-                {/* <IonToolbar><IonSearchbar></IonSearchbar></IonToolbar> */}
             </IonHeader>
 
-            <IonContent fullscreen>
-                <IonCard>
-                    <IonCardHeader>
-                        <IonImg src="" />
-                        {/* ^^^ not sure how to add image source */}
-                        <IonCardTitle>Live Festival!</IonCardTitle>
-                        <IonCardSubtitle>Location: </IonCardSubtitle>
-                    </IonCardHeader>
-                    <IonCardContent>
-                        Here's a small text description for the card content. Nothing more, nothing less.
-                    </IonCardContent>
-                </IonCard>
-
-                <IonText>
-                    related to <IonChip color="secondary">#XXXXX</IonChip>
-                </IonText>
-
-                <IonCard>
-                    <IonCardHeader>
-                        <IonImg src="" />
-                        <IonCardTitle>Live Festival!</IonCardTitle>
-                        <IonCardSubtitle>Location: </IonCardSubtitle>
-                    </IonCardHeader>
-                    <IonCardContent>
-                        Here's a small text description for the card content. Nothing more, nothing less.
-                    </IonCardContent>
-                </IonCard>
+            <IonContent>
+                <Suspense fallback={<LoadingSpinner />}>
+                    <AllEvents />
+                </Suspense>
             </IonContent>
         </IonPage>
     );

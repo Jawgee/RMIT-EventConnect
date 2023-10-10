@@ -10,25 +10,26 @@ import {
     IonBackButton,
     IonRippleEffect,
 } from '@ionic/react';
-import '../styles/register.css';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import '../styles/Register.css';
+import { Suspense, lazy, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';
 import { registerUser } from '../data/accounts.js';
 import { PasswordRegex, replacePage } from '../App';
 import { mail, lockClosed, person } from 'ionicons/icons';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { UserInfo } from '../data/profileReducer';
+const ProfileOptions = lazy(() => import('../components/ProfileOptions'));
 
 const Register: React.FC<{
-    setUser: React.Dispatch<React.SetStateAction<string | null>>;
-    setID: React.Dispatch<React.SetStateAction<number>>;
+    setInfo: (user?: string, id?: number) => void;
     // testFunction: Function;
 }> = ({
-    setUser,
-    setID,
+    setInfo,
     // testFunction
 }) => {
     // Controller for the forms
-    const { control, handleSubmit } = useForm();
+    const { control, handleSubmit } = useForm<UserInfo>();
 
     // Routing to allow to manually redirect the user
     const router = useIonRouter();
@@ -70,16 +71,15 @@ const Register: React.FC<{
     ];
 
     // Handles submit
-    const registerUserOnSubmit = (data: any) => {
-        registerUser(data.email, data.password, data.first_name, data.last_name).then((e) => {
+    const registerUserOnSubmit: SubmitHandler<UserInfo> = (data) => {
+        registerUser(data).then((e) => {
             // Get the information from the backend
             const [successful, message] = e;
 
             // If there were no issues
             if (successful) {
                 // Set the user to be used elsewhere
-                setUser(message.email);
-                setID(message.id);
+                setInfo(message.email, message.id);
                 // Send the user to the home page
                 replacePage('tags', router);
             } else {
@@ -99,7 +99,7 @@ const Register: React.FC<{
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent fullscreen>
+            <IonContent>
                 <div className="register-container">
                     <div className="register-header">
                         <IonHeader className="ion-no-border">
@@ -107,9 +107,14 @@ const Register: React.FC<{
                         </IonHeader>
                     </div>
                     <form className="register-form" onSubmit={handleSubmit(registerUserOnSubmit)}>
+                        {/* TODO: Decide if this needs to go in the middle or something */}
+                        <Suspense fallback={<LoadingSpinner />}>
+                            <ProfileOptions control={control} />
+                        </Suspense>
                         {formFields.map((field, index) => (
                             <Input {...field} control={control} key={index} />
                         ))}
+
                         <div className="register-button">
                             <IonButton
                                 className="theSignUpButton"
@@ -124,6 +129,7 @@ const Register: React.FC<{
                         </div>
                         {errorMessage && <p className="error-message">{errorMessage}</p>}
                     </form>
+
                     {/* Link to login page */}
                     <div className="register-info">
                         <p>

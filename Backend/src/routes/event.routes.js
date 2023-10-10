@@ -17,6 +17,12 @@ module.exports = (express, app) => {
     // Get profile categories
     router.get("/Categories/profile", controller.getProfileCategories);
 
+    // Get event based on tag
+    router.get("/tags/:tag", controller.listEventsByTag);
+
+    //get events based on user's tags
+    router.get("/user/:user_id", controller.listEventsForUser);
+
     // edit event's list of tags
     router.put("/:id", controller.editEvent);
 

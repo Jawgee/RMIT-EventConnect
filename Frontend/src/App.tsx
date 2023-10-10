@@ -12,7 +12,7 @@ import {
 } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import { IonReactRouter } from '@ionic/react-router';
-import { home, personCircle, search, mail, addCircle } from 'ionicons/icons';
+import { home, personCircle, addCircle } from 'ionicons/icons';
 import { Drivers, Storage } from '@ionic/storage';
 
 import Home from './pages/Home';
@@ -25,8 +25,6 @@ import Welcome from './pages/Welcome';
 import Register from './pages/Register';
 import ProfileEdit from './pages/ProfileEdit';
 import SelectTags from './pages/SelectTags';
-// import HomePractice from './pages/HomePractice';
-import Calendar from './pages/Calendar';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -129,9 +127,6 @@ const App: React.FC = () => {
                                 </Route>
                                 <Route path="/:tab(home)/event">
                                     <EventView />
-                                </Route>
-                                <Route path="/:tab(home)/calendar">
-                                    <Calendar />
                                 </Route>
                                 <Route path="/:tab(profile)/edit">
                                     <ProfileEdit />

@@ -1,5 +1,5 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import '../styles/testing.css';
+import '../styles/Testing.css';
 import '../styles/HomePractice.css';
 import { Suspense, lazy } from 'react';
 import LoadingSpinner from '../components/LoadingSpinner';

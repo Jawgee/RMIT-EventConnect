@@ -10,7 +10,7 @@ import {
     IonBackButton,
     IonRippleEffect,
 } from '@ionic/react';
-import '../styles/register.css';
+import '../styles/Register.css';
 import { Suspense, lazy, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Input, { type InputProps } from '../components/Input';

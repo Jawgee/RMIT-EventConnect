@@ -10,7 +10,7 @@ import {
     IonButtons,
 } from '@ionic/react';
 import { pushPage } from '../App';
-import Input from '../components/Input';
+import Input, { InputProps } from '../components/Input';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { editUser } from '../data/accounts';
@@ -62,7 +62,7 @@ const ProfileEdit = () => {
         });
     };
 
-    const profileFields = [
+    const profileFields: InputProps[] = [
         {
             label: 'Email',
             name: 'email',

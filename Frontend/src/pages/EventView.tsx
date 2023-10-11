@@ -20,7 +20,6 @@ import { useAppSelector } from '../hooks';
 import '../styles/HomePractice.css';
 import { calendar } from 'ionicons/icons';
 
-
 const EventView = () => {
     // const dispatch = useAppDispatch();
     // Gets post from internal event info
@@ -95,12 +94,12 @@ const EventView = () => {
                                     </p> */}
                             <IonList>
                                 {/* <IonItem> */}
-                                    <h2 className="description-location">Description </h2> 
-                                    <h2 className="selectpost-padding">{selectedPost.description}</h2>
+                                <h2 className="description-location">Description</h2>
+                                <h2 className="selectpost-padding">{selectedPost.description}</h2>
                                 {/* </IonItem> */}
                                 {/* <IonItem> */}
-                                    <h2 className="description-location">Location </h2>
-                                    <h2 className="selectpost-padding">{selectedPost.location}</h2>
+                                <h2 className="description-location">Location</h2>
+                                <h2 className="selectpost-padding">{selectedPost.location}</h2>
                                 {/* </IonItem> */}
                             </IonList>
 
@@ -108,7 +107,9 @@ const EventView = () => {
                                 {Object.keys(getTagsFromObject(selectedPost)).map((e, i) => (
                                     <IonItem key={i}>
                                         <IonChip className="selected-post">
-                                            <p className="selectedpost-e">{e}: {selectedPost[e]}</p>
+                                            <p className="selectedpost-e">
+                                                {e}: {selectedPost[e]}
+                                            </p>
                                         </IonChip>
                                     </IonItem>
                                 ))}

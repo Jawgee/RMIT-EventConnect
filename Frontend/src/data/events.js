@@ -1,8 +1,9 @@
 import { getRequest, postRequest } from './genericRequests';
 import axios from 'axios';
+import config from './config';
 
 const eventClient = axios.create({
-    baseURL: 'http://ec2-54-225-45-141.compute-1.amazonaws.com:4000/api/events',
+    baseURL: `${config.server}/events`,
 });
 
 // Creates an event

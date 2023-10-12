@@ -2,7 +2,6 @@ import {
     IonImg,
     IonText,
     IonList,
-    IonItem,
     IonContent,
     IonHeader,
     IonPage,
@@ -105,7 +104,7 @@ const EventView = () => {
 
                             <IonList>
                                 {Object.keys(getTagsFromObject(selectedPost)).map((e, i) => (
-                                        <IonChip className="selected-post" style={{margin: "5px 10px"}}>
+                                        <IonChip className="selected-post" style={{margin: "5px 10px"}} key={i}>
                                             <p className="selectedpost-e">
                                                 {e}: {selectedPost[e]}
                                             </p>

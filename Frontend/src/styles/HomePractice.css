@@ -48,7 +48,7 @@ ion-card .card-content ion-text {
 }
 
 ion-card ion-img {
-    height: 120px;
+    height: 150px;
     max-height: 150px;
     width: 100%;
     object-fit: cover;
@@ -129,5 +129,5 @@ ion-chip {
 
 .home-grid {
     display: grid;
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: repeat(1, auto);
 }

@@ -2,6 +2,24 @@ ion-title {
     color: #fff;
 }
 
+.title {
+    color: #3880ff;
+    font-size: 200%;
+    /* font-family: 'Nunito', sans-serif; */
+    font-weight: 700;
+    padding-left: 20px;
+    /* place-self: center; */
+}
+
+.title-container {
+    /* text-overflow: ellipsis; */
+}
+.event-title {
+    /* text-overflow: ellipsis; */
+    height: fit-content;
+    max-height: 20px;
+}
+
 ion-content {
     --background: #fff;
 }
@@ -10,20 +28,28 @@ ion-content {
     position: relative;
     width: 100%;
     height: 100%;
+    max-width: 500px;
+   
 }
 
 ion-card {
     background-color: #fff;
+    max-height: 250px;
+    
+
 }
 
 ion-card .card-content ion-text {
     font-size: 1.5rem;
     font-weight: 600;
     color: #333;
+    /* text-overflow: ellipsis; */
+    /* max-height: 100px; */
 }
 
 ion-card ion-img {
-    height: 175px;
+    height: 120px;
+    max-height: 150px;
     width: 100%;
     object-fit: cover;
 }
@@ -103,5 +129,5 @@ ion-chip {
 
 .home-grid {
     display: grid;
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(2, auto);
 }

@@ -58,7 +58,7 @@ const AllEvents: React.FC = () => {
         <>
             {errorMessage && <p>{errorMessage}</p>}
             <div className="content-container">
-                <h3>{posts.length === 0 ? 'No events currently exist' : 'All current events'}</h3>
+                <h3 className="title">{posts.length === 0 ? 'No events currently exist' : 'All current events'}</h3>
                 <div className="home-grid">
                     {/* <Swiper slidesPerView={1.25} spaceBetween={1}> */}
                     {posts.map((post, index) => (
@@ -105,7 +105,7 @@ const AllEvents: React.FC = () => {
                                         // initial="show"
                                         // animate={selectedPost?.index === index ? 'hidden' : 'show'}
                                     >
-                                        <IonText>{post.name}</IonText>
+                                        <IonText className='event-title'>{post.name}</IonText>
 
                                         {/* </motion.div> */}
                                     </div>

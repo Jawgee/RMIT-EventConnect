@@ -105,13 +105,11 @@ const EventView = () => {
 
                             <IonList>
                                 {Object.keys(getTagsFromObject(selectedPost)).map((e, i) => (
-                                    <IonItem key={i}>
-                                        <IonChip className="selected-post">
+                                        <IonChip className="selected-post" style={{margin: "5px 10px"}}>
                                             <p className="selectedpost-e">
                                                 {e}: {selectedPost[e]}
                                             </p>
                                         </IonChip>
-                                    </IonItem>
                                 ))}
                             </IonList>
                         </IonText>

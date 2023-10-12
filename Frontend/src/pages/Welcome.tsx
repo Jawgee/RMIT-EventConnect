@@ -12,7 +12,7 @@ const Welcome = () => {
                 <div className="container">
                     <div className="top-image">
                         <div>
-                            <IonImg src="../src/images/innovent.png" alt="Innovent Logo"></IonImg>
+                            <IonImg src="/innovent.png" alt="Innovent Logo"></IonImg>
                         </div>
                     </div>
                     {/* Link to login page */}
@@ -27,7 +27,7 @@ const Welcome = () => {
                         </IonButton>
                     </div>
                     <div className="bottom-image">
-                        <IonImg src="../src/images/innobound.png" alt="Innobound Logo"></IonImg>
+                        <IonImg src="/innobound.png" alt="Innobound Logo"></IonImg>
                     </div>
                 </div>
             </IonContent>

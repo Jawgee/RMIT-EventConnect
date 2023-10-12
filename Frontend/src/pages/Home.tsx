@@ -6,7 +6,6 @@ import LoadingSpinner from '../components/LoadingSpinner';
 const AllEvents = lazy(() => import('../components/AllEvents'));
 
 const Home: React.FC = () => {
-    // const router = useIonRouter();
     return (
         <IonPage>
             <IonHeader className="ion-no-border">

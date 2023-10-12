@@ -59,31 +59,38 @@ const EventAdd: React.FC<{ user: string }> = ({ user }) => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <form onSubmit={handleSubmit(addEventOnSubmit)}>
-                    {/* TODO: Create proper design */}
+                <div className="login-container">
+                    <form onSubmit={handleSubmit(addEventOnSubmit)} className="login-form">
+                        {/* TODO: Create proper design */}
 
-                    <Controller
-                        render={({ field }) => {
-                            return <input onChange={field.onChange} value={field.value} type="hidden" />;
-                        }}
-                        name="owner"
-                        control={control}
-                    />
-                    {formFields.map((field, index) => (
-                        <Input {...field} control={control} key={index} />
-                    ))}
+                        <Controller
+                            render={({ field }) => {
+                                return <input onChange={field.onChange} value={field.value} type="hidden" />;
+                            }}
+                            name="owner"
+                            control={control}
+                        />
+                        {formFields.map((field, index) => (
+                            <Input {...field} control={control} key={index} />
+                        ))}
 
-                    <Suspense fallback={<LoadingSpinner />}>
-                        <EventAddTags control={control} />
-                    </Suspense>
+                        <Suspense fallback={<LoadingSpinner />}>
+                            <EventAddTags control={control} />
+                        </Suspense>
 
-                    <IonButton expand="block" type="submit" className="ion-margin-top">
-                        Submit
-                    </IonButton>
-                    {/* TODO: make this look better */}
-                    {errorMessage && <p>{errorMessage}</p>}
-                    <br />
-                </form>
+                        <IonButton
+                            expand="block"
+                            type="submit"
+                            className="ion-margin-top"
+                            shape="round"
+                        >
+                            Submit
+                        </IonButton>
+                        {/* TODO: make this look better */}
+                        {errorMessage && <p>{errorMessage}</p>}
+                        <br />
+                    </form>
+                </div>
             </IonContent>
         </IonPage>
     );

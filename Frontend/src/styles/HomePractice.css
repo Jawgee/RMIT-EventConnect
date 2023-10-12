@@ -2,6 +2,24 @@ ion-title {
     color: #fff;
 }
 
+.title {
+    color: #3880ff;
+    font-size: 200%;
+    /* font-family: 'Nunito', sans-serif; */
+    font-weight: 700;
+    padding-left: 20px;
+    /* place-self: center; */
+}
+
+.title-container {
+    /* text-overflow: ellipsis; */
+}
+.event-title {
+    /* text-overflow: ellipsis; */
+    height: fit-content;
+    max-height: 20px;
+}
+
 ion-content {
     --background: #fff;
 }
@@ -10,23 +28,28 @@ ion-content {
     position: relative;
     width: 100%;
     height: 100%;
+    place-items: center;
+    display: grid;
 }
-
-
 
 ion-card {
     background-color: #fff;
+    max-height: 250px;
+    
+
 }
 
 ion-card .card-content ion-text {
     font-size: 1.5rem;
     font-weight: 600;
     color: #333;
-
+    /* text-overflow: ellipsis; */
+    /* max-height: 100px; */
 }
 
 ion-card ion-img {
-    height: 175px;
+    height: 150px;
+    max-height: 150px;
     width: 100%;
     object-fit: cover;
 }
@@ -66,7 +89,6 @@ ion-card ion-img {
 
 ion-chip {
     place-self: center;
-    
     width: auto;
 }
 
@@ -89,7 +111,7 @@ ion-chip {
     padding-right: 20px;
 }
 
-.selected-post{
+.selected-post {
     width: auto;
     background: rgba(255, 214, 10, 0.7);
     border: 2px solid rgba(255, 230, 68, 0.3);
@@ -99,9 +121,13 @@ ion-chip {
     font-family: 'Nunito', sans-serif;
     font-weight: 800;
     color: black;
-    
 }
 
 .calendar-icon-size {
     font-size: 40px;
+}
+
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(1, auto);
 }

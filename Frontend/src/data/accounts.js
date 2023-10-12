@@ -1,16 +1,17 @@
 import axios from 'axios';
 import { getRequest, postRequest, putRequest } from './genericRequests';
 import { CapacitorCookies } from '@capacitor/core';
+import config from './config';
 
 // Axios stuff, will make sure that things are consistent etc
 // Also handles all of the HTTP requests easily
 
 const userClient = axios.create({
-    baseURL: 'http://ec2-54-225-45-141.compute-1.amazonaws.com:4000/api/users',
+    baseURL: `${config.server}/users`,
 });
 
 const tagsClient = axios.create({
-    baseURL: 'http://ec2-54-225-45-141.compute-1.amazonaws.com:4000/api/tags',
+    baseURL: `${config.server}/tags`,
 });
 
 // Verifies the user via login

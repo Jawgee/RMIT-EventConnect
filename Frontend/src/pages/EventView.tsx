@@ -2,7 +2,6 @@ import {
     IonImg,
     IonText,
     IonList,
-    IonItem,
     IonContent,
     IonHeader,
     IonPage,
@@ -19,7 +18,6 @@ import { EventInfo } from '../data/eventReducer';
 import { useAppSelector } from '../hooks';
 import '../styles/HomePractice.css';
 import { calendar } from 'ionicons/icons';
-
 
 const EventView = () => {
     // const dispatch = useAppDispatch();
@@ -95,22 +93,22 @@ const EventView = () => {
                                     </p> */}
                             <IonList>
                                 {/* <IonItem> */}
-                                    <h2 className="description-location">Description </h2> 
-                                    <h2 className="selectpost-padding">{selectedPost.description}</h2>
+                                <h2 className="description-location">Description</h2>
+                                <h2 className="selectpost-padding">{selectedPost.description}</h2>
                                 {/* </IonItem> */}
                                 {/* <IonItem> */}
-                                    <h2 className="description-location">Location </h2>
-                                    <h2 className="selectpost-padding">{selectedPost.location}</h2>
+                                <h2 className="description-location">Location</h2>
+                                <h2 className="selectpost-padding">{selectedPost.location}</h2>
                                 {/* </IonItem> */}
                             </IonList>
 
                             <IonList>
                                 {Object.keys(getTagsFromObject(selectedPost)).map((e, i) => (
-                                    <IonItem key={i}>
-                                        <IonChip className="selected-post">
-                                            <p className="selectedpost-e">{e}: {selectedPost[e]}</p>
+                                        <IonChip className="selected-post" style={{margin: "5px 10px"}} key={i}>
+                                            <p className="selectedpost-e">
+                                                {e}: {selectedPost[e]}
+                                            </p>
                                         </IonChip>
-                                    </IonItem>
                                 ))}
                             </IonList>
                         </IonText>

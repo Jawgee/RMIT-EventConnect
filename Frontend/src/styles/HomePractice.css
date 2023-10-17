@@ -34,9 +34,7 @@ ion-content {
 
 ion-card {
     background-color: #fff;
-    max-height: 250px;
-    
-
+    /* max-height: 250px; */
 }
 
 ion-card .card-content ion-text {

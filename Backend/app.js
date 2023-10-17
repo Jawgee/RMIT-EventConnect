@@ -67,7 +67,7 @@ connectionPool.getConnection((err, connection) => {
     const createTagTableQuery = `
     CREATE TABLE IF NOT EXISTS tags (
       id INT AUTO_INCREMENT PRIMARY KEY,
-      ${subCategories.sector.tags.map((e) => `\n${e} TINYINT(1) NOT NULL`)},
+      ${subCategories.sector.tags.map((e) => `\`${e}\` TINYINT(1) NOT NULL`).join(',\n')},
       tag_type ENUM('event', 'user') NOT NULL,
       event_id INT,
       user_id INT,

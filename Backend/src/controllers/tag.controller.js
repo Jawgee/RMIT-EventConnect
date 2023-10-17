@@ -41,6 +41,7 @@ exports.getUserTagList = async (req, res) => {
   connectionPool.query(query, [user_id], (err, rows) => {
     if (err) {
       console.error("Error executing query:", err.stack);
+      console.log(query);
       return res.status(500).json({ error: "Error retrieving user interests" });
     }
 

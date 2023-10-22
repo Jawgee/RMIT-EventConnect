@@ -12,7 +12,7 @@ import {
 } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import { IonReactRouter } from '@ionic/react-router';
-import { home, personCircle, addCircle } from 'ionicons/icons';
+import { home, personCircle } from 'ionicons/icons';
 import { Drivers, Storage } from '@ionic/storage';
 
 import Home from './pages/Home';

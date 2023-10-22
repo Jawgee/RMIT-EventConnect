@@ -1,4 +1,4 @@
-import { IonCard, IonCardContent, IonImg, IonText, useIonRouter } from '@ionic/react';
+import { IonCard, IonCardContent, IonChip, IonImg, IonText, useIonRouter } from '@ionic/react';
 import { useEffect, useState } from 'react';
 // import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
@@ -17,6 +17,7 @@ import { getEvents } from '../data/events';
 import { pushPage } from '../App';
 import { useAppDispatch } from '../hooks';
 import { EventInfo, clearEventInfo, defaultEventInfo, setEventInfo } from '../data/eventReducer';
+import { getTagsFromObject } from '../pages/EventView';
 
 const AllEvents: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -105,7 +106,16 @@ const AllEvents: React.FC = () => {
                                         // initial="show"
                                         // animate={selectedPost?.index === index ? 'hidden' : 'show'}
                                     >
-                                        <IonText className='event-title'>{post.name}</IonText>
+                                        <IonText className="event-title">{post.name}</IonText>
+                                        <div>
+                                            {Object.keys(getTagsFromObject(post)).map((e, i) => (
+                                                <IonChip className="selected-post" style={{ margin: '5px' }} key={i}>
+                                                    <p className="selectedpost-e">
+                                                        {e}: {post[e].replace(/_/g, ' ')}
+                                                    </p>
+                                                </IonChip>
+                                            ))}
+                                        </div>
 
                                         {/* </motion.div> */}
                                     </div>

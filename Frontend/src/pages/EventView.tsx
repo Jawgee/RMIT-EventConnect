@@ -10,25 +10,25 @@ import {
     IonBackButton,
     IonButtons,
     IonChip,
-    IonButton,
-    IonIcon,
+    // IonButton,
+    // IonIcon,
 } from '@ionic/react';
 // import { AnimatePresence, motion } from 'framer-motion';
 import { EventInfo } from '../data/eventReducer';
 import { useAppSelector } from '../hooks';
 import '../styles/HomePractice.css';
-import { calendar } from 'ionicons/icons';
+// import { calendar } from 'ionicons/icons';
+
+// Helper value to get all elements except those which are pre-defined through EventInfo interface
+    const getTagsFromObject = (object: EventInfo) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        return (({ name, description, id, location, owner, image, ...o }) => o)(object);
+    };
 
 const EventView = () => {
     // const dispatch = useAppDispatch();
     // Gets post from internal event info
     const selectedPost = useAppSelector((state) => state.event.value);
-
-    // Helper value to get all elements except those which are pre-defined through EventInfo interface
-    const getTagsFromObject = (object: EventInfo) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        return (({ name, description, id, location, owner, image, ...o }) => o)(object);
-    };
 
     return (
         <IonPage>
@@ -39,11 +39,12 @@ const EventView = () => {
                         <IonBackButton></IonBackButton>
                     </IonButtons>
 
-                    <IonButtons slot="end">
+                    {/* Button to add event to the calendar */}
+                    {/* <IonButtons slot="end">
                         <IonButton>
                             <IonIcon className="calendar-icon-size" icon={calendar}></IonIcon>
                         </IonButton>
-                    </IonButtons>
+                    </IonButtons> */}
                 </IonToolbar>
             </IonHeader>
 
@@ -104,11 +105,11 @@ const EventView = () => {
 
                             <IonList>
                                 {Object.keys(getTagsFromObject(selectedPost)).map((e, i) => (
-                                        <IonChip className="selected-post" style={{margin: "5px 10px"}} key={i}>
-                                            <p className="selectedpost-e">
-                                                {e}: {selectedPost[e]}
-                                            </p>
-                                        </IonChip>
+                                    <IonChip className="selected-post" style={{ margin: '5px 10px' }} key={i}>
+                                        <p className="selectedpost-e">
+                                            {e}: {selectedPost[e].replace(/_/g, ' ')}
+                                        </p>
+                                    </IonChip>
                                 ))}
                             </IonList>
                         </IonText>
@@ -123,3 +124,4 @@ const EventView = () => {
 };
 
 export default EventView;
+export {getTagsFromObject}

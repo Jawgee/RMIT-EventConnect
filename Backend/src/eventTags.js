@@ -4,7 +4,7 @@ const lists = {
         required: true
     },
     sector: {
-        tags: ["pitch", "metaverse", "online", "stand", "round_table", "tourism", "tech", "bio", "health", "sustainability", "agro", "fintech", "greenTech", "mobility", "logistic", "food", "smart_cities", "blue_economy", "space"],
+        tags: ["triple_impact", "art_and_multimedia", "social_impact", "tourism", "biotech", "health", "sustainability", "agro_tech", "fintech", "green_tech", "mobility","clean_tech", "logistic", "food_tech", "smart_cities", "green_cities"],
         required: true
     },
     category: {

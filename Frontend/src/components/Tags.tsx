@@ -66,7 +66,7 @@ const Tags: React.FC<{
 
                                         // labelPlacement='fixed'
                                     >
-                                        #{key.replace('_', ' ')}
+                                        #{key.replace(/_/g, ' ')}
                                     </IonCheckbox>
                                 );
                             })}
@@ -74,7 +74,7 @@ const Tags: React.FC<{
                 </div>
                 <div className="tags-button">
                     <IonButton shape="round" color="primary" fill="solid" onClick={submitTags}>
-                        Submit Tags
+                        Submit
                     </IonButton>
                     {errorMessage && <p className="error-message">{errorMessage}</p>}
                 </div>

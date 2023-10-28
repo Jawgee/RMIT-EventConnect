@@ -19,12 +19,13 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 // import Explore from './pages/Explore';
 // import Inbox from './pages/Inbox';
-// import EventAdd from './pages/EventAdd';
+import EventAdd from './pages/EventAdd';
 import Login from './pages/Login';
 import Welcome from './pages/Welcome';
 import Register from './pages/Register';
 import ProfileEdit from './pages/ProfileEdit';
 import SelectTags from './pages/SelectTags';
+import { addCircle } from 'ionicons/icons';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -142,10 +143,10 @@ const App: React.FC = () => {
                                 </Route>
                                 <Route path="/:tab(inbox)">
                                     <Inbox />
-                                </Route>
+                                </Route>*/
                                 <Route path="/:tab(eventadd)">
                                     <EventAdd user={user} />
-                                </Route> */}
+                                </Route> }
                                 <Route path="/tags">
                                     <SelectTags id={id} showBack={false} />
                                 </Route>
@@ -162,12 +163,12 @@ const App: React.FC = () => {
                                 {/* <IonTabButton tab="explore" href="/explore">
                                     <IonIcon className="navbar-size" aria-hidden="true" icon={search} />
                                     <IonLabel>Explore</IonLabel>
-                                </IonTabButton>
+                                </IonTabButton>*/
                                 <IonTabButton tab="eventadd" href="/eventadd">
                                     <IonIcon className="navbar-size" aria-hidden="true" icon={addCircle} />
                                     <IonLabel>Add Event</IonLabel>
                                 </IonTabButton>
-                                <IonTabButton tab="inbox" href="/inbox">
+                                /*<IonTabButton tab="inbox" href="/inbox">
                                     <IonIcon className="navbar-size" aria-hidden="true" icon={mail} />
                                     <IonLabel>Inbox</IonLabel>
                                 </IonTabButton> */}

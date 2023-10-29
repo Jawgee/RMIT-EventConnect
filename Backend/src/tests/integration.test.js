@@ -151,7 +151,7 @@ describe("Event API Tests", () => {
         const response = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
-            sector: "tech",
+            sector: "triple_impact",
             profile: "startup",
             category: "round table",
             privacy: "public",
@@ -179,7 +179,7 @@ describe("Event API Tests", () => {
         const response = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
-            sector: "tech",
+            sector: "triple_impact",
             profile: "startup",
             category: "round table",
             privacy: "public",
@@ -198,7 +198,7 @@ describe("Event API Tests", () => {
         const response = await request(app).put(`/api/Events/${createdEventId}`).send({
             name: "Updated Sample Event",
             owner: "John Freezy Doe",
-            sector: "Tech",
+            sector: "triple_impact",
             profile: "Startup",
             category: "Round Table",
             privacy: "public",
@@ -257,7 +257,7 @@ describe("Tags API Tests", () => {
         const EventResponse = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
-            sector: "tech",
+            sector: "triple_impact",
             profile: "startup",
             category: "round table",
             privacy: "public",
@@ -274,24 +274,24 @@ describe("Tags API Tests", () => {
 
     test("PUT api/Tags/UserInterests/:user_id should return 200 if user preferences are updated successfully", async () => {
         const response = await request(app).put(`/api/Tags/UserInterests/${MockUserId}`).send({
-            pitch: false,
-            metaverse: true,
-            stand: true
+            tourism: false,
+            biotech: true,
+            health: true
         });
         expect(response.statusCode).toBe(200);
     });
 
     test("PUT api/Tags/EventTags/:event_id should return 200 if event preferences are updated successfully", async () => {
         const response = await request(app).put(`/api/Tags/EventTags/${MockEventId}`).send({
-            pitch: false,
-            metaverse: true,
-            stand: true
+            tourism: false,
+            biotech: true,
+            health: true
         });
         expect(response.statusCode).toBe(200);
     });
 
     test("GET api/Tags/UserByTag/:column/:bool should return 200 if a user with the tag exists", async () => {
-        const response = await request(app).get(`/api/Tags/UserByTag/metaverse/1`);
+        const response = await request(app).get(`/api/Tags/UserByTag/biotech/1`);
 
         expect(response.statusCode).toBe(200);
     });
@@ -333,7 +333,7 @@ describe("Enlist API Tests", () => {
         const EventResponse = await request(app).post(`/api/Events`).send({
             name: "Sample Event",
             owner: "John Doe",
-            sector: "tech",
+            sector: "triple_impact",
             profile: "startup",
             category: "round table",
             privacy: "public",

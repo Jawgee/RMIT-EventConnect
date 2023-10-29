@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+.edit-profile-container {
+    margin: 0;
+    height: 89vh;
+    display: grid;
+    padding: 0 50px;
+    
+    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-areas:
+        "sect1"
+        "sect2"
+        "sect3"
+    }
+
+
+ion-list {
+    grid-area: sect2;
+}
+
+.edit-button-container{
+    place-self: center;
+    grid-area: sect3;
+    padding-bottom: 100px;
+    padding-left: 50px;
+}
+
+.edit-profile-button {
+    place-self: center;
+    /* place-self: center; */
+    width: 80%;
+    /* height: 20%; */
+}
+
+.submit-profile-button {
+    /* place-self: center; */
+    width: 80%;
+    /* height: 20%; */
+}
+
+.edit-list-container {
+    grid-area: sect2;
+    place-self: center;
+}
+
+.edit-profile-header {
+    grid-area: sect1;
+    place-self: center;
+    padding-top: 25px;
+}
+.edit-profile-title {
+    color: #3880ff;
+    font-size: 200%;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400%;
+    
+}

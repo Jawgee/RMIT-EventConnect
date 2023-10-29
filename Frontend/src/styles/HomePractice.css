@@ -1,0 +1,131 @@
+ion-title {
+    color: #fff;
+}
+
+.title {
+    color: #3880ff;
+    font-size: 200%;
+    /* font-family: 'Nunito', sans-serif; */
+    font-weight: 700;
+    padding-left: 20px;
+    /* place-self: center; */
+}
+
+.title-container {
+    /* text-overflow: ellipsis; */
+}
+.event-title {
+    /* text-overflow: ellipsis; */
+    height: fit-content;
+    /* max-height: 20px; */
+}
+
+ion-content {
+    --background: #fff;
+}
+
+.content-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    display: grid;
+}
+
+ion-card {
+    background-color: #fff;
+    /* max-height: 250px; */
+}
+
+ion-card .card-content ion-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    /* text-overflow: ellipsis; */
+    /* max-height: 100px; */
+}
+
+ion-card ion-img {
+    height: 150px;
+    max-height: 150px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.popup-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    z-index: 20;
+}
+
+/* Add styling for the contents of the popup container 👇 */
+.popup-container ion-img {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.popup-container h1 {
+    color: #333;
+    font-size: 3rem;
+    font-weight: 600;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+.popup-container p {
+    color: #555;
+    font-size: 1.1rem;
+    padding: 0 20px;
+    line-height: 2rem;
+}
+
+ion-chip {
+    place-self: center;
+    width: auto;
+}
+
+.event-title {
+    font-family: 'Nunito', sans-serif;
+    /* font-weight: 800; */
+}
+
+.description-location {
+    padding-left: 20px;
+    color: #3880ff;
+    font-size: 150%;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+}
+.selectpost-padding {
+    padding-left: 20px;
+    font-size: 120%;
+    padding-bottom: 10px;
+    padding-right: 20px;
+}
+
+.selected-post {
+    width: auto;
+    background: rgba(255, 214, 10, 0.7);
+    border: 2px solid rgba(255, 230, 68, 0.3);
+}
+
+.selectedpost-e {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    color: black;
+}
+
+.calendar-icon-size {
+    font-size: 40px;
+}
+
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(1, auto);
+}

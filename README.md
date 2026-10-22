@@ -2,7 +2,7 @@
 ## COSC2408 Programming Project 1
 README: Innovent Code 
 
-GitHub link: https://github.com/mecarrots/VC-268-EventConnect  
+Figma: https://www.figma.com/design/MYoxjbP6WVEwxsQUYimoAS/Innovent?node-id=0-1&t=mO4Bxsflbeqd4PVC-1
 
 This repository contains both the Frontend and the Backend code pertaining to the Innobound prototype.  
 

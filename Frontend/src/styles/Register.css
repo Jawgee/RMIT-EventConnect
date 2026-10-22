@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+.register-ion-title {
+    color: #3880ff;
+    font-size: 400%;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    
+}
+
+.theSignUpButton {
+    max-width: 250px;
+    width: 60%;
+}
+
+.register-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.LoginNowButton {
+    font-size: 110%;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    color: #3880ff;
+    background: transparent;
+}
+
+.register-container {
+    margin: 0;
+    height: 92vh;
+    display: grid;
+    padding: 0 50px;
+    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-areas:
+        "sect1"
+        "sect2"
+        "sect3"
+}
+
+.register-header {
+    grid-area: sect1;
+    place-self: center;
+}
+
+.register-form {
+    grid-area: sect2;
+    place-self: center;
+    max-width: 500px;
+}
+
+.register-info {
+    grid-area: sect3;
+    justify-self: center;
+    font-size: 15px;
+}

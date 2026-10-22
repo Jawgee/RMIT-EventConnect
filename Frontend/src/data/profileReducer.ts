@@ -1,0 +1,38 @@
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
+export interface UserInfo {
+    first_name?: string;
+    last_name?: string;
+    email: string;
+    profile?: string;
+    id?: number;
+    password?: string;
+}
+
+export const defaultProfileInfo: UserInfo = {
+    first_name: '',
+    last_name: '',
+    email: '',
+    profile: '',
+    id: 0,
+};
+
+export const profileSlice = createSlice({
+    name: 'profile',
+    initialState: {
+        value: defaultProfileInfo,
+    },
+    reducers: {
+        setProfileInfo: (state, action: PayloadAction<UserInfo>) => {
+            state.value = action.payload;
+        },
+        clearProfileInfo: (state) => {
+            state.value = defaultProfileInfo;
+        },
+    },
+});
+
+// Action creators are generated for each case reducer function
+export const { setProfileInfo, clearProfileInfo } = profileSlice.actions;
+
+export default profileSlice.reducer;
